@@ -1,4 +1,4 @@
-﻿namespace ToDoPlanner
+﻿namespace ToDoPlanner.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
