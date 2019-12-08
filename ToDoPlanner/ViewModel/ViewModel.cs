@@ -22,7 +22,7 @@ namespace ToDoPlanner.ViewModel
                 // Input from User
                 Title = "Task Example",
                 Description = "An exemplary task to get the idea.",
-                PriorityNum = (int) ToDoTask.Priority.High,
+                PriorityNum = (int)Priority.High,
                 Deadline = DateTime.Parse("09.12.2019"),
                 // DeadlineString = Deadline.ToString("dd.MM.yyyy"),
                 StartDate = DateTime.Parse("23.01.2020"),

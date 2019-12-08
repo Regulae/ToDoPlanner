@@ -8,8 +8,20 @@ using ToDoPlanner.ViewModel;
 
 namespace ToDoPlanner.Model
 {
-    public class ToDoTaskModel
+    public enum Priority
     {
+        Low,
+        Medium,
+        High
+    }
+
+    public enum Status
+    {
+        None,
+        Open,
+        Planned,
+        Ongoing,
+        Done
     }
 
     public class ToDoTask : ModelBase
@@ -30,13 +42,6 @@ namespace ToDoPlanner.Model
             set => SetProperty(ref _description, value);
         }
 
-        public enum Priority
-        {
-            Low,
-            Medium,
-            High
-        }
-
         public int PriorityNum { get; set; }
         public DateTime Deadline { get; set; }
         public DateTime StartDate { get; set; }
@@ -46,15 +51,6 @@ namespace ToDoPlanner.Model
         {
             get => _category;
             set => SetProperty(ref _category, value);
-        }
-
-        public enum Status
-        {
-            None,
-            Open,
-            Planned,
-            Ongoing,
-            Done
         }
 
         public DateTime Created { get; set; }

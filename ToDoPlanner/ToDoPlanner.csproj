@@ -62,7 +62,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Command\Command.cs" />
-    <Compile Include="Model\Model.cs" />
+    <Compile Include="Model\ToDoTask.cs" />
     <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
