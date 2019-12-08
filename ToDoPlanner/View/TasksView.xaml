@@ -3,34 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:model="clr-namespace:ToDoPlanner.Model"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
         <!-- Left half of the window-->
-        <Rectangle Margin="5" Fill="#FFDDDDDD" Stroke="Black" StrokeThickness="1" />
-        <Grid Margin="5">
+        <Rectangle Fill="#FFDDDDDD" Stroke="Black" StrokeThickness="1" />
+        <Grid Name="grdToDoList">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.1*" MinHeight="40" MaxHeight="80" />
-                <RowDefinition />
-                <RowDefinition Height="0.01*" MinHeight="5" MaxHeight="20" />
-                <RowDefinition Height="0.1*" MinHeight="40" MaxHeight="80" />
+                <RowDefinition Name="grdRowTitle" Height="0.1*" MinHeight="40" MaxHeight="80" />
+                <RowDefinition Name="grdRowData" />
+                <RowDefinition Name="grdRowSplitter"  Height="0.01*" MinHeight="5" MaxHeight="20" />
+                <RowDefinition Name="grdRowControl" Height="0.1*" MinHeight="40" MaxHeight="80" />
             </Grid.RowDefinitions>
 
             <!-- First row -->
-            <Label Grid.Row="0" Content="ToDo-List" HorizontalAlignment="Center" VerticalAlignment="Center"
+            <Label Name="lblToDoList" Grid.Row="0" Content="ToDo-List" HorizontalAlignment="Center" VerticalAlignment="Center"
                    FontSize="30" FontWeight="Bold" />
 
             <!-- Second row -->
-            <DataGrid Grid.Row="1" Margin="5" />
+            <DataGrid Name="dgTasks" ItemsSource="{Binding Path=ToDoTasks}" Grid.Row="1" Margin="5"
+                      FontSize="20">
+            </DataGrid>
 
             <!-- Third row = spacer -->
-            <Rectangle Grid.Row="2" Fill="White" Stroke="Black" StrokeThickness="1" />
-
+            <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" Margin="1,0,1,0" />
+            <Rectangle Grid.Row="2" Stroke="Black" StrokeThickness="1" />
+            
             <!-- Fourth row -->
             <Button Name="btnDelete" Grid.Row="3" Content="Delete" FontSize="20" FontWeight="Bold"
                     HorizontalAlignment="Left" Margin="5" Background="OrangeRed" MinWidth="100" />
@@ -39,49 +44,52 @@
 
         </Grid>
 
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
+
         <!-- Right half of the window-->
-        <Rectangle Grid.Column="1" Margin="5" Fill="#FFDDDDDD" Stroke="Black" StrokeThickness="1" />
-        <Grid Name="grdLeftHalf" Grid.Column="1" Margin="5">
+        <Rectangle Grid.Column="2" Fill="#FFDDDDDD" Stroke="Black" StrokeThickness="1" />
+        <Grid Name="grdTaskContent" Grid.Column="2" DataContext="{Binding ElementName=dgTasks, Path=SelectedItem}">
             <Grid.RowDefinitions>
-                <RowDefinition />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="0.01*" MinHeight="5" MaxHeight="20" />
                 <RowDefinition Height="5*" />
                 <RowDefinition Height="0.01*" MinHeight="5" MaxHeight="20" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-
+            
+            
             <!-- First row -->
-            <WrapPanel Margin="5">
+            <UniformGrid Columns="4" Margin="5">
                 <Label Name="lblCreated" Content="Created:" FontSize="20" VerticalContentAlignment="Center"
-                       VerticalAlignment="Center" Width="{Binding ElementName=grdLeftHalf, Path=Width}" />
-                <TextBlock Name="txtCreated" Text="{Binding Path=ToDoTasks[0].Created, StringFormat=dd.MM.yyyy}" FontSize="20"
-                           TextAlignment="Center" VerticalAlignment="Center" FontFamily="20" MinWidth="100"
+                       VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
+                <DatePicker Name="txtCreated" Text="{Binding Path=Created, StringFormat=dd.MM.yyyy}" FontSize="20"
+                           VerticalAlignment="Center" FontFamily="20" MinWidth="100"
                            Background="#FFBABABA" />
                 <Label Name="lblDeadline" Content="Deadline:" FontSize="20" VerticalContentAlignment="Center"
-                       VerticalAlignment="Center" Width="{Binding ElementName=grdLeftHalf, Path=Width}" />
-                <TextBlock Name="txtDeadline" Text="{Binding Path=ToDoTasks[0].Deadline, StringFormat=dd.MM.yyyy}"
+                       VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
+                <TextBlock Name="txtDeadline" Text="{Binding Path=Deadline, StringFormat=dd.MM.yyyy}"
                            FontSize="20"
                            TextAlignment="Center" VerticalAlignment="Center" FontFamily="20" MinWidth="100"
                            Background="#FFBABABA" />
                 <Label Name="lblPriority" Content="Priority:" FontSize="20" VerticalContentAlignment="Center"
-                       VerticalAlignment="Center" Width="{Binding ElementName=grdLeftHalf, Path=Width}" />
+                       VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
                 <ComboBox Name="txtPriority" Text="10.10.2019" FontSize="20" VerticalAlignment="Center"
-                          FontFamily="20" MinWidth="100">
+                          FontFamily="20" MinWidth="100" SelectedIndex="{Binding Path=PriorityNum}">
                     <ComboBoxItem Content="Low" />
                     <ComboBoxItem Content="Medium" />
                     <ComboBoxItem Content="High" />
                 </ComboBox>
                 <Label Name="lblCategory" Content="Category:" FontSize="20" VerticalContentAlignment="Center"
-                       VerticalAlignment="Center" Width="{Binding ElementName=grdLeftHalf, Path=Width}" />
-                <TextBlock Name="txtCategory" Text="{Binding Path=ToDoTasks[0].Category}" FontSize="20" TextAlignment="Center"
+                       VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
+                <TextBlock Name="txtCategory" Text="{Binding Path=Category}" FontSize="20" TextAlignment="Center"
                            VerticalAlignment="Center" FontFamily="20" MinWidth="100" Background="#FFBABABA" />
-            </WrapPanel>
+            </UniformGrid>
 
             <!-- Second row -->
             <Rectangle Grid.Row="1" Fill="White" Stroke="Black" StrokeThickness="1" />
 
             <!--Third row -->
-            <TextBlock Grid.Row="2" Margin="5" Background="#FFEDEDED" />
+            <TextBox Text="{Binding Path=Description}" Grid.Row="2" Margin="5" Background="#FFEDEDED" />
 
             <!-- Fourth row = spacer -->
             <Rectangle Grid.Row="3" Fill="White" Stroke="Black" StrokeThickness="1" />
