@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using ToDoPlanner.Annotations;
+using ToDoPlanner.Command;
 
 namespace ToDoPlanner.ViewModel
 {
@@ -54,5 +56,20 @@ namespace ToDoPlanner.ViewModel
         public DateTime Changed { get; set; }
         public int Effort { get; set; }
         public int Progress { get; set; } // Implement as progressbar in the MainWindow.xaml
+        
+        // @TODO Regula 08.12.19: Implement Commands for the EditView
+        /*        // Commands
+        private readonly DelegateCommand _changeTitleCommand;
+        public ICommand ChangeTitleCommand => _changeTitleCommand;
+
+        public TaskModel()
+        {
+            _changeTitleCommand = new DelegateCommand(OnChangeTitle);
+        }
+
+        private void OnChangeTitle(object commandParameter)
+        {
+            Deadline = DateTime.Parse("12.12.2012");
+        }*/
     }
 }
