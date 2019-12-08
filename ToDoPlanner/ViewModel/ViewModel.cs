@@ -1,61 +1,42 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using ToDoPlanner.Annotations;
 using ToDoPlanner.Command;
+using ToDoPlanner.Model;
 
 namespace ToDoPlanner.ViewModel
 {
     public class TaskModel : ViewModelBase
     {
-        private string _title;
 
-        public string Title
+        public ObservableCollection<ToDoTask> ToDoTasks { get; set; }
+
+        public void LoadTasks()
         {
-            get => _title;
-            set => SetProperty(ref _title, value);
+            ObservableCollection<ToDoTask> toDoTasks = new ObservableCollection<ToDoTask>();
+            
+            toDoTasks.Add (new ToDoTask(){
+                // Input from User
+                Title = "Task Example",
+                Description = "An exemplary task to get the idea.",
+                PriorityNum = (int) ToDoTask.Priority.High,
+                Deadline = DateTime.Parse("09.12.2019"),
+                // DeadlineString = Deadline.ToString("dd.MM.yyyy"),
+                StartDate = DateTime.Parse("23.01.2020"),
+                Category = "C# Project",
+                Effort = 50,
+                Progress = 10,
+                
+                // Generated Input from System
+                Created = DateTime.Today,
+                Changed = DateTime.Today
+            });
+
+            ToDoTasks = toDoTasks;
         }
-
-        private string _description;
-
-        public string Description
-        {
-            get => _description;
-            set => SetProperty(ref _description, value);
-        }
-
-        public enum Priority
-        {
-            Low,
-            Medium,
-            High
-        }
-
-        public int PriorityNum { get; set; }
-        public DateTime Deadline { get; set; }
-        public DateTime StartDate { get; set; }
-        private string _category;
-
-        public string Category
-        {
-            get => _category;
-            set => SetProperty(ref _category, value);
-        }
-
-        public enum Status
-        {
-            None,
-            Open,
-            Planned,
-            Ongoing,
-            Done
-        }
-
-        public DateTime Created { get; set; }
-        public DateTime Changed { get; set; }
-        public int Effort { get; set; }
-        public int Progress { get; set; } // Implement as progressbar in the MainWindow.xaml
         
         // @TODO Regula 08.12.19: Implement Commands for the EditView
         /*        // Commands
