@@ -10,12 +10,12 @@ namespace ToDoPlanner.View
     {
         public MainWindow()
         {
-            var viewModel = new MainWindowViewModel
+            var taskModel = new TaskModel
             {
                 // Input from User
                 Title = "Task Example",
                 Description = "An exemplary task to get the idea.",
-                PriorityNum = (int) MainWindowViewModel.Priority.High,
+                PriorityNum = (int) TaskModel.Priority.High,
                 Deadline = DateTime.Parse("09.12.2019"),
                 // DeadlineString = Deadline.ToString("dd.MM.yyyy"),
                 StartDate = DateTime.Parse("23.01.2020"),
@@ -28,7 +28,7 @@ namespace ToDoPlanner.View
                 Changed = DateTime.Today
             };
 
-            DataContext = viewModel;
+            DataContext = taskModel;
             InitializeComponent();
         }
     }

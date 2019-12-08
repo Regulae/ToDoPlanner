@@ -9,7 +9,7 @@ using ToDoPlanner.Annotations;
 
 namespace ToDoPlanner.ViewModel
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class TaskModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
