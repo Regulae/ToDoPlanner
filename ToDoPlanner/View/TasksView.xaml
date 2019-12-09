@@ -6,6 +6,9 @@
              xmlns:model="clr-namespace:ToDoPlanner.Model"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -17,7 +20,7 @@
         <Rectangle Fill="#FFDDDDDD" Stroke="Black" StrokeThickness="1" />
         <Grid Name="grdToDoList">
             <Grid.RowDefinitions>
-                <RowDefinition Name="grdRowTitle" Height="0.1*" MinHeight="40" MaxHeight="80" />
+                <RowDefinition Name="grdRowTitle" Height="0.1*" MinHeight="50" MaxHeight="80" />
                 <RowDefinition Name="grdRowData" />
                 <RowDefinition Name="grdRowSplitter"  Height="0.01*" MinHeight="5" MaxHeight="20" />
                 <RowDefinition Name="grdRowControl" Height="0.1*" MinHeight="40" MaxHeight="80" />
@@ -29,7 +32,58 @@
 
             <!-- Second row -->
             <DataGrid Name="dgTasks" ItemsSource="{Binding Path=ToDoTasks}" Grid.Row="1" Margin="5"
-                      FontSize="20">
+                      FontSize="16" AutoGenerateColumns="False" AlternatingRowBackground="LightGray">
+                
+                <!-- Context Menu for Data Grid -->
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="miCreated" IsCheckable="True" IsChecked="True" Header="_Created"/>
+                        <MenuItem Name="miDeadline" IsCheckable="True" IsChecked="True" Header="_Deadline"/>
+                        <MenuItem Name="miTitle" IsCheckable="True" IsChecked="True" Header="_Title"/>
+                        <MenuItem Name="miPriority" IsCheckable="True" IsChecked="True" Header="_Priority"/>
+                        <MenuItem Name="miCategory" IsCheckable="True" IsChecked="True" Header="_Category"/>
+                        <MenuItem Name="miDescription" IsCheckable="True" IsChecked="True" Header="_Description"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+                
+                <!-- Colums for DataGrid -->
+                <DataGrid.Columns>
+                    <!-- Created -->
+                    <DataGridTextColumn Header="Created" Binding="{Binding Created, StringFormat=dd.MM.yyyy}"
+                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miCreated}, 
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <!-- Deadline -->
+                    <DataGridTextColumn Header="Deadline" Binding="{Binding Deadline, StringFormat=dd.MM.yyyy}"
+                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miDeadline}, 
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <!-- Title-->
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}"
+                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miTitle}, 
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <!-- Category -->
+                    <DataGridTextColumn Header="Category" Binding="{Binding Category}"
+                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miCategory}, 
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <!-- Priority -->
+                    <DataGridTemplateColumn Header="Priority"
+                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miPriority}, 
+                        Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedIndex="{Binding Path=PriorityNum}">
+                                    <ComboBoxItem Content="Low" />
+                                    <ComboBoxItem Content="Medium" />
+                                    <ComboBoxItem Content="High" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!-- Description -->
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}"
+                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miDescription}, 
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                </DataGrid.Columns>
             </DataGrid>
 
             <!-- Third row = spacer -->
@@ -59,37 +113,40 @@
             
             
             <!-- First row -->
-            <UniformGrid Columns="4" Margin="5">
-                <Label Name="lblCreated" Content="Created:" FontSize="20" VerticalContentAlignment="Center"
+            <StackPanel>
+                <TextBox Name="txtTaskTitle" Text="{Binding Path=Title, FallbackValue=Title}" FontSize="20" FontWeight="Bold" Margin="5"
+                    MinWidth="150" HorizontalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" TextAlignment="Center"/>
+                <UniformGrid Columns="4" Margin="5">
+                    <Label Name="lblCreated" Content="Created:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                <DatePicker Name="txtCreated" Text="{Binding Path=Created, StringFormat=dd.MM.yyyy}" FontSize="20"
+                    <DatePicker Name="txtCreated" Text="{Binding Path=Created, StringFormat=dd.MM.yyyy}" FontSize="20"
                            VerticalAlignment="Center" FontFamily="20" MinWidth="100"
                            Background="#FFBABABA" />
-                <Label Name="lblDeadline" Content="Deadline:" FontSize="20" VerticalContentAlignment="Center"
+                    <Label Name="lblDeadline" Content="Deadline:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                <TextBlock Name="txtDeadline" Text="{Binding Path=Deadline, StringFormat=dd.MM.yyyy}"
+                    <TextBox Name="txtDeadline" Text="{Binding Path=Deadline, StringFormat=dd.MM.yyyy}"
                            FontSize="20"
                            TextAlignment="Center" VerticalAlignment="Center" FontFamily="20" MinWidth="100"
                            Background="#FFBABABA" />
-                <Label Name="lblPriority" Content="Priority:" FontSize="20" VerticalContentAlignment="Center"
+                    <Label Name="lblPriority" Content="Priority:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                <ComboBox Name="txtPriority" Text="10.10.2019" FontSize="20" VerticalAlignment="Center"
+                    <ComboBox Name="txtPriority" Text="10.10.2019" FontSize="20" VerticalAlignment="Center"
                           FontFamily="20" MinWidth="100" SelectedIndex="{Binding Path=PriorityNum}">
-                    <ComboBoxItem Content="Low" />
-                    <ComboBoxItem Content="Medium" />
-                    <ComboBoxItem Content="High" />
-                </ComboBox>
-                <Label Name="lblCategory" Content="Category:" FontSize="20" VerticalContentAlignment="Center"
+                        <ComboBoxItem Content="Low" />
+                        <ComboBoxItem Content="Medium" />
+                        <ComboBoxItem Content="High" />
+                    </ComboBox>
+                    <Label Name="lblCategory" Content="Category:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                <TextBlock Name="txtCategory" Text="{Binding Path=Category}" FontSize="20" TextAlignment="Center"
+                    <TextBox Name="txtCategory" Text="{Binding Path=Category}" FontSize="20" TextAlignment="Center"
                            VerticalAlignment="Center" FontFamily="20" MinWidth="100" Background="#FFBABABA" />
-            </UniformGrid>
-
+                </UniformGrid>
+            </StackPanel>
             <!-- Second row -->
             <Rectangle Grid.Row="1" Fill="White" Stroke="Black" StrokeThickness="1" />
 
             <!--Third row -->
-            <TextBox Text="{Binding Path=Description}" Grid.Row="2" Margin="5" Background="#FFEDEDED" />
+            <TextBox Text="{Binding Path=Description}" FontSize="20" AcceptsReturn="True" Grid.Row="2" Margin="5" Background="#FFEDEDED" />
 
             <!-- Fourth row = spacer -->
             <Rectangle Grid.Row="3" Fill="White" Stroke="Black" StrokeThickness="1" />
