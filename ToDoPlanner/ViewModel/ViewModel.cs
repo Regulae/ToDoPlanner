@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using System.IO;
+using System.Xml.Serialization;
 using ToDoPlanner.Annotations;
 using ToDoPlanner.Command;
 using ToDoPlanner.Model;
@@ -17,8 +19,24 @@ namespace ToDoPlanner.ViewModel
         public void LoadTasks()
         {
             ObservableCollection<ToDoTask> toDoTasks = new ObservableCollection<ToDoTask>();
-            
-            toDoTasks.Add (new ToDoTask(){
+
+            // Load from xml file
+            try
+            {
+                XmlSerializer xs = new XmlSerializer(typeof(ObservableCollection<ToDoTask>));
+                using (StreamReader rd = new StreamReader(@"Data\Tasks.xml"))
+                {
+                    toDoTasks = xs.Deserialize(rd) as ObservableCollection<ToDoTask>;
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("XML file Tasks.xml not found");
+            }
+
+
+            toDoTasks.Add(new ToDoTask()
+            {
                 // Input from User
                 Title = "Task Example",
                 Description = "An exemplary task to get the idea.",
@@ -29,7 +47,7 @@ namespace ToDoPlanner.ViewModel
                 Category = "C# Project",
                 Effort = 50,
                 Progress = 10,
-                
+
                 // Generated Input from System
                 Created = DateTime.Today,
                 Changed = DateTime.Today
@@ -73,7 +91,43 @@ namespace ToDoPlanner.ViewModel
 
             ToDoTasks = toDoTasks;
         }
-        
+
+        public void AddTask(ToDoTask task)
+        {
+            ToDoTasks.Add(task);
+        }
+
+        /// <summary>
+        /// Save tasks to .xml file
+        /// </summary>
+        public void SaveTasks()
+        {
+            var serializer = new XmlSerializer(typeof(ObservableCollection<ToDoTask>));
+            if (!Directory.Exists(@"Data"))
+            {
+                try
+                {
+                    Directory.CreateDirectory(@"Data");
+                }
+                catch
+                {
+                    Console.WriteLine("Directory couldn't be created");
+                }
+            }
+
+            try
+            {
+                FileStream fs = new FileStream(@"Data\Tasks.xml", FileMode.Create);
+                serializer.Serialize(fs, ToDoTasks);
+                fs.Close();
+            }
+            catch
+            {
+                Console.WriteLine("File couldn't be created");
+            }
+
+        }
+
         // @TODO Regula 08.12.19: Implement Commands for the EditView
         /*        // Commands
         private readonly DelegateCommand _changeTitleCommand;

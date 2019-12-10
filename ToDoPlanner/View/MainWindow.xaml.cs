@@ -19,7 +19,7 @@ namespace ToDoPlanner.View
         {
             var taskViewModelObject = new TaskModel();
             taskViewModelObject.LoadTasks();
-            
+            taskViewModelObject.SaveTasks();
             TasksViewControl.DataContext = taskViewModelObject;
         }
     }
