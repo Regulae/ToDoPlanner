@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using ToDoPlanner.ViewModel;
 
 namespace ToDoPlanner.Model
@@ -43,7 +44,9 @@ namespace ToDoPlanner.Model
         }
 
         public int PriorityNum { get; set; }
+        [XmlElement(DataType = "date")]
         public DateTime Deadline { get; set; }
+        [XmlElement(DataType = "date")]
         public DateTime StartDate { get; set; }
         private string _category;
 
@@ -52,8 +55,9 @@ namespace ToDoPlanner.Model
             get => _category;
             set => SetProperty(ref _category, value);
         }
-
+        [XmlElement(DataType = "date")]
         public DateTime Created { get; set; }
+        [XmlElement(DataType = "date")]
         public DateTime Changed { get; set; }
         public int Effort { get; set; }
         public int Progress { get; set; } // Implement as progressbar in the MainWindow.xaml

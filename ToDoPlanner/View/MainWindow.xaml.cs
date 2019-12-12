@@ -9,18 +9,22 @@ namespace ToDoPlanner.View
     /// </summary>
     public partial class MainWindow
     {
+
+        TaskModel taskViewModelObject = new TaskModel();
+
         public MainWindow()
         {
             InitializeComponent();
-            
+            Closing += taskViewModelObject.SaveTasks;
+
         }
 
         private void TasksViewControl_Loaded(object sender, RoutedEventArgs e)
         {
-            var taskViewModelObject = new TaskModel();
             taskViewModelObject.LoadTasks();
-            
             TasksViewControl.DataContext = taskViewModelObject;
+            
         }
+        
     }
 }
