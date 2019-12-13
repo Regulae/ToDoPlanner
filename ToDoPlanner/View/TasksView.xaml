@@ -92,9 +92,11 @@
             
             <!-- Fourth row -->
             <Button Name="btnDelete" Grid.Row="3" Content="Delete" FontSize="20" FontWeight="Bold"
-                    HorizontalAlignment="Left" Margin="5" Background="OrangeRed" MinWidth="100" />
+                    HorizontalAlignment="Left" Margin="5" MinWidth="100"
+                    Style="{DynamicResource MaterialDesignRaisedFlatButton}"/>
             <Button Name="btnAdd" Grid.Row="3" Content="Add New" FontSize="20" FontWeight="Bold"
-                    HorizontalAlignment="Right" Margin="5" Background="GreenYellow" MinWidth="100" />
+                    HorizontalAlignment="Right" Margin="5" MinWidth="100"
+                    Style="{DynamicResource MaterialDesignRaisedButton}" />
 
         </Grid>
 
