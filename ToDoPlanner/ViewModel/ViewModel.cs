@@ -15,6 +15,9 @@ namespace ToDoPlanner.ViewModel
     {
 
         public ObservableCollection<ToDoTask> ToDoTasks { get; set; }
+        private const string FolderPath = "Data";
+        private const string FileName = "Tasks.xml";
+
 
         public void LoadTasks()
         {
@@ -24,7 +27,7 @@ namespace ToDoPlanner.ViewModel
             try
             {
                 XmlSerializer xs = new XmlSerializer(typeof(ObservableCollection<ToDoTask>));
-                using (StreamReader rd = new StreamReader(@"Data\Tasks.xml"))
+                using (StreamReader rd = new StreamReader(FolderPath + @"\" + FileName))
                 {
                     toDoTasks = xs.Deserialize(rd) as ObservableCollection<ToDoTask>;
                 }
@@ -103,11 +106,11 @@ namespace ToDoPlanner.ViewModel
         public void SaveTasks()
         {
             var serializer = new XmlSerializer(typeof(ObservableCollection<ToDoTask>));
-            if (!Directory.Exists(@"Data"))
+            if (!Directory.Exists(FolderPath))
             {
                 try
                 {
-                    Directory.CreateDirectory(@"Data");
+                    Directory.CreateDirectory(FolderPath);
                 }
                 catch
                 {
@@ -117,7 +120,7 @@ namespace ToDoPlanner.ViewModel
 
             try
             {
-                FileStream fs = new FileStream(@"Data\Tasks.xml", FileMode.Create);
+                FileStream fs = new FileStream(FolderPath + @"\" + FileName, FileMode.Create);
                 serializer.Serialize(fs, ToDoTasks);
                 fs.Close();
             }
