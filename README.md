@@ -30,13 +30,20 @@
 - ToDo-Liste
 - ToDo-Erstellung/-Bearbeitung --> Formular
 
+#### Packages:
+- MaterialDesignThemes
+- MaterialDesignColors
+- ShowMeTheXAML
   
-
 #### Erweiterungen:
 
 - Planungstool --> Kalender --> https://docs.microsoft.com/en-us/dotnet/api/system.globalization.calendar?view=netframework-4.8
 
 - Datenbank auf einem Webserver
+
+- Export zu PDF, Druckversion
+
+- Benachrichtigung 1 Woche vor Ende der Deadline
 
 #### GUI
 
