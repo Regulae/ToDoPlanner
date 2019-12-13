@@ -38,6 +38,10 @@
 
 - Datenbank auf einem Webserver
 
+- Export zu PDF, Druckversion
+
+- Benachrichtigung 1 Woche vor Ende der Deadline
+
 #### GUI
 
 ![GUI Beispiel](images/gui/GUI_Example_Text.png)
