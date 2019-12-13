@@ -44,10 +44,8 @@ namespace ToDoPlanner.Model
         }
 
         public int PriorityNum { get; set; }
-        [XmlElement(DataType = "date")]
-        public DateTime Deadline { get; set; }
-        [XmlElement(DataType = "date")]
-        public DateTime StartDate { get; set; }
+        [XmlElement(DataType = "date")] public DateTime Deadline { get; set; } = DateTime.Today;
+        [XmlElement(DataType = "date")] public DateTime StartDate { get; set; } = DateTime.Today;
         private string _category;
 
         public string Category
@@ -55,12 +53,10 @@ namespace ToDoPlanner.Model
             get => _category;
             set => SetProperty(ref _category, value);
         }
-        [XmlElement(DataType = "date")]
-        public DateTime Created { get; set; }
-        [XmlElement(DataType = "date")]
-        public DateTime Changed { get; set; }
+
+        [XmlElement(DataType = "date")] public DateTime Created { get; set; } = DateTime.Today;
+        [XmlElement(DataType = "date")] public DateTime Changed { get; set; } = DateTime.Today;
         public int Effort { get; set; }
         public int Progress { get; set; } // Implement as progressbar in the MainWindow.xaml
-
     }
 }

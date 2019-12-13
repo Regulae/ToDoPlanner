@@ -119,17 +119,17 @@
                 <UniformGrid Columns="4" Margin="5">
                     <Label Name="lblCreated" Content="Created:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                    <DatePicker Name="txtCreated" Text="{Binding Path=Created, StringFormat=dd.MM.yyyy}" FontSize="20"
-                           VerticalAlignment="Center" FontFamily="20" MinWidth="100"
-                           Background="#FFBABABA" />
+                    <TextBox Name="txtCreated" Text="{Binding Path=Created, StringFormat=dd.MM.yyyy}"
+                             FontSize="20"
+                             TextAlignment="Center" VerticalAlignment="Center" FontFamily="20" MinWidth="100"
+                             Background="#FFBABABA" />
                     <Label Name="lblDeadline" Content="Deadline:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                    <TextBox Name="txtDeadline" Text="{Binding Path=Deadline, StringFormat=dd.MM.yyyy}"
-                           FontSize="20"
-                           TextAlignment="Center" VerticalAlignment="Center" FontFamily="20" MinWidth="100"
-                           Background="#FFBABABA" />
+                    <DatePicker Name="txtDeadline" Text="{Binding Path=Deadline, StringFormat=dd.MM.yyyy}" FontSize="20"
+                                VerticalAlignment="Center" FontFamily="20" MinWidth="100"
+                                Background="#FFBABABA" />
                     <Label Name="lblPriority" Content="Priority:" FontSize="20" VerticalContentAlignment="Center"
-                       VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
+                           VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
                     <ComboBox Name="txtPriority" Text="10.10.2019" FontSize="20" VerticalAlignment="Center"
                           FontFamily="20" MinWidth="100" SelectedIndex="{Binding Path=PriorityNum}">
                         <ComboBoxItem Content="Low" />
