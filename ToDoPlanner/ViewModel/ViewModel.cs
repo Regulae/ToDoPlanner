@@ -31,7 +31,7 @@ namespace ToDoPlanner.ViewModel
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("XML file Tasks.xml not found");
+                System.Diagnostics.Trace.WriteLine("XML file Tasks.xml not found");
             }
 
 
@@ -111,7 +111,7 @@ namespace ToDoPlanner.ViewModel
                 }
                 catch
                 {
-                    Console.WriteLine("Directory couldn't be created");
+                    System.Diagnostics.Trace.WriteLine("Directory couldn't be created");
                 }
             }
 
@@ -123,7 +123,7 @@ namespace ToDoPlanner.ViewModel
             }
             catch
             {
-                Console.WriteLine("File couldn't be created");
+                System.Diagnostics.Trace.WriteLine("File couldn't be created");
             }
 
         }
