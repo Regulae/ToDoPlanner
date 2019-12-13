@@ -30,8 +30,11 @@
 - ToDo-Liste
 - ToDo-Erstellung/-Bearbeitung --> Formular
 
+### Packages:
+- MaterialDesignThemes
+- MaterialDesignColors
+- ShowMeTheXAML
   
-
 #### Erweiterungen:
 
 - Planungstool --> Kalender --> https://docs.microsoft.com/en-us/dotnet/api/system.globalization.calendar?view=netframework-4.8
