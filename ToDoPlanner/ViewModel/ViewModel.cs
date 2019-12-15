@@ -18,6 +18,14 @@ namespace ToDoPlanner.ViewModel
         private const string FolderPath = "Data";
         private const string FileName = "Tasks.xml";
 
+        private bool visibilityCreated = true;
+        public bool VisibilityCreated { get { Console.WriteLine("Visi Get"); return visibilityCreated; } set { value = visibilityCreated; Console.WriteLine("Visi Changed"); } }
+
+        private bool visibilityDeadline = true;
+        public bool VisibilityDeadline { get { return visibilityDeadline; } set { value = visibilityDeadline; Console.WriteLine("Visi visibilityDeadline Changed"); } }
+
+        private bool visibilityTitle = false;
+        public bool VisibilityTitle { get { return visibilityTitle; } set { value = visibilityTitle; Console.WriteLine("Visi visibilityTitle Changed"); } }
 
         public void LoadTasks()
         {
