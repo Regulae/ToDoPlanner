@@ -4,6 +4,6 @@
     xmlns:local="clr-namespace:ToDoPlanner.UserControls">
 
 
-    <Style TargetType="{x:Type local:EnhancedDataGrid}" BasedOn="{StaticResource {x:Type TextBox}}">
+    <Style TargetType="{x:Type local:EnhancedDataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
     </Style>
 </ResourceDictionary>

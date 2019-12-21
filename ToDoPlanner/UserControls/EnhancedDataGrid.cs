@@ -13,6 +13,11 @@ namespace ToDoPlanner.UserControls
 {
     class EnhancedDataGrid : DataGrid
     {
+        /// <summary>
+        /// Original Source from:
+        /// https://bengribaudo.com/blog/2012/03/14/1942/saving-restoring-wpf-datagrid-columns-size-sorting-and-order
+        /// </summary>
+
         private bool inWidthChange = false;
         private bool updatingColumnInfo = false;
 
@@ -20,7 +25,7 @@ namespace ToDoPlanner.UserControls
                 typeof(ObservableCollection<ColumnInfo>), typeof(EnhancedDataGrid),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColumnInfoChangedCallback)
             );
-
+        
         private static void ColumnInfoChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var grid = (EnhancedDataGrid)dependencyObject;
@@ -35,7 +40,7 @@ namespace ToDoPlanner.UserControls
             var sortDirectionPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(DataGridColumn.SortDirectionProperty, typeof(DataGridColumn));
             var widthPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(DataGridColumn.WidthProperty, typeof(DataGridColumn));
             var visibilityPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(DataGridColumn.VisibilityProperty, typeof(DataGridColumn));
-
+            
             Loaded += (sender, x) =>
             {
                 foreach (var column in Columns)
@@ -43,6 +48,7 @@ namespace ToDoPlanner.UserControls
                     sortDirectionPropertyDescriptor.AddValueChanged(column, sortDirectionChangedHandler);
                     widthPropertyDescriptor.AddValueChanged(column, widthPropertyChangedHandler);
                     visibilityPropertyDescriptor.AddValueChanged(column, visiblityChangedHandler);
+                    
                 }
             };
             Unloaded += (sender, x) =>
@@ -57,6 +63,11 @@ namespace ToDoPlanner.UserControls
             base.OnInitialized(e);
         }
 
+        private void VisibilityUpdate(object sender, EventArgs x)
+        {
+            int i = 10;
+        }
+
         public ObservableCollection<ColumnInfo> ColumnInfo
         {
             get { return (ObservableCollection<ColumnInfo>)GetValue(ColumnInfoProperty); }
@@ -66,6 +77,7 @@ namespace ToDoPlanner.UserControls
         private void UpdateColumnInfo()
         {
             updatingColumnInfo = true;
+            Console.WriteLine("Binindg property");
             ColumnInfo = new ObservableCollection<ColumnInfo>(Columns.Select((x) => new ColumnInfo(x)));
             updatingColumnInfo = false;
         }
@@ -103,7 +115,8 @@ namespace ToDoPlanner.UserControls
         public ColumnInfo(DataGridColumn column)
         {
             Header = column.Header;
-            PropertyPath = ((Binding)((DataGridBoundColumn)column).Binding).Path.Path;
+            //PropertyPath = ((Binding)((DataGridBoundColumn)column).Binding).Path.Path;
+            PropertyPath = column.SortMemberPath;
             WidthValue = column.Width.DisplayValue;
             WidthType = column.Width.UnitType;
             Visibility = column.Visibility;
@@ -113,6 +126,8 @@ namespace ToDoPlanner.UserControls
         public void Apply(DataGridColumn column, int gridColumnCount, SortDescriptionCollection sortDescriptions)
         {
             column.Width = new DataGridLength(WidthValue, WidthType);
+
+            column.SetCurrentValue(DataGridColumn.VisibilityProperty, Visibility);
             column.SortDirection = SortDirection;
             if (SortDirection != null)
             {

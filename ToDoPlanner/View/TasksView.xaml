@@ -9,6 +9,7 @@
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <ctr:EnhancedDataGrid x:Key="dgGrid"/>
     </UserControl.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
@@ -31,11 +32,10 @@
             <Label Name="lblToDoList" Grid.Row="0" Content="ToDo-List" HorizontalAlignment="Center" VerticalAlignment="Center"
                    FontSize="30" FontWeight="Bold" />
 
-            <CheckBox IsChecked="{Binding VisibilityDeadline, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"/>
+            <CheckBox DataContext="" IsChecked="{Binding Path=/ColumnInfos[1].Created, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             <CheckBox IsChecked="{Binding VisibilityDeadline, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Margin="20,0,0,0"/>
-
             <!-- Second row -->
-            <ctr:EnhancedDataGrid x:Name="dgTasks" ItemsSource="{Binding Path=ToDoTasks}" ColumnInfo="{Binding Columns}" Grid.Row="1" Margin="5"
+            <ctr:EnhancedDataGrid x:Name="dgTasks" ItemsSource="{Binding Path=ToDoTasks}" ColumnInfo="{Binding ColumnInfos}" Grid.Row="1" Margin="5"
                       FontSize="16" AutoGenerateColumns="False" AlternatingRowBackground="LightGray">
 
                 <DataGrid.Resources>
@@ -73,7 +73,7 @@
 
 
                         <MenuItem Name="miTitle" IsCheckable="True" IsChecked="{Binding Path=VisibilityTitle}" Header="_Title"/>
-                        <MenuItem Name="miPriority" IsCheckable="True" IsChecked="True" Header="_Priority"/>
+                        <MenuItem Name="miPriority" IsCheckable="True" IsChecked="{Binding Source=ColumnInfos, Path=/Visibility, Converter={StaticResource BooleanToVisibilityConverter}}" Header="_Priority"/>
                         <MenuItem Name="miCategory" IsCheckable="True" IsChecked="True" Header="_Category"/>
                         <MenuItem Name="miDescription" IsCheckable="True" IsChecked="True" Header="_Description"/>
                     </ContextMenu>
@@ -88,21 +88,22 @@
                     </DataGridTextColumn>
                     <!-- Deadline -->
                     <DataGridTextColumn Header="Deadline" Binding="{Binding Deadline, StringFormat=dd.MM.yyyy}"
-                        Visibility="{Binding VisibilityCreated, Mode=OneWayToSource, BindsDirectlyToSource=True, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        Visibility="{Binding VisibilityDeadline, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <!-- Title-->
                     <DataGridTextColumn Header="Title" Binding="{Binding Title}"
-                        Visibility="{Binding Path=VisibilityTitle, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, 
-                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+/>
                     <!-- Category -->
                     <DataGridTextColumn Header="Category" Binding="{Binding Category}"
                         Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miCategory}, 
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <!-- Priority -->
+                    
+                    <!--
                     <DataGridTextColumn Header="Priority" Binding="{Binding Priority}"
                         Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miPriority}, 
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    -->
                     
-                    <!--
                     <DataGridTemplateColumn Header="Priority"
                         Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miPriority}, 
                         Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -117,7 +118,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    -->
+                    
                     
                     <!-- Description -->
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}"
