@@ -11,12 +11,12 @@ namespace ToDoPlanner.Model
     {
         public static readonly DependencyProperty DataProperty =
            DependencyProperty.Register("Data", typeof(object),
-              typeof(BindingProxy));
+              typeof(BindingProxy), new UIPropertyMetadata(null));
 
         public object Data
         {
-            get { return GetValue(DataProperty); }
-            set { SetValue(DataProperty, value); }
+            get { Console.WriteLine("Proxy Used"); return GetValue(DataProperty); }
+            set { SetValue(DataProperty, value); Console.WriteLine("Proxy Set"); }
         }
 
         #region Overrides of Freezable

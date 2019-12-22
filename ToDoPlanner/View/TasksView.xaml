@@ -4,10 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:model="clr-namespace:ToDoPlanner.Model"
+             xmlns:ctr="clr-namespace:ToDoPlanner.UserControls"
              mc:Ignorable="d"
+             
+            TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+            TextElement.FontWeight="Regular"
+            TextElement.FontSize="13"
+            TextOptions.TextFormattingMode="Ideal"
+            TextOptions.TextRenderingMode="Auto"
+            Background="{DynamicResource MaterialDesignPaper}"
+            FontFamily="{DynamicResource MaterialDesignFont}"
+             
              d:DesignHeight="600" d:DesignWidth="800">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <ctr:EnhancedDataGrid x:Key="dgGrid"/>
     </UserControl.Resources>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
@@ -15,7 +26,7 @@
             <ColumnDefinition Width="5"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-
+        
         <!-- Left half of the window-->
         <Rectangle Fill="#FFDDDDDD" Stroke="Black" StrokeThickness="1" />
         <Grid Name="grdToDoList">
@@ -31,44 +42,126 @@
                    FontSize="30" FontWeight="Bold" />
 
             <!-- Second row -->
-            <DataGrid Name="dgTasks" ItemsSource="{Binding Path=ToDoTasks}" Grid.Row="1" Margin="5"
-                      FontSize="16" AutoGenerateColumns="False" AlternatingRowBackground="LightGray">
+            <ctr:EnhancedDataGrid 
+                x:Name="dgTasks"
+                ItemsSource="{Binding Path=ToDoTasks}"
+                ColumnInfo="{Binding ColumnInfos}"
+                Grid.Row="1"
+                Margin="5"
+                FontSize="16"
+                AutoGenerateColumns="False"
+                AlternatingRowBackground="LightGray"
+                RowHeaderWidth="0">
+
+                <DataGrid.Resources>
+                    <!-- Binding proxies for context menu on the row header
+                            It's necessary to bind visibility -->
+                    <model:BindingProxy x:Key="proxyCreated"
+                                        Data="{Binding}"/>
+                    <model:BindingProxy x:Key="proxyDeadline"
+                                        Data="{Binding}"/>
+                    <model:BindingProxy x:Key="proxyTitle"
+                                        Data="{Binding}"/>
+                    <model:BindingProxy x:Key="proxyCategory"
+                                        Data="{Binding}"/>
+                    <model:BindingProxy x:Key="proxyPriority"
+                                        Data="{Binding}"/>
+                    <model:BindingProxy x:Key="proxyDescription"
+                                        Data="{Binding}"/>
+                    <model:BindingProxy x:Key="proxyProgress"
+                                        Data="{Binding}"/>
+                    <model:BindingProxy x:Key="proxyEffort"
+                                        Data="{Binding}"/>
+
+                    
+                    <ContextMenu DataContext="dgTasks" x:Key="DataGridColumnHeaderContextMenu">
+                        
+                        <!-- The context menu in the row header for changing the visibilty of the columns -->
+                        <MenuItem Name="miCreated"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyCreated}}"
+                                  Header="_Created"/>
+                        
+                        <MenuItem Name="miDeadline"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyDeadline}}"
+                                  Header="_Deadline"/>
+
+                        <MenuItem Name="miTitle"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyTitle}}"
+                                  Header="_Title"/>
+
+                        <MenuItem Name="miCategory"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyCategory}}"
+                                  Header="_Category"/>
+
+                        <MenuItem Name="miPriority"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyPriority}}"
+                                  Header="_Priority"/>
+
+                        <MenuItem Name="miDescription"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyDescription}}"
+                                  Header="_Description"/>
+
+                        <MenuItem Name="miProgress"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyProgress}}"
+                                  Header="_Progress"/>
+
+                        <MenuItem Name="miEffort"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyEffort}}"
+                                  Header="_Effort"/>
+                    </ContextMenu>
+
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="ContextMenu"
+                    Value="{StaticResource DataGridColumnHeaderContextMenu}" />
+                    </Style>
+                </DataGrid.Resources>
                 
                 <!-- Context Menu for Data Grid -->
                 <DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Name="miCreated" IsCheckable="True" IsChecked="True" Header="_Created"/>
-                        <MenuItem Name="miDeadline" IsCheckable="True" IsChecked="True" Header="_Deadline"/>
-                        <MenuItem Name="miTitle" IsCheckable="True" IsChecked="True" Header="_Title"/>
-                        <MenuItem Name="miPriority" IsCheckable="True" IsChecked="True" Header="_Priority"/>
-                        <MenuItem Name="miCategory" IsCheckable="True" IsChecked="True" Header="_Category"/>
-                        <MenuItem Name="miDescription" IsCheckable="True" IsChecked="True" Header="_Description"/>
+                        <MenuItem Name="miExport" Header="_Export to xml..."/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
-                
+
                 <!-- Colums for DataGrid -->
                 <DataGrid.Columns>
                     <!-- Created -->
                     <DataGridTextColumn Header="Created" Binding="{Binding Created, StringFormat=dd.MM.yyyy}"
-                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miCreated}, 
+                        Visibility="{Binding Path=Data, Source={StaticResource proxyCreated}, Mode=TwoWay,
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <!-- Deadline -->
                     <DataGridTextColumn Header="Deadline" Binding="{Binding Deadline, StringFormat=dd.MM.yyyy}"
-                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miDeadline}, 
+                        Visibility="{Binding Path=Data, Source={StaticResource proxyDeadline}, Mode=TwoWay,
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <!-- Title-->
-                    <DataGridTextColumn Header="Title" Binding="{Binding Title}"
-                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miTitle}, 
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title, StringFormat=dd.MM.yyyy}"
+                        Visibility="{Binding Path=Data, Source={StaticResource proxyTitle}, Mode=TwoWay,
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <!-- Category -->
-                    <DataGridTextColumn Header="Category" Binding="{Binding Category}"
-                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miCategory}, 
+                    <DataGridTextColumn Header="Category" Binding="{Binding Category, StringFormat=dd.MM.yyyy}"
+                        Visibility="{Binding Path=Data, Source={StaticResource proxyCategory}, Mode=TwoWay,
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <!-- Priority -->
-                    <DataGridTemplateColumn Header="Priority"
+                    
+                    <!--
+                    <DataGridTextColumn Header="Priority" Binding="{Binding Priority}"
                         Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miPriority}, 
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    -->
+                    
+                    <DataGridTemplateColumn Header="Priority"
+                        Visibility="{Binding Path=Data, Source={StaticResource proxyPriority}, Mode=TwoWay,
                         Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <DataGridTemplateColumn.CellTemplate>
+                        
+                        <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ComboBox SelectedIndex="{Binding Path=PriorityNum}">
                                     <ComboBoxItem Content="Low" />
@@ -78,13 +171,25 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    
+                    
                     <!-- Description -->
                     <DataGridTextColumn Header="Description" Binding="{Binding Description}"
-                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miDescription}, 
+                        Visibility="{Binding Path=Data, Source={StaticResource proxyDescription}, Mode=TwoWay,
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                    <!-- Progress -->
+                    <DataGridTextColumn Header="Progress" Binding="{Binding Progress}"
+                        Visibility="{Binding Path=Data, Source={StaticResource proxyProgress}, Mode=TwoWay,
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                    <!-- Effort -->
+                    <DataGridTextColumn Header="Effort" Binding="{Binding Effort}"
+                        Visibility="{Binding Path=Data, Source={StaticResource proxyEffort}, Mode=TwoWay,
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                 </DataGrid.Columns>
-            </DataGrid>
+            </ctr:EnhancedDataGrid>
 
             <!-- Third row = spacer -->
             <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" Margin="1,0,1,0" />
