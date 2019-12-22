@@ -27,27 +27,11 @@ namespace ToDoPlanner.ViewModel
         private const string FolderPathSettings = "Settings";
         private const string FileNameDataGridView = "DataGridView.xml";
 
-        private bool visibilityCreated = true;
-        public bool VisibilityCreated { get { Console.WriteLine("Visi Get"); return visibilityCreated; } set { value = visibilityCreated; Console.WriteLine("Visi Changed"); } }
-
-        private bool visibilityDeadline = true;
-        public bool VisibilityDeadline { get { return visibilityDeadline; } set { value = visibilityDeadline; Console.WriteLine("Visi visibilityDeadline Changed"); } }
-
-        private bool visibilityTitle = false;
-        public bool VisibilityTitle { get { return visibilityTitle; } set { value = visibilityTitle; visibilityChanged(); Console.WriteLine("Visi visibilityTitle Changed"); } }
-
-
-        private void visibilityChanged()
-        {
-            var found = ColumnInfos.FirstOrDefault(x => string.Equals(x.Header, "Title"));
-            found.Visibility = System.Windows.Visibility.Collapsed;
-            int i = 10;
-        }
 
         public void LoadTasks()
         {
             ObservableCollection<ToDoTask> toDoTasks = new ObservableCollection<ToDoTask>();
-            //ObservableCollection<ColumnInfo> columnInfos = new ObservableCollection<ColumnInfo>();
+            ObservableCollection<ToDoTask> toDoTasks2 = new ObservableCollection<ToDoTask>();
 
 
             // Load DataGrid view settings from xml file
@@ -56,25 +40,13 @@ namespace ToDoPlanner.ViewModel
                 XmlSerializer xs = new XmlSerializer(typeof(ObservableCollection<ColumnInfo>));
                 using (StreamReader rd = new StreamReader(FolderPathSettings + @"\" + FileNameDataGridView))
                 {
-                    //columnInfos = ColumnInfos;
                     columnInfos = xs.Deserialize(rd) as ObservableCollection<ColumnInfo>;
                     ColumnInfos = columnInfos;
-                    //ColumnInfos.Clear();
-
-                    //foreach (ColumnInfo ci in columnInfos)
-                    //{
-                    //    ColumnInfos.Add(ci);
-                    //}
-
-                    Console.WriteLine("This is the Collection");
-                    Console.WriteLine(ColumnInfos);
-
-                    
                 }
             }
             catch
             {
-                System.Diagnostics.Trace.WriteLine("XML file Tasks.xml not found");
+                System.Diagnostics.Trace.WriteLine("XML file Settings.xml not found");
             }
 
 
@@ -110,7 +82,7 @@ namespace ToDoPlanner.ViewModel
             //    Changed = DateTime.Today
             //});
 
-            //toDoTasks.Add(new ToDoTask()
+            //toDoTasks2.Add(new ToDoTask()
             //{
             //    // Input from User
             //    Title = "ComboBox Priority",
@@ -188,6 +160,8 @@ namespace ToDoPlanner.ViewModel
 
         /// <summary>
         /// Save DataGrid view settings to .xml file
+        /// 
+        /// Saves the actual order, width and visibility of the columns
         /// </summary>
         public void SaveSettings()
         {

@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 
 namespace ToDoPlanner.UserControls
 {
@@ -16,6 +12,9 @@ namespace ToDoPlanner.UserControls
         /// <summary>
         /// Original Source from:
         /// https://bengribaudo.com/blog/2012/03/14/1942/saving-restoring-wpf-datagrid-columns-size-sorting-and-order
+        /// 
+        /// Added comments and Visibility tracking of each column.
+        /// Some other small fixes and improvements.
         /// </summary>
 
         private bool inWidthChange = false;
@@ -32,8 +31,15 @@ namespace ToDoPlanner.UserControls
             if (!grid.updatingColumnInfo) { grid.ColumnInfoChanged(); }
         }
 
+        /// <summary>
+        /// Initialize the enhanced datagrid.
+        /// 
+        /// Setting up all events to detect changes in every column for width, sort order and visibility
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnInitialized(EventArgs e)
         {
+            
             EventHandler sortDirectionChangedHandler = (sender, x) => UpdateColumnInfo();
             EventHandler widthPropertyChangedHandler = (sender, x) => inWidthChange = true;
             EventHandler visiblityChangedHandler = (sender, x) => UpdateColumnInfo();
@@ -41,6 +47,7 @@ namespace ToDoPlanner.UserControls
             var widthPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(DataGridColumn.WidthProperty, typeof(DataGridColumn));
             var visibilityPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(DataGridColumn.VisibilityProperty, typeof(DataGridColumn));
             
+            // Add events to each datagrid loaded, for detecting changes in width, sort order and visibility of each column
             Loaded += (sender, x) =>
             {
                 foreach (var column in Columns)
@@ -51,6 +58,7 @@ namespace ToDoPlanner.UserControls
                     
                 }
             };
+            // Remove events when a datagrid is unloaded
             Unloaded += (sender, x) =>
             {
                 foreach (var column in Columns)
@@ -63,31 +71,37 @@ namespace ToDoPlanner.UserControls
             base.OnInitialized(e);
         }
 
-        private void VisibilityUpdate(object sender, EventArgs x)
-        {
-            int i = 10;
-        }
-
+        // 
         public ObservableCollection<ColumnInfo> ColumnInfo
         {
             get { return (ObservableCollection<ColumnInfo>)GetValue(ColumnInfoProperty); }
             set { SetValue(ColumnInfoProperty, value); }
         }
 
+        /// <summary>
+        /// Update ColumnInfo whenever some settings are changed
+        /// </summary>
         private void UpdateColumnInfo()
         {
             updatingColumnInfo = true;
-            Console.WriteLine("Binindg property");
             ColumnInfo = new ObservableCollection<ColumnInfo>(Columns.Select((x) => new ColumnInfo(x)));
             updatingColumnInfo = false;
         }
 
+        /// <summary>
+        /// Updates after the column order is changed
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnColumnReordered(DataGridColumnEventArgs e)
         {
             UpdateColumnInfo();
             base.OnColumnReordered(e);
         }
 
+        /// <summary>
+        /// Check on left mouse button reales, if any column width is changed and update if so
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnPreviewMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e)
         {
             if (inWidthChange)
@@ -98,6 +112,9 @@ namespace ToDoPlanner.UserControls
             base.OnPreviewMouseLeftButtonUp(e);
         }
 
+        /// <summary>
+        /// Apply the changes from ColumnInfo to the grid
+        /// </summary>
         private void ColumnInfoChanged()
         {
             Items.SortDescriptions.Clear();
@@ -112,6 +129,14 @@ namespace ToDoPlanner.UserControls
 
     public struct ColumnInfo
     {
+        public object Header;                       // Header, e.g. title string     
+        public string PropertyPath;                 // Path to the source
+        public Visibility Visibility;               // Visibility of the column
+        public ListSortDirection? SortDirection;    // Sort direction (Accending, Decending)
+        public int DisplayIndex;                    // The position of the column. 0 = left, 1  = 2nd, 2 = 3rd
+        public double WidthValue;                   // Width of the column
+        public DataGridLengthUnitType WidthType;    // Width type (Pixel, Star, Auto...)
+
         public ColumnInfo(DataGridColumn column)
         {
             Header = column.Header;
@@ -123,10 +148,16 @@ namespace ToDoPlanner.UserControls
             SortDirection = column.SortDirection;
             DisplayIndex = column.DisplayIndex;
         }
+
+        /// <summary>
+        /// Apply settings to columns
+        /// </summary>
+        /// <param name="column"></param>The actual column to be modified
+        /// <param name="gridColumnCount"></param>The position of the actual column
+        /// <param name="sortDescriptions"></param>The sort setting (Accending, Decending)
         public void Apply(DataGridColumn column, int gridColumnCount, SortDescriptionCollection sortDescriptions)
         {
             column.Width = new DataGridLength(WidthValue, WidthType);
-
             column.SetCurrentValue(DataGridColumn.VisibilityProperty, Visibility);
             column.SortDirection = SortDirection;
             if (SortDirection != null)
@@ -139,12 +170,5 @@ namespace ToDoPlanner.UserControls
                 column.DisplayIndex = (DisplayIndex <= maxIndex) ? DisplayIndex : maxIndex;
             }
         }
-        public object Header;
-        public string PropertyPath;
-        public Visibility Visibility;
-        public ListSortDirection? SortDirection;
-        public int DisplayIndex;
-        public double WidthValue;
-        public DataGridLengthUnitType WidthType;
     }
 }
