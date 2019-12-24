@@ -15,15 +15,16 @@ namespace ToDoPlanner.View
         public MainWindow()
         {
             InitializeComponent();
-            Closing += taskViewModelObject.SaveTasks;
+            Closing += taskViewModelObject.Close;
+            
 
         }
 
         private void TasksViewControl_Loaded(object sender, RoutedEventArgs e)
         {
-            taskViewModelObject.LoadTasks();
-            TasksViewControl.DataContext = taskViewModelObject;
             
+            TasksViewControl.DataContext = taskViewModelObject;
+            taskViewModelObject.LoadTasks();
         }
         
     }
