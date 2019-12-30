@@ -16,10 +16,37 @@ namespace ToDoPlanner.ViewModel
     public class TaskListViewModel : ViewModelBase
     {
 
+        #region Properties
+
+        /// <summary>
+        /// The task list
+        /// </summary>
         public ObservableCollection<ToDoTask> ToDoTasks { get; set; }
 
+        /// <summary>
+        /// The settings of a datagrid.
+        /// Hold information about the width and visibility of the columns
+        /// </summary>
         private ObservableCollection<ColumnInfo> columnInfos;
         public ObservableCollection<ColumnInfo> ColumnInfos { get; set; }
+
+        public TaskViewModel TaskViewModelControl { get; set; }
+
+        private ToDoTask selectedTask;
+
+
+        public ToDoTask SelectedTask {
+            get { return selectedTask; }
+            set
+            {
+                TaskViewModelControl.Task = value;
+                selectedTask = value;
+            }
+        }
+
+        #endregion
+
+        #region Constants
 
         private const string FolderPathData = "Data";
         private const string FileNameTasks = "Tasks.xml";
@@ -27,6 +54,29 @@ namespace ToDoPlanner.ViewModel
         private const string FolderPathSettings = "Settings";
         private const string FileNameDataGridView = "DataGridView.xml";
 
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// Command for adding a new task
+        /// </summary>
+        public RelayCommand AddNewTaskCoomand { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Basic contsructor of the TaskListViewModel
+        /// </summary>
+        public TaskListViewModel()
+        {
+            TaskViewModelControl = new TaskViewModel(this);
+            AddNewTaskCoomand = new RelayCommand(AddNewTask);
+        }
+
+        #endregion
 
         public void LoadTasks()
         {
@@ -57,74 +107,25 @@ namespace ToDoPlanner.ViewModel
                 using (StreamReader rd = new StreamReader(FolderPathData + @"\" + FileNameTasks))
                 {
                     toDoTasks = xs.Deserialize(rd) as ObservableCollection<ToDoTask>;
+                    ToDoTasks = toDoTasks;
                 }
             }
             catch
             {
                 System.Diagnostics.Trace.WriteLine("XML file Tasks.xml not found");
             }
-
-            //toDoTasks.Add(new ToDoTask()
-            //{
-            //    // Input from User
-            //    Title = "Task Example",
-            //    Description = "An exemplary task to get the idea.",
-            //    PriorityNum = (int)Priority.High,
-            //    Deadline = DateTime.Parse("09.12.2019"),
-            //    // DeadlineString = Deadline.ToString("dd.MM.yyyy"),
-            //    StartDate = DateTime.Parse("23.01.2020"),
-            //    Category = "C# Project",
-            //    Effort = 50,
-            //    Progress = 10,
-
-            //    // Generated Input from System
-            //    Created = DateTime.Today,
-            //    Changed = DateTime.Today
-            //});
-
-            //toDoTasks2.Add(new ToDoTask()
-            //{
-            //    // Input from User
-            //    Title = "ComboBox Priority",
-            //    Description = "The ComboBox for the priority don't change the value in the list or will not be updated",
-            //    PriorityNum = (int)Priority.Medium,
-            //    Deadline = DateTime.Parse("12.12.2019"),
-            //    // DeadlineString = Deadline.ToString("dd.MM.yyyy"),
-            //    StartDate = DateTime.Parse("05.12.2019"),
-            //    Category = "C# Project",
-            //    Effort = 50,
-            //    Progress = 10,
-
-            //    // Generated Input from System
-            //    Created = DateTime.Today,
-            //    Changed = DateTime.Today
-            //});
-
-            //toDoTasks.Add(new ToDoTask()
-            //{
-            //    // Input from User
-            //    Title = "Another Example for testing how long the text has to be to be shown on the datagrid",
-            //    Description = "What else could we do?",
-            //    PriorityNum = (int)Priority.Low,
-            //    Deadline = DateTime.Parse("05.03.2020"),
-            //    // DeadlineString = Deadline.ToString("dd.MM.yyyy"),
-            //    StartDate = DateTime.Parse("23.01.2020"),
-            //    Category = "C# Project",
-            //    Effort = 50,
-            //    Progress = 10,
-
-            //    // Generated Input from System
-            //    Created = DateTime.Today,
-            //    Changed = DateTime.Today
-            //});
-
-            ToDoTasks = toDoTasks;
-
         }
 
         public void AddTask(ToDoTask task)
         {
             ToDoTasks.Add(task);
+        }
+
+        private void AddNewTask()
+        {
+            var toDoTask = new ToDoTask();
+            ToDoTasks.Add(toDoTask);
+            SelectedTask = toDoTask;
         }
 
         /// <summary>
