@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace ToDoPlanner.ViewModel
 {
-    public class TaskModel : ViewModelBase
+    public class TaskListViewModel : ViewModelBase
     {
 
         public ObservableCollection<ToDoTask> ToDoTasks { get; set; }

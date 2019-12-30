@@ -10,7 +10,7 @@ namespace ToDoPlanner.View
     public partial class MainWindow
     {
 
-        TaskModel taskViewModelObject = new TaskModel();
+        TaskListViewModel taskViewModelObject = new TaskListViewModel();
 
         public MainWindow()
         {
