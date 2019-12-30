@@ -46,7 +46,8 @@
                 AutoGenerateColumns="False"
                 Style="{DynamicResource MaterialDesignDataGrid}"
                 RowHeaderWidth="0"
-                SelectedItem="{Binding SelectedTask}">
+                SelectedItem="{Binding SelectedTask}"
+                CanUserAddRows="False">
 
                 <DataGrid.Resources>
                     <!-- Binding proxies for context menu on the row header
@@ -192,10 +193,12 @@
             <!-- Fourth row -->
             <Button Name="btnDelete" Grid.Row="3" Content="Delete" FontSize="20" FontWeight="Bold"
                     HorizontalAlignment="Left" Margin="5" MinWidth="100"
-                    Style="{DynamicResource MaterialDesignRaisedDarkButton}"/>
+                    Style="{DynamicResource MaterialDesignRaisedDarkButton}"
+                    Command="{Binding Path=DeleteTaskCommand}"/>
             <Button Name="btnAdd" Grid.Row="3" Content="Add New" FontSize="20" FontWeight="Bold"
                     HorizontalAlignment="Right" Margin="5" MinWidth="100"
-                    Style="{DynamicResource MaterialDesignRaisedButton}" />
+                    Style="{DynamicResource MaterialDesignRaisedButton}" 
+                    Command="{Binding Path=AddNewTaskCommand}"/>
 
         </Grid>
     </Grid>

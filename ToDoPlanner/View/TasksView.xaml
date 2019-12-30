@@ -23,7 +23,7 @@
 
         <!-- Right half of the window-->
         <Rectangle Grid.Column="2" Fill="{DynamicResource MaterialDesignFlatButtonClick}" Stroke="{DynamicResource MaterialDesignFlatButtonRipple}" StrokeThickness="1"/>
-        <Grid Name="grdTaskContent" Grid.Column="2" DataContext="{Binding ElementName=dgTasks, Path=SelectedItem}">
+        <Grid Name="grdTaskContent" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="0.01*" MinHeight="5" MaxHeight="20" />
@@ -35,31 +35,31 @@
             
             <!-- First row -->
             <StackPanel>
-                <TextBox Name="txtTaskTitle" Text="{Binding Path=Title, FallbackValue=Title}" FontSize="20" FontWeight="Bold" Margin="5"
+                <TextBox Name="txtTaskTitle" Text="{Binding Path=Task.Title, FallbackValue=Title}" FontSize="20" FontWeight="Bold" Margin="5"
                     MinWidth="150" HorizontalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" TextAlignment="Center"/>
                 <UniformGrid Columns="4" Margin="5">
                     <Label Name="lblCreated" Content="Created:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                    <TextBox Name="txtCreated" Text="{Binding Path=SelectedTask.Created, StringFormat=dd.MM.yyyy}"
+                    <TextBox Name="txtCreated" Text="{Binding Path=Task.Created, StringFormat=dd.MM.yyyy}"
                              FontSize="20"
                              TextAlignment="Center" VerticalAlignment="Center" FontFamily="20" MinWidth="100"
                              Background="#FFBABABA" />
                     <Label Name="lblDeadline" Content="Deadline:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                    <DatePicker Name="txtDeadline" Text="{Binding Path=Deadline, StringFormat=dd.MM.yyyy}" FontSize="20"
+                    <DatePicker Name="txtDeadline" Text="{Binding Path=Task.Deadline, StringFormat=dd.MM.yyyy}" FontSize="20"
                                 VerticalAlignment="Center" FontFamily="20" MinWidth="100"
                                 Background="#FFBABABA" />
                     <Label Name="lblPriority" Content="Priority:" FontSize="20" VerticalContentAlignment="Center"
                            VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
                     <ComboBox Name="txtPriority" Text="10.10.2019" FontSize="20" VerticalAlignment="Center"
-                          FontFamily="20" MinWidth="100" SelectedIndex="{Binding Path=PriorityNum}">
+                          FontFamily="20" MinWidth="100" SelectedIndex="{Binding Path=Task.PriorityNum}">
                         <ComboBoxItem Content="Low" />
                         <ComboBoxItem Content="Medium" />
                         <ComboBoxItem Content="High" />
                     </ComboBox>
                     <Label Name="lblCategory" Content="Category:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                    <TextBox Name="txtCategory" Text="{Binding Path=Category}" FontSize="20" TextAlignment="Center"
+                    <TextBox Name="txtCategory" Text="{Binding Path=Task.Category}" FontSize="20" TextAlignment="Center"
                            VerticalAlignment="Center" FontFamily="20" MinWidth="100" Background="#FFBABABA" />
                 </UniformGrid>
             </StackPanel>
@@ -67,7 +67,7 @@
             <Rectangle Grid.Row="1" Fill="{DynamicResource MaterialDesignBackground}" Margin="1" />
 
             <!--Third row -->
-            <TextBox Text="{Binding Path=Description}" FontSize="20" AcceptsReturn="True" Grid.Row="2" Margin="5" Background="#FFEDEDED" />
+            <TextBox Text="{Binding Path=Task.Description}" FontSize="20" AcceptsReturn="True" Grid.Row="2" Margin="5" Background="#FFEDEDED" />
 
             <!-- Fourth row = spacer -->
             <Rectangle Grid.Row="3" Fill="{DynamicResource MaterialDesignBackground}" Margin="1" />

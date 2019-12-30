@@ -13,22 +13,21 @@ namespace ToDoPlanner.ViewModel
 {
     public class TaskViewModel : ViewModelBase
     {
+        #region Properties
+
         /// <summary>
         /// The Task which is shown on the view
         /// </summary>
-
         private ToDoTask task;
         public ToDoTask Task {
-                get {
-                    return task;
-                }
-                set {
-                    task = value;
-                }
-            }
+            get => task;
+            set => SetProperty(ref task, value);
+        }
 
         private ToDoTask tempTask;      // The Task which was opened
         private TaskListViewModel taskListViewModel;
+
+        #endregion
 
         #region Commands
 

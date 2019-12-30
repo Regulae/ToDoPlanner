@@ -23,7 +23,7 @@ namespace ToDoPlanner.View
         private void TasksViewControl_Loaded(object sender, RoutedEventArgs e)
         {
             TaskListViewControl.DataContext = taskViewModelObject;
-            TasksViewControl.DataContext = taskViewModelObject.SelectedTask;
+            TasksViewControl.DataContext = taskViewModelObject.TaskViewModelControl;
             taskViewModelObject.LoadTasks();
         }
         

@@ -34,13 +34,16 @@ namespace ToDoPlanner.ViewModel
 
         private ToDoTask selectedTask;
 
-
         public ToDoTask SelectedTask {
             get { return selectedTask; }
             set
             {
-                TaskViewModelControl.Task = value;
-                selectedTask = value;
+                if (value != selectedTask)
+                {
+                    TaskViewModelControl.Task = value;
+                    selectedTask = value;
+                    NotifyPropertyChanged();
+                }
             }
         }
 
@@ -61,7 +64,12 @@ namespace ToDoPlanner.ViewModel
         /// <summary>
         /// Command for adding a new task
         /// </summary>
-        public RelayCommand AddNewTaskCoomand { get; set; }
+        public RelayCommand AddNewTaskCommand { get; set; }
+
+        /// <summary>
+        /// Command for deleting the selected task
+        /// </summary>
+        public RelayCommand DeleteTaskCommand { get; set; }
 
         #endregion
 
@@ -73,17 +81,59 @@ namespace ToDoPlanner.ViewModel
         public TaskListViewModel()
         {
             TaskViewModelControl = new TaskViewModel(this);
-            AddNewTaskCoomand = new RelayCommand(AddNewTask);
+            AddNewTaskCommand = new RelayCommand(AddNewTask);
+            DeleteTaskCommand = new RelayCommand(DeleteTask);
         }
 
         #endregion
 
-        public void LoadTasks()
+        #region Helper methods
+
+        /// <summary>
+        /// Add a task to the list
+        /// </summary>
+        /// <param name="task"></param>
+        public void AddTask(ToDoTask task)
         {
-            ObservableCollection<ToDoTask> toDoTasks = new ObservableCollection<ToDoTask>();
-            ObservableCollection<ToDoTask> toDoTasks2 = new ObservableCollection<ToDoTask>();
+            ToDoTasks.Add(task);
+        }
 
+        /// <summary>
+        /// Delete the selected task in the datagrid
+        /// </summary>
+        private void DeleteTask()
+        {
+            ToDoTasks.Remove(selectedTask);
+        }
 
+        /// <summary>
+        /// Add a new empty task to the list
+        /// </summary>
+        private void AddNewTask()
+        {
+            var toDoTask = new ToDoTask();
+            ToDoTasks.Add(toDoTask);
+            SelectedTask = toDoTask;
+        }
+
+        #endregion
+
+        #region Loading / Initilize
+
+        /// <summary>
+        /// Load all settings and tasks from files
+        /// </summary>
+        public void Initialize()
+        {
+            LoadSettings();
+            LoadTasks();
+        }
+
+        /// <summary>
+        /// Load settings from .xml file for the datagrid column
+        /// </summary>
+        public void LoadSettings()
+        {
             // Load DataGrid view settings from xml file
             try
             {
@@ -98,7 +148,14 @@ namespace ToDoPlanner.ViewModel
             {
                 System.Diagnostics.Trace.WriteLine("XML file Settings.xml not found");
             }
+        }
 
+        /// <summary>
+        /// Load the saved tasks from .xml file
+        /// </summary>
+        public void LoadTasks()
+        {
+            ObservableCollection<ToDoTask> toDoTasks = new ObservableCollection<ToDoTask>();
 
             // Load Tasks from xml file
             try
@@ -116,16 +173,19 @@ namespace ToDoPlanner.ViewModel
             }
         }
 
-        public void AddTask(ToDoTask task)
-        {
-            ToDoTasks.Add(task);
-        }
+        #endregion
 
-        private void AddNewTask()
+        #region Saving / Closing
+        
+        /// <summary>
+        /// Save the settings and tasks
+        /// </summary>
+        /// <param name="sender"></param> The event sende e.g. application or windows
+        /// <param name="e"></param> The Arguments
+        public void Close(object sender, CancelEventArgs e)
         {
-            var toDoTask = new ToDoTask();
-            ToDoTasks.Add(toDoTask);
-            SelectedTask = toDoTask;
+            SaveTasks();
+            SaveSettings();
         }
 
         /// <summary>
@@ -192,11 +252,8 @@ namespace ToDoPlanner.ViewModel
 
         }
 
-        public void Close(object sender, CancelEventArgs e)
-        {
-            SaveTasks();
-            SaveSettings();
-        }
+        #endregion
+
 
         // @TODO Regula 08.12.19: Implement Commands for the EditView
         /*        // Commands
