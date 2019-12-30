@@ -28,7 +28,7 @@
         </Grid.ColumnDefinitions>
         
         <!-- Left half of the window-->
-        <Rectangle Fill="#FFDDDDDD" Stroke="Black" StrokeThickness="1" />
+        <Rectangle Fill="{DynamicResource MaterialDesignFlatButtonClick}" Stroke="{DynamicResource MaterialDesignFlatButtonRipple}" StrokeThickness="1"/>
         <Grid Name="grdToDoList">
             <Grid.RowDefinitions>
                 <RowDefinition Name="grdRowTitle" Height="0.1*" MinHeight="50" MaxHeight="80" />
@@ -50,7 +50,7 @@
                 Margin="5"
                 FontSize="16"
                 AutoGenerateColumns="False"
-                AlternatingRowBackground="LightGray"
+                Style="{DynamicResource MaterialDesignDataGrid}"
                 RowHeaderWidth="0">
 
                 <DataGrid.Resources>
@@ -192,23 +192,22 @@
             </ctr:EnhancedDataGrid>
 
             <!-- Third row = spacer -->
-            <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" Margin="1,0,1,0" />
-            <Rectangle Grid.Row="2" Stroke="Black" StrokeThickness="1" />
+            <Rectangle Grid.Row="2" Fill="{DynamicResource MaterialDesignBackground}" Margin="1" />
             
             <!-- Fourth row -->
             <Button Name="btnDelete" Grid.Row="3" Content="Delete" FontSize="20" FontWeight="Bold"
                     HorizontalAlignment="Left" Margin="5" MinWidth="100"
-                    Style="{DynamicResource MaterialDesignRaisedFlatButton}"/>
+                    Style="{DynamicResource MaterialDesignRaisedDarkButton}"/>
             <Button Name="btnAdd" Grid.Row="3" Content="Add New" FontSize="20" FontWeight="Bold"
                     HorizontalAlignment="Right" Margin="5" MinWidth="100"
                     Style="{DynamicResource MaterialDesignRaisedButton}" />
 
         </Grid>
 
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
+        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="White"/>
 
         <!-- Right half of the window-->
-        <Rectangle Grid.Column="2" Fill="#FFDDDDDD" Stroke="Black" StrokeThickness="1" />
+        <Rectangle Grid.Column="2" Fill="{DynamicResource MaterialDesignFlatButtonClick}" Stroke="{DynamicResource MaterialDesignFlatButtonRipple}" StrokeThickness="1"/>
         <Grid Name="grdTaskContent" Grid.Column="2" DataContext="{Binding ElementName=dgTasks, Path=SelectedItem}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -250,13 +249,13 @@
                 </UniformGrid>
             </StackPanel>
             <!-- Second row -->
-            <Rectangle Grid.Row="1" Fill="White" Stroke="Black" StrokeThickness="1" />
+            <Rectangle Grid.Row="1" Fill="{DynamicResource MaterialDesignBackground}" Margin="1" />
 
             <!--Third row -->
             <TextBox Text="{Binding Path=Description}" FontSize="20" AcceptsReturn="True" Grid.Row="2" Margin="5" Background="#FFEDEDED" />
 
             <!-- Fourth row = spacer -->
-            <Rectangle Grid.Row="3" Fill="White" Stroke="Black" StrokeThickness="1" />
+            <Rectangle Grid.Row="3" Fill="{DynamicResource MaterialDesignBackground}" Margin="1" />
 
             <!-- Fourth row -->
 
