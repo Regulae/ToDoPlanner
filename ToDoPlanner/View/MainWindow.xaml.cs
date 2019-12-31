@@ -24,7 +24,7 @@ namespace ToDoPlanner.View
         {
             TaskListViewControl.DataContext = taskViewModelObject;
             TasksViewControl.DataContext = taskViewModelObject.TaskViewModelControl;
-            taskViewModelObject.LoadTasks();
+            taskViewModelObject.Initialize();
         }
         
     }

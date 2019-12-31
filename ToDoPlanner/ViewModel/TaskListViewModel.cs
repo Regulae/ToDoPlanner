@@ -164,13 +164,14 @@ namespace ToDoPlanner.ViewModel
                 using (StreamReader rd = new StreamReader(FolderPathData + @"\" + FileNameTasks))
                 {
                     toDoTasks = xs.Deserialize(rd) as ObservableCollection<ToDoTask>;
-                    ToDoTasks = toDoTasks;
+                    
                 }
             }
             catch
             {
                 System.Diagnostics.Trace.WriteLine("XML file Tasks.xml not found");
             }
+            ToDoTasks = toDoTasks;
         }
 
         #endregion
