@@ -13,6 +13,11 @@ using System.Linq;
 
 namespace ToDoPlanner.ViewModel
 {
+    /// <summary>
+    /// This view model class is about the task list.
+    /// It loads/saves the tasks and the data grid view settings from/to .xml file
+    /// The view of a single task is also instantated in this class
+    /// </summary>
     public class TaskListViewModel : ViewModelBase
     {
 
@@ -30,16 +35,23 @@ namespace ToDoPlanner.ViewModel
         private ObservableCollection<ColumnInfo> columnInfos;
         public ObservableCollection<ColumnInfo> ColumnInfos { get; set; }
 
+        /// <summary>
+        /// The viemodel of a single task
+        /// </summary>
         public TaskViewModel TaskViewModelControl { get; set; }
 
+        /// <summary>
+        /// The actual selected task
+        /// </summary>
         private ToDoTask selectedTask;
-
         public ToDoTask SelectedTask {
             get { return selectedTask; }
             set
             {
                 if (value != selectedTask)
                 {
+                    // If a new task has been selected, not only change the actual selected task
+                    // also refresh the task of the task view
                     TaskViewModelControl.Task = value;
                     selectedTask = value;
                     NotifyPropertyChanged();
@@ -95,6 +107,8 @@ namespace ToDoPlanner.ViewModel
         /// <param name="task"></param>
         public void AddTask(ToDoTask task)
         {
+            if (ToDoTasks.Contains(task))
+                return;
             ToDoTasks.Add(task);
         }
 
@@ -111,9 +125,11 @@ namespace ToDoPlanner.ViewModel
         /// </summary>
         private void AddNewTask()
         {
-            var toDoTask = new ToDoTask();
-            ToDoTasks.Add(toDoTask);
-            SelectedTask = toDoTask;
+            //var toDoTask = new ToDoTask();
+            //ToDoTasks.Add(toDoTask);
+            //SelectedTask = toDoTask;
+            TaskViewModelControl.Task = new ToDoTask();
+            TaskViewModelControl.HasChanged = true;
         }
 
         #endregion

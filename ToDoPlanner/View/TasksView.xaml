@@ -17,7 +17,8 @@
              
              d:DesignHeight="600" d:DesignWidth="400">
     <UserControl.Resources>
-        <!-- No resources needed here -->
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <ctr:EnhancedDataGrid x:Key="dgGrid"/>
     </UserControl.Resources>
     <Grid Margin="0">
 
@@ -31,8 +32,8 @@
                 <RowDefinition Height="0.01*" MinHeight="5" MaxHeight="20" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            
-            
+
+
             <!-- First row -->
             <StackPanel>
                 <TextBox Name="txtTaskTitle" Text="{Binding Path=Task.Title, FallbackValue=Title}" FontSize="20" FontWeight="Bold" Margin="5"
@@ -41,18 +42,19 @@
                     <Label Name="lblCreated" Content="Created:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
                     <TextBox Name="txtCreated" Text="{Binding Path=Task.Created, StringFormat=dd.MM.yyyy}"
-                             FontSize="20"
-                             TextAlignment="Center" VerticalAlignment="Center" FontFamily="20" MinWidth="100"
-                             Background="#FFBABABA" />
+                        FontSize="20"
+                        Background="{DynamicResource MaterialDesignTextFieldBoxDisabledBackground}"
+                        TextAlignment="Center" VerticalAlignment="Center" FontFamily="20" MinWidth="100"
+                        IsReadOnly="True"/>
                     <Label Name="lblDeadline" Content="Deadline:" FontSize="20" VerticalContentAlignment="Center"
-                       VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
+                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
                     <DatePicker Name="txtDeadline" Text="{Binding Path=Task.Deadline, StringFormat=dd.MM.yyyy}" FontSize="20"
-                                VerticalAlignment="Center" FontFamily="20" MinWidth="100"
-                                Background="#FFBABABA" />
+                        VerticalAlignment="Center" FontFamily="20" MinWidth="100" Background="{x:Null}">
+                    </DatePicker>
                     <Label Name="lblPriority" Content="Priority:" FontSize="20" VerticalContentAlignment="Center"
-                           VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
+                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
                     <ComboBox Name="txtPriority" Text="10.10.2019" FontSize="20" VerticalAlignment="Center"
-                          FontFamily="20" MinWidth="100" SelectedIndex="{Binding Path=Task.PriorityNum}">
+                        FontFamily="20" MinWidth="100" SelectedIndex="{Binding Path=Task.PriorityNum}">
                         <ComboBoxItem Content="Low" />
                         <ComboBoxItem Content="Medium" />
                         <ComboBoxItem Content="High" />
@@ -60,7 +62,8 @@
                     <Label Name="lblCategory" Content="Category:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
                     <TextBox Name="txtCategory" Text="{Binding Path=Task.Category}" FontSize="20" TextAlignment="Center"
-                           VerticalAlignment="Center" FontFamily="20" MinWidth="100" Background="#FFBABABA" />
+                        VerticalAlignment="Center" FontFamily="20" MinWidth="100" 
+                        Background="{DynamicResource MaterialDesignTextFieldBoxDisabledBackground}" />
                 </UniformGrid>
             </StackPanel>
             <!-- Second row -->
@@ -73,8 +76,16 @@
             <Rectangle Grid.Row="3" Fill="{DynamicResource MaterialDesignBackground}" Margin="1" />
 
             <!-- Fourth row -->
-
-
+            <Button Name="btnDelete" Grid.Row="4" Content="Cancel" FontSize="20" FontWeight="Bold"
+                    HorizontalAlignment="Left" Margin="5" MinWidth="100"
+                    Style="{DynamicResource MaterialDesignRaisedDarkButton}"
+                    Command="{Binding Path=CancelCommand}"/>
+            <Button Name="btnAdd" Grid.Row="4" Content="Apply" FontSize="20" FontWeight="Bold"
+                    HorizontalAlignment="Right" Margin="5" MinWidth="100"
+                    Style="{DynamicResource MaterialDesignRaisedButton}" 
+                    Command="{Binding Path=ApplyCommand}"
+                    Visibility="{Binding Path=HasChanged, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         </Grid>
+
     </Grid>
 </UserControl>

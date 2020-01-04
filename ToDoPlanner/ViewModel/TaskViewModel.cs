@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +22,24 @@ namespace ToDoPlanner.ViewModel
         private ToDoTask task;
         public ToDoTask Task {
             get => task;
-            set => SetProperty(ref task, value);
+            set
+            {
+                SetProperty(ref task, value);
+                tempTask = value.Clone();
+                HasChanged = false;
+                value.PropertyChanged += taskChanged;
+            }
         }
 
         private ToDoTask tempTask;      // The Task which was opened
         private TaskListViewModel taskListViewModel;
+
+        private bool hasChanged;
+        public bool HasChanged
+        {
+            get => hasChanged;
+            set => SetProperty(ref hasChanged, value);
+        }
 
         #endregion
 
@@ -53,7 +67,6 @@ namespace ToDoPlanner.ViewModel
             // Creat Commands
             ApplyCommand = new RelayCommand(Apply);
             CancelCommand = new RelayCommand(Cancel);
-
         }
 
         #endregion
@@ -62,11 +75,18 @@ namespace ToDoPlanner.ViewModel
         private void Apply()
         {
             taskListViewModel.AddTask(Task);
+            HasChanged = false;
         }
 
         private void Cancel()
         {
-            Task = tempTask;
+            Task.Copy(tempTask);
+            HasChanged = false;
+        }
+
+        private void taskChanged(object sender, PropertyChangedEventArgs e)
+        {
+            HasChanged = true;
         }
 
     }
