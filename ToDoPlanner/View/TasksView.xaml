@@ -15,201 +15,15 @@
             Background="{DynamicResource MaterialDesignPaper}"
             FontFamily="{DynamicResource MaterialDesignFont}"
              
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="400">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <ctr:EnhancedDataGrid x:Key="dgGrid"/>
+        <!-- No resources needed here -->
     </UserControl.Resources>
-    <Grid Margin="5">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        
-        <!-- Left half of the window-->
-        <Rectangle Fill="#FFDDDDDD" Stroke="Black" StrokeThickness="1" />
-        <Grid Name="grdToDoList">
-            <Grid.RowDefinitions>
-                <RowDefinition Name="grdRowTitle" Height="0.1*" MinHeight="50" MaxHeight="80" />
-                <RowDefinition Name="grdRowData" />
-                <RowDefinition Name="grdRowSplitter"  Height="0.01*" MinHeight="5" MaxHeight="20" />
-                <RowDefinition Name="grdRowControl" Height="0.1*" MinHeight="40" MaxHeight="80" />
-            </Grid.RowDefinitions>
-
-            <!-- First row -->
-            <Label Name="lblToDoList" Grid.Row="0" Content="ToDo-List" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   FontSize="30" FontWeight="Bold" />
-
-            <!-- Second row -->
-            <ctr:EnhancedDataGrid 
-                x:Name="dgTasks"
-                ItemsSource="{Binding Path=ToDoTasks}"
-                ColumnInfo="{Binding ColumnInfos}"
-                Grid.Row="1"
-                Margin="5"
-                FontSize="16"
-                AutoGenerateColumns="False"
-                AlternatingRowBackground="LightGray"
-                RowHeaderWidth="0">
-
-                <DataGrid.Resources>
-                    <!-- Binding proxies for context menu on the row header
-                            It's necessary to bind visibility -->
-                    <model:BindingProxy x:Key="proxyCreated"
-                                        Data="{Binding}"/>
-                    <model:BindingProxy x:Key="proxyDeadline"
-                                        Data="{Binding}"/>
-                    <model:BindingProxy x:Key="proxyTitle"
-                                        Data="{Binding}"/>
-                    <model:BindingProxy x:Key="proxyCategory"
-                                        Data="{Binding}"/>
-                    <model:BindingProxy x:Key="proxyPriority"
-                                        Data="{Binding}"/>
-                    <model:BindingProxy x:Key="proxyDescription"
-                                        Data="{Binding}"/>
-                    <model:BindingProxy x:Key="proxyProgress"
-                                        Data="{Binding}"/>
-                    <model:BindingProxy x:Key="proxyEffort"
-                                        Data="{Binding}"/>
-
-                    
-                    <ContextMenu DataContext="dgTasks" x:Key="DataGridColumnHeaderContextMenu">
-                        
-                        <!-- The context menu in the row header for changing the visibilty of the columns -->
-                        <MenuItem Name="miCreated"
-                                  IsCheckable="True"
-                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyCreated}}"
-                                  Header="_Created"/>
-                        
-                        <MenuItem Name="miDeadline"
-                                  IsCheckable="True"
-                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyDeadline}}"
-                                  Header="_Deadline"/>
-
-                        <MenuItem Name="miTitle"
-                                  IsCheckable="True"
-                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyTitle}}"
-                                  Header="_Title"/>
-
-                        <MenuItem Name="miCategory"
-                                  IsCheckable="True"
-                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyCategory}}"
-                                  Header="_Category"/>
-
-                        <MenuItem Name="miPriority"
-                                  IsCheckable="True"
-                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyPriority}}"
-                                  Header="_Priority"/>
-
-                        <MenuItem Name="miDescription"
-                                  IsCheckable="True"
-                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyDescription}}"
-                                  Header="_Description"/>
-
-                        <MenuItem Name="miProgress"
-                                  IsCheckable="True"
-                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyProgress}}"
-                                  Header="_Progress"/>
-
-                        <MenuItem Name="miEffort"
-                                  IsCheckable="True"
-                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyEffort}}"
-                                  Header="_Effort"/>
-                    </ContextMenu>
-
-                    <Style TargetType="{x:Type DataGridColumnHeader}">
-                        <Setter Property="ContextMenu"
-                    Value="{StaticResource DataGridColumnHeaderContextMenu}" />
-                    </Style>
-                </DataGrid.Resources>
-                
-                <!-- Context Menu for Data Grid -->
-                <DataGrid.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Name="miExport" Header="_Export to xml..."/>
-                    </ContextMenu>
-                </DataGrid.ContextMenu>
-
-                <!-- Colums for DataGrid -->
-                <DataGrid.Columns>
-                    <!-- Created -->
-                    <DataGridTextColumn Header="Created" Binding="{Binding Created, StringFormat=dd.MM.yyyy}"
-                        Visibility="{Binding Path=Data, Source={StaticResource proxyCreated}, Mode=TwoWay,
-                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    <!-- Deadline -->
-                    <DataGridTextColumn Header="Deadline" Binding="{Binding Deadline, StringFormat=dd.MM.yyyy}"
-                        Visibility="{Binding Path=Data, Source={StaticResource proxyDeadline}, Mode=TwoWay,
-                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    <!-- Title-->
-                    <DataGridTextColumn Header="Title" Binding="{Binding Title, StringFormat=dd.MM.yyyy}"
-                        Visibility="{Binding Path=Data, Source={StaticResource proxyTitle}, Mode=TwoWay,
-                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    <!-- Category -->
-                    <DataGridTextColumn Header="Category" Binding="{Binding Category, StringFormat=dd.MM.yyyy}"
-                        Visibility="{Binding Path=Data, Source={StaticResource proxyCategory}, Mode=TwoWay,
-                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    <!-- Priority -->
-                    
-                    <!--
-                    <DataGridTextColumn Header="Priority" Binding="{Binding Priority}"
-                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miPriority}, 
-                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    -->
-                    
-                    <DataGridTemplateColumn Header="Priority"
-                        Visibility="{Binding Path=Data, Source={StaticResource proxyPriority}, Mode=TwoWay,
-                        Converter={StaticResource BooleanToVisibilityConverter}}">
-                        
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <ComboBox SelectedIndex="{Binding Path=PriorityNum}">
-                                    <ComboBoxItem Content="Low" />
-                                    <ComboBoxItem Content="Medium" />
-                                    <ComboBoxItem Content="High" />
-                                </ComboBox>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    
-                    
-                    <!-- Description -->
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}"
-                        Visibility="{Binding Path=Data, Source={StaticResource proxyDescription}, Mode=TwoWay,
-                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
-
-                    <!-- Progress -->
-                    <DataGridTextColumn Header="Progress" Binding="{Binding Progress}"
-                        Visibility="{Binding Path=Data, Source={StaticResource proxyProgress}, Mode=TwoWay,
-                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
-
-                    <!-- Effort -->
-                    <DataGridTextColumn Header="Effort" Binding="{Binding Effort}"
-                        Visibility="{Binding Path=Data, Source={StaticResource proxyEffort}, Mode=TwoWay,
-                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
-
-                </DataGrid.Columns>
-            </ctr:EnhancedDataGrid>
-
-            <!-- Third row = spacer -->
-            <GridSplitter Grid.Row="2" HorizontalAlignment="Stretch" Margin="1,0,1,0" />
-            <Rectangle Grid.Row="2" Stroke="Black" StrokeThickness="1" />
-            
-            <!-- Fourth row -->
-            <Button Name="btnDelete" Grid.Row="3" Content="Delete" FontSize="20" FontWeight="Bold"
-                    HorizontalAlignment="Left" Margin="5" MinWidth="100"
-                    Style="{DynamicResource MaterialDesignRaisedFlatButton}"/>
-            <Button Name="btnAdd" Grid.Row="3" Content="Add New" FontSize="20" FontWeight="Bold"
-                    HorizontalAlignment="Right" Margin="5" MinWidth="100"
-                    Style="{DynamicResource MaterialDesignRaisedButton}" />
-
-        </Grid>
-
-        <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
+    <Grid Margin="0">
 
         <!-- Right half of the window-->
-        <Rectangle Grid.Column="2" Fill="#FFDDDDDD" Stroke="Black" StrokeThickness="1" />
-        <Grid Name="grdTaskContent" Grid.Column="2" DataContext="{Binding ElementName=dgTasks, Path=SelectedItem}">
+        <Rectangle Grid.Column="2" Fill="{DynamicResource MaterialDesignFlatButtonClick}" Stroke="{DynamicResource MaterialDesignFlatButtonRipple}" StrokeThickness="1"/>
+        <Grid Name="grdTaskContent" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="0.01*" MinHeight="5" MaxHeight="20" />
@@ -221,42 +35,42 @@
             
             <!-- First row -->
             <StackPanel>
-                <TextBox Name="txtTaskTitle" Text="{Binding Path=Title, FallbackValue=Title}" FontSize="20" FontWeight="Bold" Margin="5"
+                <TextBox Name="txtTaskTitle" Text="{Binding Path=Task.Title, FallbackValue=Title}" FontSize="20" FontWeight="Bold" Margin="5"
                     MinWidth="150" HorizontalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" TextAlignment="Center"/>
                 <UniformGrid Columns="4" Margin="5">
                     <Label Name="lblCreated" Content="Created:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                    <TextBox Name="txtCreated" Text="{Binding Path=Created, StringFormat=dd.MM.yyyy}"
+                    <TextBox Name="txtCreated" Text="{Binding Path=Task.Created, StringFormat=dd.MM.yyyy}"
                              FontSize="20"
                              TextAlignment="Center" VerticalAlignment="Center" FontFamily="20" MinWidth="100"
                              Background="#FFBABABA" />
                     <Label Name="lblDeadline" Content="Deadline:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                    <DatePicker Name="txtDeadline" Text="{Binding Path=Deadline, StringFormat=dd.MM.yyyy}" FontSize="20"
+                    <DatePicker Name="txtDeadline" Text="{Binding Path=Task.Deadline, StringFormat=dd.MM.yyyy}" FontSize="20"
                                 VerticalAlignment="Center" FontFamily="20" MinWidth="100"
                                 Background="#FFBABABA" />
                     <Label Name="lblPriority" Content="Priority:" FontSize="20" VerticalContentAlignment="Center"
                            VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
                     <ComboBox Name="txtPriority" Text="10.10.2019" FontSize="20" VerticalAlignment="Center"
-                          FontFamily="20" MinWidth="100" SelectedIndex="{Binding Path=PriorityNum}">
+                          FontFamily="20" MinWidth="100" SelectedIndex="{Binding Path=Task.PriorityNum}">
                         <ComboBoxItem Content="Low" />
                         <ComboBoxItem Content="Medium" />
                         <ComboBoxItem Content="High" />
                     </ComboBox>
                     <Label Name="lblCategory" Content="Category:" FontSize="20" VerticalContentAlignment="Center"
                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                    <TextBox Name="txtCategory" Text="{Binding Path=Category}" FontSize="20" TextAlignment="Center"
+                    <TextBox Name="txtCategory" Text="{Binding Path=Task.Category}" FontSize="20" TextAlignment="Center"
                            VerticalAlignment="Center" FontFamily="20" MinWidth="100" Background="#FFBABABA" />
                 </UniformGrid>
             </StackPanel>
             <!-- Second row -->
-            <Rectangle Grid.Row="1" Fill="White" Stroke="Black" StrokeThickness="1" />
+            <Rectangle Grid.Row="1" Fill="{DynamicResource MaterialDesignBackground}" Margin="1" />
 
             <!--Third row -->
-            <TextBox Text="{Binding Path=Description}" FontSize="20" AcceptsReturn="True" Grid.Row="2" Margin="5" Background="#FFEDEDED" />
+            <TextBox Text="{Binding Path=Task.Description}" FontSize="20" AcceptsReturn="True" Grid.Row="2" Margin="5" Background="#FFEDEDED" />
 
             <!-- Fourth row = spacer -->
-            <Rectangle Grid.Row="3" Fill="White" Stroke="Black" StrokeThickness="1" />
+            <Rectangle Grid.Row="3" Fill="{DynamicResource MaterialDesignBackground}" Margin="1" />
 
             <!-- Fourth row -->
 

@@ -10,7 +10,7 @@ namespace ToDoPlanner.View
     public partial class MainWindow
     {
 
-        TaskModel taskViewModelObject = new TaskModel();
+        TaskListViewModel taskViewModelObject = new TaskListViewModel();
 
         public MainWindow()
         {
@@ -22,9 +22,9 @@ namespace ToDoPlanner.View
 
         private void TasksViewControl_Loaded(object sender, RoutedEventArgs e)
         {
-            
-            TasksViewControl.DataContext = taskViewModelObject;
-            taskViewModelObject.LoadTasks();
+            TaskListViewControl.DataContext = taskViewModelObject;
+            TasksViewControl.DataContext = taskViewModelObject.TaskViewModelControl;
+            taskViewModelObject.Initialize();
         }
         
     }

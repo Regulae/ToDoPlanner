@@ -22,7 +22,6 @@
 | Kategorie | String | Kategorie der Aufgabe | Auswahl selber erstellt (mit Möglichkeit für neue Kategorien) |  |
 | Status | enum | Auswahl: 0 = None, 1 = offen, 2 = geplant, 3 = in Arbeit, 4 = erledigt | Wie viele verschiedene Status gibt es? Enum einfach Erweiterbar. Status wählbar oder automatisch über andere Parameter ermittelbar? | X |
 | Erstellungsdatum | datetime | Datum und Uhrzeit bei Erstellung |  | X |
-| Änderungsdatum | datetime | Datum bei Änderung | Eventuell mit Information was geändert wurde (Änderungshistorie) |  |
 | Zeitaufwand | int | Zeit in Stunden |  |  |
 | Fortschritt | int | 0-100% | Funktionalität von Status schon abgedeckt? |  |
 

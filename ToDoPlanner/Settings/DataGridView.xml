@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<ArrayOfColumnInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ColumnInfo>
+    <Header xsi:type="xsd:string">Created</Header>
+    <PropertyPath>Created</PropertyPath>
+    <Visibility>Visible</Visibility>
+    <SortDirection xsi:nil="true" />
+    <DisplayIndex>0</DisplayIndex>
+    <WidthValue>100</WidthValue>
+    <WidthType>Auto</WidthType>
+  </ColumnInfo>
+  <ColumnInfo>
+    <Header xsi:type="xsd:string">Deadline</Header>
+    <PropertyPath>Deadline</PropertyPath>
+    <Visibility>Visible</Visibility>
+    <SortDirection xsi:nil="true" />
+    <DisplayIndex>1</DisplayIndex>
+    <WidthValue>100</WidthValue>
+    <WidthType>Auto</WidthType>
+  </ColumnInfo>
+  <ColumnInfo>
+    <Header xsi:type="xsd:string">Title</Header>
+    <PropertyPath>Title</PropertyPath>
+    <Visibility>Visible</Visibility>
+    <SortDirection xsi:nil="true" />
+    <DisplayIndex>2</DisplayIndex>
+    <WidthValue>100</WidthValue>
+    <WidthType>Auto</WidthType>
+  </ColumnInfo>
+  <ColumnInfo>
+    <Header xsi:type="xsd:string">Category</Header>
+    <PropertyPath>Category</PropertyPath>
+    <Visibility>Visible</Visibility>
+    <SortDirection xsi:nil="true" />
+    <DisplayIndex>3</DisplayIndex>
+    <WidthValue>100</WidthValue>
+    <WidthType>Auto</WidthType>
+  </ColumnInfo>
+  <ColumnInfo>
+    <Header xsi:type="xsd:string">Priority</Header>
+    <PropertyPath />
+    <Visibility>Visible</Visibility>
+    <SortDirection xsi:nil="true" />
+    <DisplayIndex>4</DisplayIndex>
+    <WidthValue>100</WidthValue>
+    <WidthType>Auto</WidthType>
+  </ColumnInfo>
+  <ColumnInfo>
+    <Header xsi:type="xsd:string">Description</Header>
+    <PropertyPath>Description</PropertyPath>
+    <Visibility>Visible</Visibility>
+    <SortDirection xsi:nil="true" />
+    <DisplayIndex>5</DisplayIndex>
+    <WidthValue>100</WidthValue>
+    <WidthType>Auto</WidthType>
+  </ColumnInfo>
+  <ColumnInfo>
+    <Header xsi:type="xsd:string">Progress</Header>
+    <PropertyPath>Progress</PropertyPath>
+    <Visibility>Visible</Visibility>
+    <SortDirection xsi:nil="true" />
+    <DisplayIndex>6</DisplayIndex>
+    <WidthValue>100</WidthValue>
+    <WidthType>Auto</WidthType>
+  </ColumnInfo>
+  <ColumnInfo>
+    <Header xsi:type="xsd:string">Effort</Header>
+    <PropertyPath>Effort</PropertyPath>
+    <Visibility>Visible</Visibility>
+    <SortDirection xsi:nil="true" />
+    <DisplayIndex>7</DisplayIndex>
+    <WidthValue>100</WidthValue>
+    <WidthType>Auto</WidthType>
+  </ColumnInfo>
+</ArrayOfColumnInfo>
