@@ -30,40 +30,114 @@
                 <RowDefinition Height="0.01*" MinHeight="5" MaxHeight="20" />
                 <RowDefinition Height="5*" />
                 <RowDefinition Height="0.01*" MinHeight="5" MaxHeight="20" />
-                <RowDefinition />
+                <RowDefinition  Height="50"/>
             </Grid.RowDefinitions>
 
 
             <!-- First row -->
-            <StackPanel>
-                <TextBox Name="txtTaskTitle" Text="{Binding Path=Task.Title, FallbackValue=Title}" FontSize="20" FontWeight="Bold" Margin="5"
-                    MinWidth="150" HorizontalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" TextAlignment="Center"/>
+            <StackPanel Name="spTaskInfo">
+                
+                <!-- Title -->
+                <TextBox Name="txtTaskTitle"
+                         Text="{Binding Path=Task.Title, FallbackValue=Title}"
+                         FontSize="20"
+                         FontWeight="Bold"
+                         Margin="5"
+                         Width="{Binding ElementName=spTaskInfo, Path=ActualWidth}"
+                         MinWidth="150"
+                         HorizontalAlignment="Center"
+                         TextAlignment="Center"/>
+                
                 <UniformGrid Columns="4" Margin="5">
-                    <Label Name="lblCreated" Content="Created:" FontSize="20" VerticalContentAlignment="Center"
-                       VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                    <TextBox Name="txtCreated" Text="{Binding Path=Task.Created, StringFormat=dd.MM.yyyy}"
-                        FontSize="20"
-                        Background="{DynamicResource MaterialDesignTextFieldBoxDisabledBackground}"
-                        TextAlignment="Center" VerticalAlignment="Center" FontFamily="20" MinWidth="100"
-                        IsReadOnly="True"/>
-                    <Label Name="lblDeadline" Content="Deadline:" FontSize="20" VerticalContentAlignment="Center"
-                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                    <DatePicker Name="txtDeadline" Text="{Binding Path=Task.Deadline, StringFormat=dd.MM.yyyy}" FontSize="20"
-                        VerticalAlignment="Center" FontFamily="20" MinWidth="100" Background="{x:Null}">
-                    </DatePicker>
-                    <Label Name="lblPriority" Content="Priority:" FontSize="20" VerticalContentAlignment="Center"
-                        VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                    <ComboBox Name="txtPriority" Text="10.10.2019" FontSize="20" VerticalAlignment="Center"
-                        FontFamily="20" MinWidth="100" SelectedIndex="{Binding Path=Task.PriorityNum}">
+                    
+                    <!-- Created -->
+                    <Label Name="lblCreated"
+                           Content="Created:"
+                           FontSize="20"
+                           VerticalContentAlignment="Center"
+                           VerticalAlignment="Center"/>
+                    <TextBox Name="txtCreated"
+                             Text="{Binding Path=Task.Created, StringFormat=dd.MM.yyyy}"
+                             FontSize="20"
+                             Background="{DynamicResource MaterialDesignTextFieldBoxDisabledBackground}"
+                             TextAlignment="Center"
+                             VerticalAlignment="Center"
+                             FontFamily="20"
+                             IsReadOnly="True"/>
+
+                    <!-- Deadline -->
+                    <Label Name="lblDeadline"
+                           Content="Deadline:"
+                           FontSize="20"
+                           VerticalContentAlignment="Center"
+                           VerticalAlignment="Center"/>
+                    <DatePicker Name="txtDeadline"
+                                Text="{Binding Path=Task.Deadline, StringFormat=dd.MM.yyyy}"
+                                FontSize="20"
+                                VerticalAlignment="Center"
+                                FontFamily="20"/>
+
+                    <!-- Priority -->
+                    <Label Name="lblPriority"
+                           Content="Priority:"
+                           FontSize="20"
+                           VerticalContentAlignment="Center"
+                           VerticalAlignment="Center" />
+                    <ComboBox Name="txtPriority"
+                              FontSize="20"
+                              VerticalAlignment="Center"
+                              FontFamily="20"
+                              SelectedIndex="{Binding Path=Task.PriorityNum}">
                         <ComboBoxItem Content="Low" />
                         <ComboBoxItem Content="Medium" />
                         <ComboBoxItem Content="High" />
                     </ComboBox>
-                    <Label Name="lblCategory" Content="Category:" FontSize="20" VerticalContentAlignment="Center"
-                       VerticalAlignment="Center" Width="{Binding ElementName=grdTaskContent, Path=Width}" />
-                    <TextBox Name="txtCategory" Text="{Binding Path=Task.Category}" FontSize="20" TextAlignment="Center"
-                        VerticalAlignment="Center" FontFamily="20" MinWidth="100" 
-                        Background="{DynamicResource MaterialDesignTextFieldBoxDisabledBackground}" />
+
+                    <!-- Category -->
+                    <Label Name="lblCategory"
+                           Content="Category:"
+                           FontSize="20"
+                           VerticalContentAlignment="Center"
+                           VerticalAlignment="Center"/>
+                    <TextBox Name="txtCategory"
+                             Text="{Binding Path=Task.Category}"
+                             FontSize="20"
+                             TextAlignment="Center"
+                             VerticalAlignment="Center"
+                             FontFamily="20"/>
+
+                    <!-- Effort -->
+                    <Label Name="lblEffort"
+                           Content="Effort:"
+                           FontSize="20"
+                           VerticalContentAlignment="Center"
+                           VerticalAlignment="Center"/>
+                    <TextBox Name="txtEffort"
+                             Text="{Binding Path=Task.Effort}"
+                             FontSize="20"
+                             TextAlignment="Center"
+                             VerticalAlignment="Center"
+                             FontFamily="20"/>
+                    <!-- Effort -->
+                    <Label Name="lblProgress"
+                           Content="Progress:"
+                           FontSize="20"
+                           VerticalContentAlignment="Center"
+                           VerticalAlignment="Center"/>
+                    <Grid>
+                        <ProgressBar Name="txtProgress"
+                             Value="{Binding Path=Task.Progress}"
+                             VerticalAlignment="Center"
+                             Height="20"
+                             FontFamily="20"
+                             Margin="2"/>
+                        <TextBox Text="{Binding Path=Task.Progress, StringFormat={}{0:0}%}"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 BorderBrush="{x:Null}"
+                                 Foreground="#DDFFFFFF"/>
+                    </Grid>
+
                 </UniformGrid>
             </StackPanel>
             <!-- Second row -->

@@ -98,8 +98,8 @@ namespace ToDoPlanner.Model
         private int _progress;
         public int Progress // Implement as progressbar in the MainWindow.xaml
         {
-            get => _effort;
-            set => SetProperty(ref _effort, value);
+            get => _progress;
+            set => SetProperty(ref _progress, value);
         }
 
         #region Helper methods

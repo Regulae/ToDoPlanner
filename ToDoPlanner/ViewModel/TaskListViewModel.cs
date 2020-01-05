@@ -102,14 +102,15 @@ namespace ToDoPlanner.ViewModel
         #region Helper methods
 
         /// <summary>
-        /// Add a task to the list
+        /// Add a task to the list, if it's not already inside
         /// </summary>
         /// <param name="task"></param>
         public void AddTask(ToDoTask task)
         {
-            if (ToDoTasks.Contains(task))
-                return;
-            ToDoTasks.Add(task);
+            if (!ToDoTasks.Contains(task))
+            {
+                ToDoTasks.Add(task);
+            }
         }
 
         /// <summary>
