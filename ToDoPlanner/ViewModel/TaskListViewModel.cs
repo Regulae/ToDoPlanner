@@ -10,9 +10,16 @@ using ToDoPlanner.Command;
 using ToDoPlanner.Model;
 using ToDoPlanner.UserControls;
 using System.Linq;
+using System.Windows;
+using ToDoPlanner.Operations;
 
 namespace ToDoPlanner.ViewModel
 {
+    /// <summary>
+    /// This view model class is about the task list.
+    /// It loads/saves the tasks and the data grid view settings from/to .xml file
+    /// The view of a single task is also instantated in this class
+    /// </summary>
     public class TaskListViewModel : ViewModelBase
     {
 
@@ -30,16 +37,23 @@ namespace ToDoPlanner.ViewModel
         private ObservableCollection<ColumnInfo> columnInfos;
         public ObservableCollection<ColumnInfo> ColumnInfos { get; set; }
 
+        /// <summary>
+        /// The viemodel of a single task
+        /// </summary>
         public TaskViewModel TaskViewModelControl { get; set; }
 
+        /// <summary>
+        /// The actual selected task
+        /// </summary>
         private ToDoTask selectedTask;
-
         public ToDoTask SelectedTask {
             get { return selectedTask; }
             set
             {
                 if (value != selectedTask)
                 {
+                    // If a new task has been selected, not only change the actual selected task
+                    // also refresh the task of the task view
                     TaskViewModelControl.Task = value;
                     selectedTask = value;
                     NotifyPropertyChanged();
@@ -90,12 +104,15 @@ namespace ToDoPlanner.ViewModel
         #region Helper methods
 
         /// <summary>
-        /// Add a task to the list
+        /// Add a task to the list, if it's not already inside
         /// </summary>
         /// <param name="task"></param>
         public void AddTask(ToDoTask task)
         {
-            ToDoTasks.Add(task);
+            if (!ToDoTasks.Contains(task))
+            {
+                ToDoTasks.Add(task);
+            }
         }
 
         /// <summary>
@@ -111,14 +128,16 @@ namespace ToDoPlanner.ViewModel
         /// </summary>
         private void AddNewTask()
         {
-            var toDoTask = new ToDoTask();
-            ToDoTasks.Add(toDoTask);
-            SelectedTask = toDoTask;
+            //var toDoTask = new ToDoTask();
+            //ToDoTasks.Add(toDoTask);
+            //SelectedTask = toDoTask;
+            TaskViewModelControl.Task = new ToDoTask();
+            TaskViewModelControl.HasChanged = true;
         }
 
         #endregion
 
-        #region Loading / Initilize
+        #region Loading / Initialize
 
         /// <summary>
         /// Load all settings and tasks from files
@@ -155,7 +174,21 @@ namespace ToDoPlanner.ViewModel
         /// </summary>
         public void LoadTasks()
         {
-            ObservableCollection<ToDoTask> toDoTasks = new ObservableCollection<ToDoTask>();
+
+            ApiOperations ops = new ApiOperations();
+            ToDoTask authTask = ops.Authenticate("regula", "fritzli-hansli-greteli");
+            Globals.InitTask = authTask;
+            System.Diagnostics.Trace.WriteLine("Token: " + authTask.access_token);
+
+             ToDoTask task = ops.GetTaskDetails(Globals.InitTask);
+
+            if (task == null)
+            {
+                MessageBox.Show("no task");
+            }
+
+            Globals.InitTask = task;
+            /*ObservableCollection<ToDoTask> toDoTasks = new ObservableCollection<ToDoTask>();
 
             // Load Tasks from xml file
             try
@@ -171,7 +204,7 @@ namespace ToDoPlanner.ViewModel
             {
                 System.Diagnostics.Trace.WriteLine("XML file Tasks.xml not found");
             }
-            ToDoTasks = toDoTasks;
+            ToDoTasks = toDoTasks;*/
         }
 
         #endregion
@@ -254,21 +287,5 @@ namespace ToDoPlanner.ViewModel
         }
 
         #endregion
-
-
-        // @TODO Regula 08.12.19: Implement Commands for the EditView
-        /*        // Commands
-        private readonly DelegateCommand _changeTitleCommand;
-        public ICommand ChangeTitleCommand => _changeTitleCommand;
-
-        public TaskModel()
-        {
-            _changeTitleCommand = new DelegateCommand(OnChangeTitle);
-        }
-
-        private void OnChangeTitle(object commandParameter)
-        {
-            Deadline = DateTime.Parse("12.12.2012");
-        }*/
     }
 }

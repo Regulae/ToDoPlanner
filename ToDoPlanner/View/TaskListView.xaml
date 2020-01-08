@@ -28,7 +28,7 @@
                 <RowDefinition Name="grdRowTitle" Height="0.1*" MinHeight="50" MaxHeight="80" />
                 <RowDefinition Name="grdRowData" />
                 <RowDefinition Name="grdRowSplitter"  Height="0.01*" MinHeight="5" MaxHeight="20" />
-                <RowDefinition Name="grdRowControl" Height="0.1*" MinHeight="40" MaxHeight="80" />
+                <RowDefinition Name="grdRowControl" Height="50"/>
             </Grid.RowDefinitions>
 
             <!-- First row -->
