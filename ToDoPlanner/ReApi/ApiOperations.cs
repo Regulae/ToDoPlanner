@@ -27,7 +27,7 @@ namespace ToDoPlanner.Operations
 
         //private string _password = "fritzli-hansli-greteli";
 
-        public ToDoTask Authenticate(string username, string password)
+        public TokenResponse Authenticate(string username, string password)
         {
             string endpoint = this.baseUrl + "/login_check";
             string method = "POST";
@@ -44,7 +44,7 @@ namespace ToDoPlanner.Operations
             try
             {
                 string response = wc.UploadString(endpoint, method, json);
-                return JsonConvert.DeserializeObject<ToDoTask>(response);
+                return JsonConvert.DeserializeObject<TokenResponse>(response);
             }
             catch (Exception)
             {
@@ -52,16 +52,18 @@ namespace ToDoPlanner.Operations
             }
         }
 
-        public ToDoTask GetTaskDetails(ToDoTask task)
+        public void GetTaskDetails(TokenResponse tokenResponse)
         {
             string endpoint = this.baseUrl + "tasks/2"; // later "tasks" + task.Id
-            string access_token = task.access_token;
+            string access_token = tokenResponse.token;
             
             WebClient wc = new WebClient();
             wc.Headers["Content-Type"] = "application/json";
             wc.Headers["Authorization"] = access_token;
+            
+            System.Diagnostics.Trace.WriteLine(access_token);
 
-            try
+            /*try
             {
                 string response = wc.DownloadString(endpoint);
                 task = JsonConvert.DeserializeObject<ToDoTask>(response);
@@ -72,7 +74,7 @@ namespace ToDoPlanner.Operations
             catch (Exception)
             {
                 return null;
-            }
+            }*/
         }
     }
     

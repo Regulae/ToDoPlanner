@@ -176,18 +176,18 @@ namespace ToDoPlanner.ViewModel
         {
 
             ApiOperations ops = new ApiOperations();
-            ToDoTask authTask = ops.Authenticate("regula", "fritzli-hansli-greteli");
-            Globals.InitTask = authTask;
-            System.Diagnostics.Trace.WriteLine("Token: " + authTask.access_token);
+            TokenResponse token = ops.Authenticate("regula", "fritzli-hansli-greteli");
+            //Globals.InitTask = authTask;
+            System.Diagnostics.Trace.WriteLine("Token: " + token.token);
 
-             ToDoTask task = ops.GetTaskDetails(Globals.InitTask);
+             //ToDoTask task = ops.GetTaskDetails(token);
 
-            if (task == null)
-            {
-                MessageBox.Show("no task");
-            }
-
-            Globals.InitTask = task;
+            // if (task == null)
+            // {
+            //     MessageBox.Show("no task");
+            // }
+            //
+            // Globals.InitTask = task;
             /*ObservableCollection<ToDoTask> toDoTasks = new ObservableCollection<ToDoTask>();
 
             // Load Tasks from xml file

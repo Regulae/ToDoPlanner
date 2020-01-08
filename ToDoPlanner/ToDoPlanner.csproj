@@ -89,7 +89,7 @@
     <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="Model\BindingProxy.cs" />
     <Compile Include="Model\Globals.cs" />
-    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\TokenResponse.cs" />
     <Compile Include="ReApi\ApiOperations.cs" />
     <Compile Include="UserControls\EnhancedDataGrid.cs" />
     <Compile Include="ViewModel\TaskViewModel.cs" />
