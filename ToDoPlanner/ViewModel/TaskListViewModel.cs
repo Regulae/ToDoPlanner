@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using System.IO;
 using System.Xml.Serialization;
-using ToDoPlanner.Annotations;
 using ToDoPlanner.Command;
 using ToDoPlanner.Model;
 using ToDoPlanner.UserControls;
-using System.Linq;
-using System.Windows;
 using ToDoPlanner.Operations;
 
 namespace ToDoPlanner.ViewModel
@@ -112,7 +106,12 @@ namespace ToDoPlanner.ViewModel
             if (!ToDoTasks.Contains(task))
             {
                 ToDoTasks.Add(task);
+                //Get token for authentication with api
+                TokenResponse token = GetToken();
+                ApiOperations ops = new ApiOperations();
+                ops.PostTask(task, token);
             }
+
         }
 
         /// <summary>
@@ -128,9 +127,6 @@ namespace ToDoPlanner.ViewModel
         /// </summary>
         private void AddNewTask()
         {
-            //var toDoTask = new ToDoTask();
-            //ToDoTasks.Add(toDoTask);
-            //SelectedTask = toDoTask;
             TaskViewModelControl.Task = new ToDoTask();
             TaskViewModelControl.HasChanged = true;
         }
@@ -178,32 +174,6 @@ namespace ToDoPlanner.ViewModel
             TokenResponse token = GetToken();
             ApiOperations ops = new ApiOperations();
             ToDoTasks = ops.GetTasks(token);
-
-            //ToDoTask task = ops.GetTaskDetails(token);
-
-            // if (task == null)
-            // {
-            //     MessageBox.Show("no task");
-            // }
-            //
-            // Globals.InitTask = task;
-            /*ObservableCollection<ToDoTask> toDoTasks = new ObservableCollection<ToDoTask>();
-
-            // Load Tasks from xml file
-            try
-            {
-                XmlSerializer xs = new XmlSerializer(typeof(ObservableCollection<ToDoTask>));
-                using (StreamReader rd = new StreamReader(FolderPathData + @"\" + FileNameTasks))
-                {
-                    toDoTasks = xs.Deserialize(rd) as ObservableCollection<ToDoTask>;
-                    
-                }
-            }
-            catch
-            {
-                System.Diagnostics.Trace.WriteLine("XML file Tasks.xml not found");
-            }
-            ToDoTasks = toDoTasks;*/
         }
 
         #endregion
@@ -224,31 +194,36 @@ namespace ToDoPlanner.ViewModel
         /// <summary>
         /// Save tasks to .xml file
         /// </summary>
+        
+        //@TODO Regula: decide if this method is still needed
         public void SaveTasks()
         {
-            var serializer = new XmlSerializer(typeof(ObservableCollection<ToDoTask>));
-            if (!Directory.Exists(FolderPathData))
-            {
-                try
-                {
-                    Directory.CreateDirectory(FolderPathData);
-                }
-                catch
-                {
-                    System.Diagnostics.Trace.WriteLine("Directory couldn't be created");
-                }
-            }
 
-            try
-            {
-                FileStream fs = new FileStream(FolderPathData + @"\" + FileNameTasks, FileMode.Create);
-                serializer.Serialize(fs, ToDoTasks);
-                fs.Close();
-            }
-            catch
-            {
-                System.Diagnostics.Trace.WriteLine("File couldn't be created");
-            }
+
+
+            // var serializer = new XmlSerializer(typeof(ObservableCollection<ToDoTask>));
+            // if (!Directory.Exists(FolderPathData))
+            // {
+            //     try
+            //     {
+            //         Directory.CreateDirectory(FolderPathData);
+            //     }
+            //     catch
+            //     {
+            //         System.Diagnostics.Trace.WriteLine("Directory couldn't be created");
+            //     }
+            // }
+            //
+            // try
+            // {
+            //     FileStream fs = new FileStream(FolderPathData + @"\" + FileNameTasks, FileMode.Create);
+            //     serializer.Serialize(fs, ToDoTasks);
+            //     fs.Close();
+            // }
+            // catch
+            // {
+            //     System.Diagnostics.Trace.WriteLine("File couldn't be created");
+            // }
 
         }
 
