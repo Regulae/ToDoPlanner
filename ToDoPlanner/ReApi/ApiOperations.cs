@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Net;
 using Newtonsoft.Json;
 using ToDoPlanner.Model;
@@ -52,29 +53,29 @@ namespace ToDoPlanner.Operations
             }
         }
 
-        public void GetTaskDetails(TokenResponse tokenResponse)
+        // Get tasks from api
+        public ObservableCollection<ToDoTask> GetTasks(TokenResponse tokenResponse)
         {
-            string endpoint = this.baseUrl + "tasks/2"; // later "tasks" + task.Id
+            string endpoint = this.baseUrl + "/tasks.json";
             string access_token = tokenResponse.token;
             
             WebClient wc = new WebClient();
             wc.Headers["Content-Type"] = "application/json";
-            wc.Headers["Authorization"] = access_token;
+            wc.Headers["Authorization"] = "Bearer " + access_token;
             
-            System.Diagnostics.Trace.WriteLine(access_token);
+            ObservableCollection<ToDoTask> toDoTasks = new ObservableCollection<ToDoTask>();
 
-            /*try
+            try
             {
                 string response = wc.DownloadString(endpoint);
-                task = JsonConvert.DeserializeObject<ToDoTask>(response);
-                task.access_token = access_token;
-                System.Diagnostics.Trace.WriteLine(task);
-                return task;
+                toDoTasks = JsonConvert.DeserializeObject<ObservableCollection<ToDoTask>>(response);
+                return toDoTasks;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                System.Diagnostics.Trace.WriteLine("Exception: " + ex);
                 return null;
-            }*/
+            }
         }
     }
     

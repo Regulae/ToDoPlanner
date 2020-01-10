@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AppIcon.ico" />
+    <Content Include="ReApi\ApiDocumentation.yaml" />
     <Content Include="Settings\DataGridView.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

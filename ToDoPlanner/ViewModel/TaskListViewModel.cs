@@ -18,7 +18,7 @@ namespace ToDoPlanner.ViewModel
     /// <summary>
     /// This view model class is about the task list.
     /// It loads/saves the tasks and the data grid view settings from/to .xml file
-    /// The view of a single task is also instantated in this class
+    /// The view of a single task is also instantiated in this class
     /// </summary>
     public class TaskListViewModel : ViewModelBase
     {
@@ -174,13 +174,12 @@ namespace ToDoPlanner.ViewModel
         /// </summary>
         public void LoadTasks()
         {
-
+            // Get token for authentication with api
+            TokenResponse token = GetToken();
             ApiOperations ops = new ApiOperations();
-            TokenResponse token = ops.Authenticate("regula", "fritzli-hansli-greteli");
-            //Globals.InitTask = authTask;
-            System.Diagnostics.Trace.WriteLine("Token: " + token.token);
+            ToDoTasks = ops.GetTasks(token);
 
-             //ToDoTask task = ops.GetTaskDetails(token);
+            //ToDoTask task = ops.GetTaskDetails(token);
 
             // if (task == null)
             // {
