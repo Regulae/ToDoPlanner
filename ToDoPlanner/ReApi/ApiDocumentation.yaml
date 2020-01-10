@@ -1,0 +1,280 @@
+﻿openapi: 3.0.2
+info:
+  title: ''
+  version: 0.0.0
+paths:
+  /api/tasks:
+    get:
+      tags:
+        - Task
+      operationId: getTaskCollection
+      summary: 'Retrieves the collection of Task resources.'
+      responses:
+        200:
+          description: 'Task collection response'
+          content:
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Task:jsonld' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+            default: 1
+    post:
+      tags:
+        - Task
+      operationId: postTaskCollection
+      summary: 'Creates a Task resource.'
+      responses:
+        201:
+          description: 'Task resource created'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Task:jsonld'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Task'
+          links:
+            GetTaskItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getTaskItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /api/tasks/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Task:jsonld'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Task'
+        description: 'The new Task resource'
+  '/api/tasks/{id}':
+    get:
+      tags:
+        - Task
+      operationId: getTaskItem
+      summary: 'Retrieves a Task resource.'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'Task resource response'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Task:jsonld'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Task'
+        404:
+          description: 'Resource not found'
+    delete:
+      tags:
+        - Task
+      operationId: deleteTaskItem
+      summary: 'Removes the Task resource.'
+      responses:
+        204:
+          description: 'Task resource deleted'
+        404:
+          description: 'Resource not found'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+    put:
+      tags:
+        - Task
+      operationId: putTaskItem
+      summary: 'Replaces the Task resource.'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'Task resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Task:jsonld'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Task'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Task:jsonld'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Task'
+        description: 'The updated Task resource'
+    patch:
+      tags:
+        - Task
+      operationId: patchTaskItem
+      summary: 'Updates the Task resource.'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'Task resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Task:jsonld'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Task'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Task'
+        description: 'The updated Task resource'
+components:
+  schemas:
+    Task:
+      type: object
+      description: ''
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        priority:
+          type: integer
+        deadline:
+          type: string
+          format: date-time
+        start_date:
+          type: string
+          format: date-time
+        category:
+          type: string
+        status:
+          description: 'Allowed values: ''None'', ''Open'', ''Planned'', ''Ongoing'', ''Done'''
+          type: string
+        created:
+          type: string
+          format: date-time
+        changed:
+          type: string
+          format: date-time
+        effort:
+          type: integer
+        progress:
+          type: integer
+        id:
+          readOnly: true
+          type: integer
+    'Task:jsonld':
+      type: object
+      description: ''
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        priority:
+          description: 'Allowed values: ''Low'', ''Medium'', ''High'''
+          type: string
+        deadline:
+          type: string
+          format: date-time
+        start_date:
+          type: string
+          format: date-time
+        category:
+          type: string
+        status:
+          description: 'Allowed values: ''None'', ''Open'', ''Planned'', ''Ongoing'', ''Done'''
+          type: string
+        created:
+          type: string
+          format: date-time
+        changed:
+          type: string
+          format: date-time
+        effort:
+          type: integer
+        progress:
+          type: integer
+        id:
+          readOnly: true
+          type: integer

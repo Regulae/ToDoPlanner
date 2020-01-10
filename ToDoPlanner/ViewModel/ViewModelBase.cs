@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ToDoPlanner.Annotations;
+using ToDoPlanner.Model;
+using ToDoPlanner.Operations;
 
 namespace ToDoPlanner.ViewModel
 {
@@ -28,6 +30,14 @@ namespace ToDoPlanner.ViewModel
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public TokenResponse GetToken()
+        {
+            ApiOperations ops = new ApiOperations();
+            TokenResponse token = ops.Authenticate("regula", "fritzli-hansli-greteli");
+            //System.Diagnostics.Trace.WriteLine("Token: " + token.token);
+            return token;
         }
 
 

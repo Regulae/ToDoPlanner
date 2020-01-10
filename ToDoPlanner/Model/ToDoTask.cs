@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 using ToDoPlanner.ViewModel;
 
 namespace ToDoPlanner.Model
@@ -27,7 +28,17 @@ namespace ToDoPlanner.Model
 
     public class ToDoTask : ModelBase
     {
+        private int? _id;
+        
+        [JsonProperty("id")]
+        public int? Id
+        {
+            get => _id ?? null;
+            set => SetProperty(ref _id, value);
+        }
+        
         private string _title;
+        [JsonProperty("title")]
         public string Title
         {
             get => _title;
@@ -35,6 +46,8 @@ namespace ToDoPlanner.Model
         }
 
         private string _description;
+        
+        [JsonProperty("description")]
         public string Description
         {
             get => _description;
@@ -42,14 +55,26 @@ namespace ToDoPlanner.Model
         }
 
         private int _priorityNum;
+        
+        [JsonProperty("priority")]
         public int PriorityNum
         {
             get => _priorityNum;
             set => SetProperty(ref _priorityNum, value);
         }
 
+        public int status = 1;
+        // private int _statusNum;
+        //
+        // [JsonProperty("status")]
+        // public int StatusNum
+        // {
+        //     get => _statusNum;
+        //     set => SetProperty(ref _statusNum, value);
+        // }
+
         private DateTime _deadline = DateTime.Today;
-        [XmlElement(DataType = "date")]
+        [JsonProperty("deadline")]
         public DateTime Deadline
         {
             get => _deadline;
@@ -57,7 +82,7 @@ namespace ToDoPlanner.Model
         }
 
         private DateTime _startDate = DateTime.Today;
-        [XmlElement(DataType = "date")]
+        [JsonProperty("start_date")]
         public DateTime StartDate
         {
             get => _startDate;
@@ -66,6 +91,7 @@ namespace ToDoPlanner.Model
 
         private string _category;
 
+        [JsonProperty("category")]
         public string Category
         {
             get => _category;
@@ -73,7 +99,8 @@ namespace ToDoPlanner.Model
         }
 
         private DateTime _created = DateTime.Today;
-        [XmlElement(DataType = "date")]
+        
+        [JsonProperty("created")]
         public DateTime Created
         {
             get => _created;
@@ -81,7 +108,8 @@ namespace ToDoPlanner.Model
         }
 
         private DateTime _changed = DateTime.Today;
-        [XmlElement(DataType = "date")]
+        
+        [JsonProperty("changed")]
         public DateTime Changed
         {
             get => _changed;
@@ -89,6 +117,7 @@ namespace ToDoPlanner.Model
         }
 
         private int _effort;
+        [JsonProperty("effort")]
         public int Effort
         {
             get => _effort;
@@ -96,12 +125,13 @@ namespace ToDoPlanner.Model
         }
 
         private int _progress;
+        [JsonProperty("progress")]
         public int Progress // Implement as progressbar in the MainWindow.xaml
         {
             get => _progress;
             set => SetProperty(ref _progress, value);
         }
-
+        
         #region Helper methods
 
         /// <summary>
