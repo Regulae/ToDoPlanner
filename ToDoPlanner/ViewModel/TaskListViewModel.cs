@@ -9,6 +9,7 @@ using ToDoPlanner.Annotations;
 using ToDoPlanner.Command;
 using ToDoPlanner.Model;
 using ToDoPlanner.UserControls;
+using System.Windows;
 using System.Linq;
 
 namespace ToDoPlanner.ViewModel
@@ -30,10 +31,15 @@ namespace ToDoPlanner.ViewModel
         private ObservableCollection<ColumnInfo> columnInfos;
         public ObservableCollection<ColumnInfo> ColumnInfos { get; set; }
 
+        /// <summary>
+        /// Task view to display details of a task
+        /// </summary>
         public TaskViewModel TaskViewModelControl { get; set; }
 
+        /// <summary>
+        /// The actual selected task in the data grid
+        /// </summary>
         private ToDoTask selectedTask;
-
         public ToDoTask SelectedTask {
             get { return selectedTask; }
             set
@@ -47,13 +53,22 @@ namespace ToDoPlanner.ViewModel
             }
         }
 
+        private ToDoTaskVisibility visibilityTaskList;
+        public ToDoTaskVisibility VisibilityTaskList
+        {
+            get => visibilityTaskList;
+            set => SetProperty(ref visibilityTaskList, value);
+        }
+
         #endregion
 
         #region Constants
 
+        /// <summary>
+        /// Constant strings for saving/loading the tasks and the datagrid settings
+        /// </summary>
         private const string FolderPathData = "Data";
         private const string FileNameTasks = "Tasks.xml";
-
         private const string FolderPathSettings = "Settings";
         private const string FileNameDataGridView = "DataGridView.xml";
 

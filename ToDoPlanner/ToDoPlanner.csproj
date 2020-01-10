@@ -64,6 +64,7 @@
     </ApplicationDefinition>
     <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="Model\BindingProxy.cs" />
+    <Compile Include="Model\ToDoTaskVisibility.cs" />
     <Compile Include="UserControls\EnhancedDataGrid.cs" />
     <Compile Include="ViewModel\TaskViewModel.cs" />
     <Compile Include="View\TaskListView.xaml.cs">
