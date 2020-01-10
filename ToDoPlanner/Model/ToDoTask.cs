@@ -64,10 +64,10 @@ namespace ToDoPlanner.Model
         }
 
         public int status = 1;
-        // private int? _statusNum;
+        // private int _statusNum;
         //
         // [JsonProperty("status")]
-        // public int? StatusNum
+        // public int StatusNum
         // {
         //     get => _statusNum;
         //     set => SetProperty(ref _statusNum, value);
