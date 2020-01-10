@@ -14,6 +14,11 @@ using System.Linq;
 
 namespace ToDoPlanner.ViewModel
 {
+    /// <summary>
+    /// This view model class is about the task list.
+    /// It loads/saves the tasks and the data grid view settings from/to .xml file
+    /// The view of a single task is also instantated in this class
+    /// </summary>
     public class TaskListViewModel : ViewModelBase
     {
 
@@ -46,6 +51,8 @@ namespace ToDoPlanner.ViewModel
             {
                 if (value != selectedTask)
                 {
+                    // If a new task has been selected, not only change the actual selected task
+                    // also refresh the task of the task view
                     TaskViewModelControl.Task = value;
                     selectedTask = value;
                     NotifyPropertyChanged();
@@ -105,12 +112,15 @@ namespace ToDoPlanner.ViewModel
         #region Helper methods
 
         /// <summary>
-        /// Add a task to the list
+        /// Add a task to the list, if it's not already inside
         /// </summary>
         /// <param name="task"></param>
         public void AddTask(ToDoTask task)
         {
-            ToDoTasks.Add(task);
+            if (!ToDoTasks.Contains(task))
+            {
+                ToDoTasks.Add(task);
+            }
         }
 
         /// <summary>
@@ -126,9 +136,11 @@ namespace ToDoPlanner.ViewModel
         /// </summary>
         private void AddNewTask()
         {
-            var toDoTask = new ToDoTask();
-            ToDoTasks.Add(toDoTask);
-            SelectedTask = toDoTask;
+            //var toDoTask = new ToDoTask();
+            //ToDoTasks.Add(toDoTask);
+            //SelectedTask = toDoTask;
+            TaskViewModelControl.Task = new ToDoTask();
+            TaskViewModelControl.HasChanged = true;
         }
 
         #endregion
