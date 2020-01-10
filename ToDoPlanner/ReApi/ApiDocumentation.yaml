@@ -209,8 +209,7 @@ components:
         description:
           type: string
         priority:
-          description: 'Allowed values: ''Low'', ''Medium'', ''High'''
-          type: string
+          type: integer
         deadline:
           type: string
           format: date-time
