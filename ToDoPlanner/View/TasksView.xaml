@@ -54,7 +54,10 @@
                          materialDesign:HintAssist.Hint="Title"/>
 
                 <UniformGrid Name="ugTaskProperties" 
-                             Columns="{Binding Path=ActualWidth, ElementName=ugTaskProperties, Converter={StaticResource LimitSwitchValueConverter}, ConverterParameter='360,2,4', FallbackValue='4'}"
+                             Columns="{Binding Path=ActualWidth, 
+                                        ElementName=ugTaskProperties,
+                                        Converter={StaticResource LimitSwitchValueConverter},
+                                        ConverterParameter='400,2,4'}"
                              Margin="5">
                     
                     <!-- Created -->
@@ -62,7 +65,8 @@
                            Content="Created:"
                            FontSize="20"
                            VerticalContentAlignment="Center"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"
+                           Margin="2,3,2,3"/>
                     <TextBox Name="txtCreated"
                              Text="{Binding Path=Task.Created, StringFormat=dd.MM.yyyy}"
                              FontSize="20"
@@ -70,31 +74,36 @@
                              TextAlignment="Center"
                              VerticalAlignment="Center"
                              FontFamily="20"
-                             IsReadOnly="True"/>
+                             IsReadOnly="True"
+                             Margin="2,3,2,3"/>
 
                     <!-- Deadline -->
                     <Label Name="lblDeadline"
                            Content="Deadline:"
                            FontSize="20"
                            VerticalContentAlignment="Center"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"
+                           Margin="2,3,2,3"/>
                     <DatePicker Name="txtDeadline"
                                 Text="{Binding Path=Task.Deadline, StringFormat=dd.MM.yyyy}"
                                 FontSize="20"
                                 VerticalAlignment="Center"
-                                FontFamily="20"/>
+                                FontFamily="20"
+                                Margin="2,3,2,3"/>
 
                     <!-- Priority -->
                     <Label Name="lblPriority"
                            Content="Priority:"
                            FontSize="20"
                            VerticalContentAlignment="Center"
-                           VerticalAlignment="Center" />
+                           VerticalAlignment="Center"
+                           Margin="2,3,2,3"/>
                     <ComboBox Name="txtPriority"
                               FontSize="20"
                               VerticalAlignment="Center"
                               FontFamily="20"
-                              SelectedIndex="{Binding Path=Task.PriorityNum}">
+                              SelectedIndex="{Binding Path=Task.PriorityNum}"
+                              Margin="2,3,2,3">
                         <ComboBoxItem Content="Low" />
                         <ComboBoxItem Content="Medium" />
                         <ComboBoxItem Content="High" />
@@ -105,45 +114,51 @@
                            Content="Category:"
                            FontSize="20"
                            VerticalContentAlignment="Center"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"
+                           Margin="2,3,2,3"/>
                     <TextBox Name="txtCategory"
                              Text="{Binding Path=Task.Category}"
                              FontSize="20"
                              TextAlignment="Center"
                              VerticalAlignment="Center"
-                             FontFamily="20"/>
+                             FontFamily="20"
+                             Margin="2,3,2,3"/>
 
                     <!-- Effort -->
                     <Label Name="lblEffort"
                            Content="Effort:"
                            FontSize="20"
                            VerticalContentAlignment="Center"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"
+                           Margin="2,3,2,3"/>
                     <TextBox Name="txtEffort"
                              Text="{Binding Path=Task.Effort}"
                              FontSize="20"
                              TextAlignment="Center"
                              VerticalAlignment="Center"
-                             FontFamily="20"/>
+                             FontFamily="20"
+                             Margin="2,3,2,3"/>
                     <!-- Effort -->
                     <Label Name="lblProgress"
                            Content="Progress:"
                            FontSize="20"
                            VerticalContentAlignment="Center"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"
+                           Margin="2,3,2,3"/>
                     <Grid>
                         <ProgressBar Name="txtProgress"
                              Value="{Binding Path=Task.Progress}"
                              VerticalAlignment="Center"
                              Height="20"
-                             Margin="2"/>
+                             Margin="2,3,2,3"/>
                         <TextBox Text="{Binding Path=Task.Progress,
                                         Converter={StaticResource PercentageValueConverter},
                                         ConverterParameter='0,100'}"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
                                  BorderBrush="{x:Null}"
-                                 Foreground="#DDFFFFFF"/>
+                                 Foreground="#DDFFFFFF"
+                                 Margin="2,3,2,3"/>
                     </Grid>
                     
                     <!-- Status -->
@@ -151,11 +166,13 @@
                            Content="Status:"
                            FontSize="20"
                            VerticalContentAlignment="Center"
-                           VerticalAlignment="Center" />
+                           VerticalAlignment="Center"
+                           Margin="2,3,2,3"/>
                     <ComboBox Name="txtStatus"
                               FontSize="20"
                               VerticalAlignment="Center"
-                              SelectedIndex="{Binding Path=Task.StatusNum}">
+                              SelectedIndex="{Binding Path=Task.StatusNum}"
+                              Margin="2,3,2,3">
                         <ComboBoxItem Content="None" />
                         <ComboBoxItem Content="Open" />
                         <ComboBoxItem Content="Planned" />

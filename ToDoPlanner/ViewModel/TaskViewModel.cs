@@ -25,9 +25,14 @@ namespace ToDoPlanner.ViewModel
             set
             {
                 SetProperty(ref task, value);
-                tempTask = value.Clone();
                 HasChanged = false;
-                value.PropertyChanged += taskChanged;
+
+                if(value != null)
+                {
+                    tempTask = value.Clone();
+                    value.PropertyChanged += taskChanged;
+                }
+
             }
         }
 
