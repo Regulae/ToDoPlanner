@@ -137,7 +137,24 @@
                                  BorderBrush="{x:Null}"
                                  Foreground="#DDFFFFFF"/>
                     </Grid>
-
+                    
+                    <!-- Status -->
+                    <Label Name="lblStatus"
+                           Content="Status:"
+                           FontSize="20"
+                           VerticalContentAlignment="Center"
+                           VerticalAlignment="Center" />
+                    <ComboBox Name="txtStatus"
+                              FontSize="20"
+                              VerticalAlignment="Center"
+                              FontFamily="20"
+                              SelectedIndex="{Binding Path=Task.StatusNum}">
+                        <ComboBoxItem Content="None" />
+                        <ComboBoxItem Content="Open" />
+                        <ComboBoxItem Content="Planned" />
+                        <ComboBoxItem Content="Ongoing" />
+                        <ComboBoxItem Content="Done" />
+                    </ComboBox>
                 </UniformGrid>
             </StackPanel>
             <!-- Second row -->

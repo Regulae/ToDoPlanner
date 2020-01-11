@@ -63,15 +63,15 @@ namespace ToDoPlanner.Model
             set => SetProperty(ref _priorityNum, value);
         }
 
-        public int status = 1;
-        // private int _statusNum;
-        //
-        // [JsonProperty("status")]
-        // public int StatusNum
-        // {
-        //     get => _statusNum;
-        //     set => SetProperty(ref _statusNum, value);
-        // }
+        //public int status = 1;
+        private int _statusNum;
+
+        [JsonProperty("status")]
+        public int StatusNum
+        {
+            get => _statusNum;
+            set => SetProperty(ref _statusNum, value);
+        }
 
         private DateTime _deadline = DateTime.Today;
         [JsonProperty("deadline")]

@@ -68,7 +68,8 @@
                                         Data="{Binding}"/>
                     <model:BindingProxy x:Key="proxyEffort"
                                         Data="{Binding}"/>
-
+                    <model:BindingProxy x:Key="proxyStatus"
+                                        Data="{Binding}"/>
 
                     <ContextMenu DataContext="dgTasks" x:Key="DataGridColumnHeaderContextMenu">
 
@@ -112,6 +113,11 @@
                                   IsCheckable="True"
                                   IsChecked="{Binding Path=Data, Source={StaticResource proxyEffort}}"
                                   Header="_Effort"/>
+
+                        <MenuItem Name="miStatus"
+                                  IsCheckable="True"
+                                  IsChecked="{Binding Path=Data, Source={StaticResource proxyStatus}}"
+                                  Header="_Status"/>
                     </ContextMenu>
 
                     <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -184,6 +190,23 @@
                         Visibility="{Binding Path=Data, Source={StaticResource proxyEffort}, Mode=TwoWay,
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
+                    <DataGridTemplateColumn Header="Status"
+                        Visibility="{Binding Path=Data, Source={StaticResource proxyStatus}, Mode=TwoWay,
+                        Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedIndex="{Binding Path=StatusNum}">
+                                    <ComboBoxItem Content="None" />
+                                    <ComboBoxItem Content="Open" />
+                                    <ComboBoxItem Content="Planned" />
+                                    <ComboBoxItem Content="Ongoing" />
+                                    <ComboBoxItem Content="Done" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+            
                 </DataGrid.Columns>
             </ctr:EnhancedDataGrid>
 
