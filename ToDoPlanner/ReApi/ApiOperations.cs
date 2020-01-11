@@ -35,6 +35,10 @@ namespace ToDoPlanner.Operations
                 password = password
             });
 
+            // Necessary for working with windows 7
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             WebClient wc = new WebClient();
             wc.Headers["Content-Type"] = "application/json";
             try
