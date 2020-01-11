@@ -92,7 +92,9 @@
     <Compile Include="Model\TokenResponse.cs" />
     <Compile Include="ReApi\ApiOperations.cs" />
     <Compile Include="UserControls\EnhancedDataGrid.cs" />
+    <Compile Include="ViewModel\PercentageValueConverter.cs" />
     <Compile Include="ViewModel\TaskViewModel.cs" />
+    <Compile Include="ViewModel\LimitSwitchValueConverter.cs" />
     <Compile Include="View\TaskListView.xaml.cs">
       <DependentUpon>TaskListView.xaml</DependentUpon>
     </Compile>
