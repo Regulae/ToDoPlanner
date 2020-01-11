@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:model="clr-namespace:ToDoPlanner.Model"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:model="clr-namespace:ToDoPlanner.ViewModel"
              xmlns:ctr="clr-namespace:ToDoPlanner.UserControls"
              mc:Ignorable="d"
              
@@ -18,6 +19,8 @@
              d:DesignHeight="600" d:DesignWidth="400">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <model:PercentageValueConverter x:Key="PercentageValueConverter"/>
+        <model:LimitSwitchValueConverter x:Key="LimitSwitchValueConverter"/>
         <ctr:EnhancedDataGrid x:Key="dgGrid"/>
     </UserControl.Resources>
     <Grid Margin="0">
@@ -39,16 +42,20 @@
                 
                 <!-- Title -->
                 <TextBox Name="txtTaskTitle"
-                         Text="{Binding Path=Task.Title, FallbackValue=Title}"
+                         Text="{Binding Path=Task.Title}"
                          FontSize="20"
                          FontWeight="Bold"
                          Margin="5"
                          Width="{Binding ElementName=spTaskInfo, Path=ActualWidth}"
                          MinWidth="150"
                          HorizontalAlignment="Center"
-                         TextAlignment="Center"/>
-                
-                <UniformGrid Columns="4" Margin="5">
+                         TextAlignment="Center"
+                         Padding="5,0,5,0"
+                         materialDesign:HintAssist.Hint="Title"/>
+
+                <UniformGrid Name="ugTaskProperties" 
+                             Columns="{Binding Path=ActualWidth, ElementName=ugTaskProperties, Converter={StaticResource LimitSwitchValueConverter}, ConverterParameter='360,2,4', FallbackValue='4'}"
+                             Margin="5">
                     
                     <!-- Created -->
                     <Label Name="lblCreated"
@@ -129,9 +136,10 @@
                              Value="{Binding Path=Task.Progress}"
                              VerticalAlignment="Center"
                              Height="20"
-                             FontFamily="20"
                              Margin="2"/>
-                        <TextBox Text="{Binding Path=Task.Progress, StringFormat={}{0:0}%}"
+                        <TextBox Text="{Binding Path=Task.Progress,
+                                        Converter={StaticResource PercentageValueConverter},
+                                        ConverterParameter='0,100'}"
                                  HorizontalAlignment="Center"
                                  VerticalAlignment="Center"
                                  BorderBrush="{x:Null}"
@@ -147,7 +155,6 @@
                     <ComboBox Name="txtStatus"
                               FontSize="20"
                               VerticalAlignment="Center"
-                              FontFamily="20"
                               SelectedIndex="{Binding Path=Task.StatusNum}">
                         <ComboBoxItem Content="None" />
                         <ComboBoxItem Content="Open" />
@@ -161,7 +168,7 @@
             <Rectangle Grid.Row="1" Fill="{DynamicResource MaterialDesignBackground}" Margin="1" />
 
             <!--Third row -->
-            <TextBox Text="{Binding Path=Task.Description}" FontSize="20" AcceptsReturn="True" Grid.Row="2" Margin="5" Background="#FFEDEDED" />
+            <TextBox Text="{Binding Path=Task.Description, UpdateSourceTrigger=PropertyChanged}" FontSize="20" AcceptsReturn="True" Grid.Row="2" Margin="5" Background="#FFEDEDED" />
 
             <!-- Fourth row = spacer -->
             <Rectangle Grid.Row="3" Fill="{DynamicResource MaterialDesignBackground}" Margin="1" />

@@ -6,6 +6,7 @@ using ToDoPlanner.Command;
 using ToDoPlanner.Model;
 using ToDoPlanner.UserControls;
 using ToDoPlanner.Operations;
+using System.Windows.Data;
 
 namespace ToDoPlanner.ViewModel
 {
@@ -54,6 +55,27 @@ namespace ToDoPlanner.ViewModel
                 }
             }
         }
+
+        private ICollectionView filteredView;
+
+        private string filter;
+        public string Filter
+        {
+            get
+            {
+                return filter;
+            }
+            set
+            {
+                if (value != filter)
+                {
+                    filter = value;
+                    filteredView.Refresh();
+                    SetProperty(ref filter, value);
+                }
+            }
+        }
+
 
         private ToDoTaskVisibility visibilityTaskList;
         public ToDoTaskVisibility VisibilityTaskList
@@ -183,6 +205,8 @@ namespace ToDoPlanner.ViewModel
             TokenResponse token = GetToken();
             ApiOperations ops = new ApiOperations();
             ToDoTasks = ops.GetTasks(token);
+            filteredView = CollectionViewSource.GetDefaultView(ToDoTasks);
+            filteredView.Filter = o => string.IsNullOrEmpty(Filter) ? true : (o.ToString()).Contains(Filter);
         }
 
         #endregion
