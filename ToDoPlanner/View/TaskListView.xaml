@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:model="clr-namespace:ToDoPlanner.Model"
              xmlns:ctr="clr-namespace:ToDoPlanner.UserControls"
              mc:Ignorable="d"
@@ -25,16 +26,38 @@
         <Rectangle Fill="{DynamicResource MaterialDesignFlatButtonClick}" Stroke="{DynamicResource MaterialDesignFlatButtonRipple}" StrokeThickness="1"/>
         <Grid Name="grdToDoList">
             <Grid.RowDefinitions>
-                <RowDefinition Name="grdRowTitle" Height="0.1*" MinHeight="50" MaxHeight="80" />
+                <RowDefinition Name="grdRowTitle" Height="100"/>
                 <RowDefinition Name="grdRowData" />
                 <RowDefinition Name="grdRowSplitter"  Height="0.01*" MinHeight="5" MaxHeight="20" />
                 <RowDefinition Name="grdRowControl" Height="50"/>
             </Grid.RowDefinitions>
 
             <!-- First row -->
-            <Label Name="lblToDoList" Grid.Row="0" Content="ToDo-List" HorizontalAlignment="Center" VerticalAlignment="Center"
+            <StackPanel>
+                <Label Name="lblToDoList" Grid.Row="0" Content="ToDo-List" HorizontalAlignment="Center" VerticalAlignment="Center"
                    FontSize="30" FontWeight="Bold" />
-
+                
+                <!-- Search bar -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0"
+                             Margin="5,0,5,0"
+                             Grid.Row="3"
+                             Height="30"
+                             Text="{Binding Filter}"
+                             materialDesign:HintAssist.Hint="Enter search text here"
+                             materialDesign:TextFieldAssist.HasClearButton="True"
+                             Background="White"/>
+                    <Button HorizontalAlignment="Center" Grid.Column="1">
+                        <materialDesign:PackIcon Kind="Magnify"/>
+                    </Button>
+                </Grid>
+                
+            </StackPanel>
+            
             <!-- Second row -->
             <ctr:EnhancedDataGrid 
                 x:Name="dgTasks"
