@@ -24,19 +24,24 @@ namespace ToDoPlanner.ViewModel
             get => task;
             set
             {
-                SetProperty(ref task, value);
-                HasChanged = false;
-
-                if(value != null)
+                if (value != null)
                 {
-                    tempTask = value.Clone();
-                    value.PropertyChanged += taskChanged;
+                    task = value.Clone();
+                    sourceTask = value;
+                    task.PropertyChanged += taskChanged;
                 }
+                else
+                {
+                    task = value;
+                }
+
+                NotifyPropertyChanged();
+                HasChanged = false;
 
             }
         }
 
-        private ToDoTask tempTask;      // The Task which was opened
+        private ToDoTask sourceTask;      // The Task which was opened
         private TaskListViewModel taskListViewModel;
 
         private bool hasChanged;
@@ -79,13 +84,14 @@ namespace ToDoPlanner.ViewModel
 
         private void Apply()
         {
-            taskListViewModel.AddTask(Task);
+            sourceTask?.Copy(Task);
+            taskListViewModel.AddTask(sourceTask);
             HasChanged = false;
         }
 
         private void Cancel()
         {
-            Task.Copy(tempTask);
+            Task.Copy(sourceTask);
             HasChanged = false;
         }
 

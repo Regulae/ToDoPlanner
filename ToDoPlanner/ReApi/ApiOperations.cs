@@ -36,7 +36,6 @@ namespace ToDoPlanner.Operations
             });
 
             // Necessary for working with windows 7
-            ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
             WebClient wc = new WebClient();

@@ -56,8 +56,14 @@ namespace ToDoPlanner.ViewModel
             }
         }
 
+        /// <summary>
+        /// DataGrid View for filtered values
+        /// </summary>
         private ICollectionView filteredView;
 
+        /// <summary>
+        /// Filter, to search in the task list, which task contains this filter string
+        /// </summary>
         private string filter;
         public string Filter
         {
@@ -67,12 +73,8 @@ namespace ToDoPlanner.ViewModel
             }
             set
             {
-                if (value != filter)
-                {
-                    filter = value;
+                if (SetProperty(ref filter, value))
                     filteredView.Refresh();
-                    SetProperty(ref filter, value);
-                }
             }
         }
 
@@ -220,43 +222,38 @@ namespace ToDoPlanner.ViewModel
         /// <param name="e"></param> The Arguments
         public void Close(object sender, CancelEventArgs e)
         {
-            SaveTasks();
+            //SaveTasks();
             SaveSettings();
         }
 
         /// <summary>
         /// Save tasks to .xml file
         /// </summary>
-        
-        //@TODO Regula: decide if this method is still needed
         public void SaveTasks()
         {
+            var serializer = new XmlSerializer(typeof(ObservableCollection<ToDoTask>));
+            if (!Directory.Exists(FolderPathData))
+            {
+                try
+                {
+                    Directory.CreateDirectory(FolderPathData);
+                }
+                catch
+                {
+                    System.Diagnostics.Trace.WriteLine("Directory couldn't be created");
+                }
+            }
 
-
-
-            // var serializer = new XmlSerializer(typeof(ObservableCollection<ToDoTask>));
-            // if (!Directory.Exists(FolderPathData))
-            // {
-            //     try
-            //     {
-            //         Directory.CreateDirectory(FolderPathData);
-            //     }
-            //     catch
-            //     {
-            //         System.Diagnostics.Trace.WriteLine("Directory couldn't be created");
-            //     }
-            // }
-            //
-            // try
-            // {
-            //     FileStream fs = new FileStream(FolderPathData + @"\" + FileNameTasks, FileMode.Create);
-            //     serializer.Serialize(fs, ToDoTasks);
-            //     fs.Close();
-            // }
-            // catch
-            // {
-            //     System.Diagnostics.Trace.WriteLine("File couldn't be created");
-            // }
+            try
+            {
+                FileStream fs = new FileStream(FolderPathData + @"\" + FileNameTasks, FileMode.Create);
+                serializer.Serialize(fs, ToDoTasks);
+                fs.Close();
+            }
+            catch
+            {
+                System.Diagnostics.Trace.WriteLine("File couldn't be created");
+            }
 
         }
 
