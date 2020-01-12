@@ -140,7 +140,6 @@ namespace ToDoPlanner.UserControls
         public ColumnInfo(DataGridColumn column)
         {
             Header = column.Header;
-            //PropertyPath = ((Binding)((DataGridBoundColumn)column).Binding).Path.Path;
             PropertyPath = column.SortMemberPath;
             WidthValue = column.Width.DisplayValue;
             WidthType = column.Width.UnitType;

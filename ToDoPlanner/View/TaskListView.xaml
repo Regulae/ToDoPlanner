@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:model="clr-namespace:ToDoPlanner.Model"
+             xmlns:viewmodel="clr-namespace:ToDoPlanner.ViewModel"
              xmlns:ctr="clr-namespace:ToDoPlanner.UserControls"
              mc:Ignorable="d"
              
@@ -19,6 +20,7 @@
              d:DesignHeight="600" d:DesignWidth="400">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <viewmodel:PercentageValueConverter x:Key="PercentageValueConverter"/>
         <ctr:EnhancedDataGrid x:Key="dgGrid"/>
     </UserControl.Resources>
     <Grid>
@@ -28,7 +30,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Name="grdRowTitle" Height="100"/>
                 <RowDefinition Name="grdRowData" />
-                <RowDefinition Name="grdRowSplitter"  Height="0.01*" MinHeight="5" MaxHeight="20" />
+                <RowDefinition Name="grdRowSplitter"  Height="5" />
                 <RowDefinition Name="grdRowControl" Height="50"/>
             </Grid.RowDefinitions>
 
@@ -65,12 +67,14 @@
                 ColumnInfo="{Binding ColumnInfos}"
                 Grid.Row="1"
                 Margin="5"
-                FontSize="16"
+                FontSize="14"
+                AlternatingRowBackground="LightGray"
                 AutoGenerateColumns="False"
                 Style="{DynamicResource MaterialDesignDataGrid}"
                 RowHeaderWidth="0"
                 SelectedItem="{Binding SelectedTask}"
-                CanUserAddRows="False">
+                CanUserAddRows="False"
+                CanUserDeleteRows="False">
 
                 <DataGrid.Resources>
                     <!-- Binding proxies for context menu on the row header
@@ -177,11 +181,11 @@
                     <!-- Priority -->
 
                     <!--
-                    <DataGridTextColumn Header="Priority" Binding="{Binding Priority}"
-                        Visibility="{Binding Path=IsChecked, Source={x:Reference Name=miPriority}, 
+                    <DataGridTextColumn Header="Priority" Binding="{Binding PriorityNum}"
+                        Visibility="{Binding Path=Data, Source={StaticResource proxyPriority}, Mode=TwoWay,
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     -->
-
+                    
                     <DataGridTemplateColumn Header="Priority"
                         Visibility="{Binding Path=Data, Source={StaticResource proxyPriority}, Mode=TwoWay,
                         Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -204,7 +208,7 @@
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                     <!-- Progress -->
-                    <DataGridTextColumn Header="Progress" Binding="{Binding Progress}"
+                    <DataGridTextColumn Header="Progress" Binding="{Binding Progress, Converter={StaticResource PercentageValueConverter}}"
                         Visibility="{Binding Path=Data, Source={StaticResource proxyProgress}, Mode=TwoWay,
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
