@@ -63,15 +63,15 @@ namespace ToDoPlanner.Model
             set => SetProperty(ref _priorityNum, value);
         }
 
-        public int status = 1;
-        // private int _statusNum;
-        //
-        // [JsonProperty("status")]
-        // public int StatusNum
-        // {
-        //     get => _statusNum;
-        //     set => SetProperty(ref _statusNum, value);
-        // }
+        //public int status = 1;
+        private int _statusNum;
+
+        [JsonProperty("status")]
+        public int StatusNum
+        {
+            get => _statusNum;
+            set => SetProperty(ref _statusNum, value);
+        }
 
         private DateTime _deadline = DateTime.Today;
         [JsonProperty("deadline")]
@@ -151,14 +151,15 @@ namespace ToDoPlanner.Model
                 Created = this.Created,
                 Changed = this.Changed,
                 Effort = this.Effort,
-                Progress = this.Progress
+                Progress = this.Progress,
+                StatusNum = this.StatusNum
             };
         }
 
         /// <summary>
         /// Copy all values and references
         /// </summary>
-        /// <param name="task"></param>
+        /// <param name="task">The task of which the values has to be copied</param>
         public void Copy(ToDoTask task)
         {
             this.Title = task.Title;
@@ -171,8 +172,27 @@ namespace ToDoPlanner.Model
             this.Changed = task.Changed;
             this.Effort = task.Effort;
             this.Progress = task.Progress;
+            this.StatusNum = task.StatusNum;
         }
 
+        /// <summary>
+        /// Convert all properties of the class to string and concatinate them seperated by a comma
+        /// </summary>
+        /// <returns>Returns all properties seperated with a ", " as a string</returns>
+        public override string ToString()
+        {
+            return Title?.ToString() + ", " +
+                Description?.ToString() + ", " +
+                Enum.GetName(typeof(Priority), PriorityNum) + ", " +
+                Deadline.ToString() + ", " +
+                StartDate.ToString() + ", " +
+                Category?.ToString() + ", " +
+                Created.ToString() + ", " +
+                Changed.ToString() + ", " +
+                Effort.ToString() + ", " +
+                Progress.ToString() + ", " +
+                Enum.GetName(typeof(Status), StatusNum);
+        }
         #endregion
     }
 }
