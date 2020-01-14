@@ -10,6 +10,9 @@ namespace ToDoPlannerTest
     [TestClass]
     public class TaskListViewModelTest
     {
+        /// <summary>
+        /// Test if a task is added with the AddTask method
+        /// </summary>
         [TestMethod]
         public void AddTask_TaskIsAdded_ReturnsTrue()
         {
@@ -35,6 +38,9 @@ namespace ToDoPlannerTest
 
         }
 
+        /// <summary>
+        /// Test if settings can be saved and loaded
+        /// </summary>
         [TestMethod]
         public void SaveLoadSettings_SaveAndLoadingSettings_ReturnsTrue()
         {

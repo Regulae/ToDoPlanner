@@ -15,7 +15,7 @@ namespace ToDoPlanner.ViewModel
     public class TaskViewModel : ViewModelBase
     {
         #region Properties
-
+        
         /// <summary>
         /// The Task which is shown on the view
         /// </summary>
@@ -33,7 +33,8 @@ namespace ToDoPlanner.ViewModel
 
         private ToDoTask tempTask;      // The Task which was opened
         private TaskListViewModel taskListViewModel;
-
+        
+        
         private bool hasChanged;
         public bool HasChanged
         {

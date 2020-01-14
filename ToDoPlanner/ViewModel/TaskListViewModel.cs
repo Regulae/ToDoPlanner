@@ -6,6 +6,7 @@ using ToDoPlanner.Command;
 using ToDoPlanner.Model;
 using ToDoPlanner.UserControls;
 using ToDoPlanner.Operations;
+using System.Windows;
 
 namespace ToDoPlanner.ViewModel
 {
@@ -44,14 +45,34 @@ namespace ToDoPlanner.ViewModel
             get { return selectedTask; }
             set
             {
-                if (value != selectedTask)
+                if (TaskViewModelControl.HasChanged)
                 {
-                    // If a new task has been selected, not only change the actual selected task
-                    // also refresh the task of the task view
-                    TaskViewModelControl.Task = value;
-                    selectedTask = value;
-                    NotifyPropertyChanged();
+                    MessageBoxResult result = MessageBox.Show("Do you want to save the changes?",
+                          "Confirmation",
+                          MessageBoxButton.YesNo,
+                          MessageBoxImage.Question);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        TaskViewModelControl.ApplyCommand.Execute(null);
+                    }
                 }
+
+                {
+                    if (value != selectedTask)
+                    {
+                        // If a new task has been selected, not only change the actual selected task
+                        // also refresh the task of the task view
+                        TaskViewModelControl.Task = value;
+                        selectedTask = value;
+                        NotifyPropertyChanged();
+                    }
+                }
+                //else
+                //{
+                //    TaskViewModelControl.ApplyCommand.Execute();
+                //}
+
+
             }
         }
 
