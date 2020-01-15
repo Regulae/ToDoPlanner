@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Net;
-using System.Web.UI.WebControls;
-using MaterialDesignThemes.Wpf.Converters;
+using System.Text;
 using Newtonsoft.Json;
 using ToDoPlanner.Model;
 
@@ -108,6 +108,42 @@ namespace ToDoPlanner.Operations
             try
             {
                 string response = wc.UploadString(endpoint, method, json);
+                return JsonConvert.DeserializeObject<ToDoTask>(response);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine("Exception: " + ex);
+                return null;
+            }
+        }
+        /*
+         * Remove Task from Database via API
+         * @param ToDoTask newTask
+         * @param TokenResponse tokenResponse
+         */
+        public ToDoTask DeleteTask(ToDoTask task, TokenResponse tokenResponse)
+        {
+            int? taskId = task.Id;
+            string endpoint = this.baseUrl + "/tasks/" + taskId;
+            string method = "DELETE";
+            string json = JsonConvert.SerializeObject(
+                task,
+                Formatting.None,
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                }
+            );
+            System.Diagnostics.Trace.WriteLine("JSON: " + json);
+
+            string accessToken = tokenResponse.token;
+
+            WebClient wc = new WebClient();
+            wc.Headers["Authorization"] = "Bearer " + accessToken;
+
+            try
+            {
+                string response = Encoding.ASCII.GetString(wc.UploadValues(endpoint, method, new NameValueCollection()));
                 return JsonConvert.DeserializeObject<ToDoTask>(response);
             }
             catch (Exception ex)

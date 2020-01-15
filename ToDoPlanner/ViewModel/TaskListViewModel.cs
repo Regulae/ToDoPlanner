@@ -17,7 +17,6 @@ namespace ToDoPlanner.ViewModel
     /// </summary>
     public class TaskListViewModel : ViewModelBase
     {
-
         #region Properties
 
         /// <summary>
@@ -30,6 +29,7 @@ namespace ToDoPlanner.ViewModel
         /// Hold information about the width and visibility of the columns
         /// </summary>
         private ObservableCollection<ColumnInfo> columnInfos;
+
         public ObservableCollection<ColumnInfo> ColumnInfos { get; set; }
 
         /// <summary>
@@ -41,8 +41,10 @@ namespace ToDoPlanner.ViewModel
         /// The actual selected task in the data grid
         /// </summary>
         private ToDoTask selectedTask;
-        public ToDoTask SelectedTask {
-            get { return selectedTask; }
+
+        public ToDoTask SelectedTask
+        {
+            get => selectedTask;
             set
             {
                 if (value != selectedTask)
@@ -65,12 +67,10 @@ namespace ToDoPlanner.ViewModel
         /// Filter, to search in the task list, which task contains this filter string
         /// </summary>
         private string filter;
+
         public string Filter
         {
-            get
-            {
-                return filter;
-            }
+            get { return filter; }
             set
             {
                 if (SetProperty(ref filter, value))
@@ -80,6 +80,7 @@ namespace ToDoPlanner.ViewModel
 
 
         private ToDoTaskVisibility visibilityTaskList;
+
         public ToDoTaskVisibility VisibilityTaskList
         {
             get => visibilityTaskList;
@@ -94,6 +95,7 @@ namespace ToDoPlanner.ViewModel
         /// Constant strings for saving/loading the tasks and the datagrid settings
         /// </summary>
         private const string FolderPathData = "Data";
+
         private const string FileNameTasks = "Tasks.xml";
         private const string FolderPathSettings = "Settings";
         private const string FileNameDataGridView = "DataGridView.xml";
@@ -144,7 +146,6 @@ namespace ToDoPlanner.ViewModel
                 ApiOperations ops = new ApiOperations();
                 ops.PostTask(task, token);
             }
-
         }
 
         /// <summary>
@@ -152,6 +153,10 @@ namespace ToDoPlanner.ViewModel
         /// </summary>
         private void DeleteTask()
         {
+            TokenResponse token = GetToken();
+            ApiOperations ops = new ApiOperations();
+            ops.DeleteTask(selectedTask, token);
+
             ToDoTasks.Remove(selectedTask);
         }
 
@@ -214,7 +219,7 @@ namespace ToDoPlanner.ViewModel
         #endregion
 
         #region Saving / Closing
-        
+
         /// <summary>
         /// Save the settings and tasks
         /// </summary>
@@ -254,7 +259,6 @@ namespace ToDoPlanner.ViewModel
             {
                 System.Diagnostics.Trace.WriteLine("File couldn't be created");
             }
-
         }
 
         /// <summary>
@@ -287,7 +291,6 @@ namespace ToDoPlanner.ViewModel
             {
                 System.Diagnostics.Trace.WriteLine("File couldn't be created");
             }
-
         }
 
         #endregion
