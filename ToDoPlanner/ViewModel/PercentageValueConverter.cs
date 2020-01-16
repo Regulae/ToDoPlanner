@@ -4,21 +4,24 @@ using System.Windows.Data;
 
 namespace ToDoPlanner.ViewModel
 {
-    class PercentageValueConverter : IValueConverter
+    public class PercentageValueConverter : IValueConverter
 
     {
+        const long defaultLowerLimit = 0;
+        const long defaultUpperLimit = 100;
+
         /// <summary>
         /// Add a percentage symbol to the end of a value.
         /// </summary>
         /// <param name="value">The value produced by the binding source. Limit from 0 to 100 if no paramters are used.</param>
         /// <param name="targetType">The type of the binding target property.</param>
         /// <param name="parameter">The converter parameter to use. Possible Paramter "lowerLimit,upperLimit", e.g. "-50,250" = limit the value from -50 to 200.</param>
-        /// <param name="culture">A converted value. If the method returns null, the valid null value is used.</param>
+        /// <param name="culture">The culture to use in the converter.</param>
         /// <returns>A string with a percentage symbol in the end. If conversation fails return "0%"</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            long lowerLimit = 0;
-            long upperLimit = 100;
+            long lowerLimit = defaultLowerLimit;
+            long upperLimit = defaultUpperLimit;
 
             try
             {
@@ -56,9 +59,8 @@ namespace ToDoPlanner.ViewModel
         /// <returns>An interger without percentage symbol. If conversation fails return 0</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            long lowerLimit = 0;
-            long upperLimit = 100;
-
+            long lowerLimit = defaultLowerLimit;
+            long upperLimit = defaultUpperLimit;
 
             try
             {
