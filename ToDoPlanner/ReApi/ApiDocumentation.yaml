@@ -34,7 +34,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Task'
       parameters:
-        - name: page
+        -
+          name: page
           in: query
           required: false
           description: 'The collection page number'
@@ -88,7 +89,8 @@ paths:
       operationId: getTaskItem
       summary: 'Retrieves a Task resource.'
       parameters:
-        - name: id
+        -
+          name: id
           in: path
           required: true
           schema:
@@ -119,7 +121,8 @@ paths:
         404:
           description: 'Resource not found'
       parameters:
-        - name: id
+        -
+          name: id
           in: path
           required: true
           schema:
@@ -130,7 +133,8 @@ paths:
       operationId: putTaskItem
       summary: 'Replaces the Task resource.'
       parameters:
-        - name: id
+        -
+          name: id
           in: path
           required: true
           schema:
@@ -170,7 +174,8 @@ paths:
       operationId: patchTaskItem
       summary: 'Updates the Task resource.'
       parameters:
-        - name: id
+        -
+          name: id
           in: path
           required: true
           schema:
@@ -219,8 +224,7 @@ components:
         category:
           type: string
         status:
-          description: 'Allowed values: ''None'', ''Open'', ''Planned'', ''Ongoing'', ''Done'''
-          type: string
+          type: integer
         created:
           type: string
           format: date-time
@@ -247,13 +251,12 @@ components:
         '@type':
           readOnly: true
           type: string
-        name:
+        title:
           type: string
         description:
           type: string
         priority:
-          description: 'Allowed values: ''Low'', ''Medium'', ''High'''
-          type: string
+          type: integer
         deadline:
           type: string
           format: date-time
@@ -263,8 +266,7 @@ components:
         category:
           type: string
         status:
-          description: 'Allowed values: ''None'', ''Open'', ''Planned'', ''Ongoing'', ''Done'''
-          type: string
+          type: integer
         created:
           type: string
           format: date-time
