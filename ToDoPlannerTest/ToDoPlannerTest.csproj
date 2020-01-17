@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="TaskListViewModelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LimitSwitchValueConverterTest.cs" />
+    <Compile Include="PercentageValueConverterTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
