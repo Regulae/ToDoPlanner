@@ -16,7 +16,7 @@ namespace ToDoPlannerTest
             // Creat a new TaskListView and add an empty list
             var taskList = new TaskListViewModel();
             taskList.ToDoTasks = new System.Collections.ObjectModel.ObservableCollection<ToDoTask>();
-
+            
             // Creat a task
             var task = new ToDoTask();
 
