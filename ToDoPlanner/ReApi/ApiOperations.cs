@@ -20,11 +20,12 @@ namespace ToDoPlanner.Operations
             this.baseUrl = "https://todo.re.heisch.ch/api";
         }
 
-        /**
-         * Authenticate user with Web Api Endpoint
-         * @param string username = "regula"
-         * @param string password = "fritzli-hansli-greteli"
-         */
+        /// <summary>
+        /// Authenticate to use database
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns>TokenResponse</returns>
         public TokenResponse Authenticate(string username, string password)
         {
             string endpoint = this.baseUrl + "/login_check";
@@ -52,10 +53,11 @@ namespace ToDoPlanner.Operations
             }
         }
 
-        /*
-         * Get TodDoTasks from API
-         * @param TokenResponse tokenResponse
-         */
+        /// <summary>
+        /// Load tasks from database
+        /// </summary>
+        /// <param name="tokenResponse"></param>
+        /// <returns>ObservableCollection<ToDoTask></returns>
         public ObservableCollection<ToDoTask> GetTasks(TokenResponse tokenResponse)
         {
             string endpoint = this.baseUrl + "/tasks.json";
@@ -80,11 +82,12 @@ namespace ToDoPlanner.Operations
             }
         }
 
-        /*
-         * Add Task to Database via API
-         * @param ToDoTask newTask
-         * @param TokenResponse tokenResponse
-         */
+        /// <summary>
+        /// Post task to database
+        /// </summary>
+        /// <param name="newTask"></param>
+        /// <param name="tokenResponse"></param>
+        /// <returns></returns>
         public ToDoTask PostTask(ToDoTask newTask, TokenResponse tokenResponse)
         {
             string endpoint = this.baseUrl + "/tasks";
@@ -97,7 +100,6 @@ namespace ToDoPlanner.Operations
                     NullValueHandling = NullValueHandling.Ignore
                 }
             );
-            System.Diagnostics.Trace.WriteLine("JSON: " + json);
 
             string accessToken = tokenResponse.token;
 
@@ -116,11 +118,13 @@ namespace ToDoPlanner.Operations
                 return null;
             }
         }
-        /*
-         * Remove Task from Database via API
-         * @param ToDoTask newTask
-         * @param TokenResponse tokenResponse
-         */
+
+        /// <summary>
+        /// Delete task from database
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="tokenResponse"></param>
+        /// <returns>ToDoTask</returns>
         public ToDoTask DeleteTask(ToDoTask task, TokenResponse tokenResponse)
         {
             int? taskId = task.Id;
@@ -134,7 +138,6 @@ namespace ToDoPlanner.Operations
                     NullValueHandling = NullValueHandling.Ignore
                 }
             );
-            System.Diagnostics.Trace.WriteLine("JSON: " + json);
 
             string accessToken = tokenResponse.token;
 
@@ -143,7 +146,46 @@ namespace ToDoPlanner.Operations
 
             try
             {
-                string response = Encoding.ASCII.GetString(wc.UploadValues(endpoint, method, new NameValueCollection()));
+                string response =
+                    Encoding.ASCII.GetString(wc.UploadValues(endpoint, method, new NameValueCollection()));
+                return JsonConvert.DeserializeObject<ToDoTask>(response);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine("Exception: " + ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Update task on database
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="tokenResponse"></param>
+        /// <returns>ToDoTask</returns>
+        public ToDoTask UpdateTask(ToDoTask task, TokenResponse tokenResponse)
+        {
+            int? taskId = task.Id;
+            string endpoint = this.baseUrl + "/tasks/" + taskId;
+            string method = "PUT";
+            string json = JsonConvert.SerializeObject(
+                task,
+                Formatting.None,
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                }
+            );
+
+            string accessToken = tokenResponse.token;
+
+            WebClient wc = new WebClient();
+            wc.Headers["Content-Type"] = "application/json";
+            wc.Headers["Authorization"] = "Bearer " + accessToken;
+
+            try
+            {
+                string response = wc.UploadString(endpoint, method, json);
                 return JsonConvert.DeserializeObject<ToDoTask>(response);
             }
             catch (Exception ex)

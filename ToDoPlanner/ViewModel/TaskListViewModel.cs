@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Xml.Serialization;
@@ -145,6 +146,13 @@ namespace ToDoPlanner.ViewModel
                 TokenResponse token = GetToken();
                 ApiOperations ops = new ApiOperations();
                 ops.PostTask(task, token);
+            }
+            else
+            {
+                //Get token for authentication with api
+                TokenResponse token = GetToken();
+                ApiOperations ops = new ApiOperations();
+                ops.UpdateTask(task, token);
             }
         }
 
