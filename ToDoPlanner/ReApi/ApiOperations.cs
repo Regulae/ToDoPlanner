@@ -1,4 +1,14 @@
-﻿using System;
+﻿///------------------------------------------------------------------------
+/// Namespace:    ToDoPlanner.ReApi
+/// Class:        ApiOperations
+/// Description:  This class connects the Applicaiton with the database
+///               and handles the communication between the app and the
+///               api.
+/// Author:       Kevin Kessler & Regula Engelhardt
+/// Copyright:    (c) Kevin Kessler & Regula Engelhardt
+///------------------------------------------------------------------------
+
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Net;
@@ -6,7 +16,7 @@ using System.Text;
 using Newtonsoft.Json;
 using ToDoPlanner.Model;
 
-namespace ToDoPlanner.Operations
+namespace ToDoPlanner.ReApi
 {
     class ApiOperations
     {

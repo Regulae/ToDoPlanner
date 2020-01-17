@@ -1,9 +1,17 @@
-﻿using System.Collections.Generic;
+﻿///------------------------------------------------------------------------
+/// Namespace:    ToDoPlanner.ViewModel
+/// Class:        ViewModelBase
+/// Description:  This class is an abstract base class for all ViewModels.
+/// Author:       Kevin Kessler & Regula Engelhardt
+/// Copyright:    (c) Kevin Kessler & Regula Engelhardt
+///------------------------------------------------------------------------
+
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ToDoPlanner.Annotations;
 using ToDoPlanner.Model;
-using ToDoPlanner.Operations;
+using ToDoPlanner.ReApi;
 
 namespace ToDoPlanner.ViewModel
 {

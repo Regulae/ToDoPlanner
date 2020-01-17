@@ -1,4 +1,13 @@
-﻿
+﻿///------------------------------------------------------------------------
+/// Namespace:    ToDoPlanner.ViewModel
+/// Class:        TaskListViewModel
+/// Description:  This class connects the TaskListView with the Models
+///               and handles actions like loading tasks, adding tasks
+///               and deleting tasks from the task list.
+/// Author:       Kevin Kessler & Regula Engelhardt
+/// Copyright:    (c) Kevin Kessler & Regula Engelhardt
+///------------------------------------------------------------------------
+
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -6,14 +15,14 @@ using System.Xml.Serialization;
 using ToDoPlanner.Command;
 using ToDoPlanner.Model;
 using ToDoPlanner.UserControls;
-using ToDoPlanner.Operations;
 using System.Windows.Data;
+using ToDoPlanner.ReApi;
 
 namespace ToDoPlanner.ViewModel
 {
     /// <summary>
     /// This view model class is about the task list.
-    /// It loads/saves the tasks and the data grid view settings from/to .xml file
+    /// It loads/saves the tasks and the data grid view settings from/to a datbase.
     /// The view of a single task is also instantiated in this class
     /// </summary>
     public class TaskListViewModel : ViewModelBase
