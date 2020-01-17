@@ -15,7 +15,6 @@ using System.Xml.Serialization;
 using ToDoPlanner.Command;
 using ToDoPlanner.Model;
 using ToDoPlanner.UserControls;
-using ToDoPlanner.Operations;
 using System.Windows;
 using System.Windows.Data;
 using ToDoPlanner.ReApi;
