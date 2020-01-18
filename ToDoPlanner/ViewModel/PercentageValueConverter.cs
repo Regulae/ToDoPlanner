@@ -1,14 +1,31 @@
-﻿using System;
+﻿///------------------------------------------------------------------------
+/// Namespace:    ToDoPlanner.ViewModel
+/// Class:        PercentageValueConverter
+/// Author:       Kevin Kessler & Regula Engelhardt
+/// Copyright:    (c) Kevin Kessler & Regula Engelhardt
+///------------------------------------------------------------------------
+
+using System;
 using System.Globalization;
 using System.Windows.Data;
 
 namespace ToDoPlanner.ViewModel
 {
+    /// <summary>
+    /// A Converter to add a percentage symbol to and int or removing it from a string and convert it to an int.
+    /// Also limiting the value from 0 to 100, or alternative the values can be changed with the us of the parameter.
+    /// </summary>
     public class PercentageValueConverter : IValueConverter
 
     {
+        #region Default values
+
         const long defaultLowerLimit = 0;
         const long defaultUpperLimit = 100;
+
+        #endregion
+
+        #region IValueConverter methods
 
         /// <summary>
         /// Add a percentage symbol to the end of a value.
@@ -86,7 +103,7 @@ namespace ToDoPlanner.ViewModel
             {
                 return 0;
             }
-
         }
+        #endregion
     }
 }

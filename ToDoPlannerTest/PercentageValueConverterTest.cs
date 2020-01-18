@@ -12,11 +12,7 @@ namespace ToDoPlannerTest
         {
             var converter = new PercentageValueConverter();
             int value = 10;
-            int limit = 100;
-            int firstValue = 2;
-            int secondValue = 4;
             object result;
-            string parameter = limit + "," + firstValue + "," + secondValue;
 
             result = converter.Convert(value, null, null, null);
             Assert.AreEqual(result, value + "%");

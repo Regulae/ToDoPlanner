@@ -23,7 +23,7 @@ namespace ToDoPlanner.ViewModel
 {
     /// <summary>
     /// This view model class is about the task list.
-    /// It loads/saves the tasks and the data grid view settings from/to a datbase.
+    /// It loads/saves the tasks from/to a database and the data grid view settings from/to a xml file.
     /// The view of a single task is also instantiated in this class
     /// </summary>
     public class TaskListViewModel : ViewModelBase
@@ -39,8 +39,6 @@ namespace ToDoPlanner.ViewModel
         /// The settings of a datagrid.
         /// Hold information about the width and visibility of the columns
         /// </summary>
-        private ObservableCollection<ColumnInfo> columnInfos;
-
         public ObservableCollection<ColumnInfo> ColumnInfos { get; set; }
 
         /// <summary>
@@ -48,16 +46,17 @@ namespace ToDoPlanner.ViewModel
         /// </summary>
         public TaskViewModel TaskViewModelControl { get; set; }
 
+        private ToDoTask selectedTask;
         /// <summary>
         /// The actual selected task in the data grid
         /// </summary>
-        private ToDoTask selectedTask;
-
         public ToDoTask SelectedTask
         {
             get => selectedTask;
             set
             {
+
+                // Creat message box if you change the selected task and it is not saved
                 if (TaskViewModelControl.HasChanged)
                 {
                     MessageBoxResult result = MessageBox.Show("Do you want to save the changes?",
@@ -70,22 +69,14 @@ namespace ToDoPlanner.ViewModel
                     }
                 }
 
+                if (value != selectedTask)
                 {
-                    if (value != selectedTask)
-                    {
-                        // If a new task has been selected, not only change the actual selected task
-                        // also refresh the task of the task view
-                        TaskViewModelControl.Task = value;
-                        selectedTask = value;
-                        NotifyPropertyChanged();
-                    }
+                    // If a new task has been selected, not only change the actual selected task
+                    // also refresh the task of the task view
+                    TaskViewModelControl.Task = value;
+                    selectedTask = value;
+                    NotifyPropertyChanged();
                 }
-                //else
-                //{
-                //    TaskViewModelControl.ApplyCommand.Execute();
-                //}
-
-
             }
         }
 
@@ -94,11 +85,10 @@ namespace ToDoPlanner.ViewModel
         /// </summary>
         private ICollectionView filteredView;
 
+        private string filter;
         /// <summary>
         /// Filter, to search in the task list, which task contains this filter string
         /// </summary>
-        private string filter;
-
         public string Filter
         {
             get { return filter; }
@@ -107,15 +97,6 @@ namespace ToDoPlanner.ViewModel
                 if (SetProperty(ref filter, value))
                     filteredView.Refresh();
             }
-        }
-
-
-        private ToDoTaskVisibility visibilityTaskList;
-
-        public ToDoTaskVisibility VisibilityTaskList
-        {
-            get => visibilityTaskList;
-            set => SetProperty(ref visibilityTaskList, value);
         }
 
         #endregion
@@ -145,6 +126,11 @@ namespace ToDoPlanner.ViewModel
         /// </summary>
         public RelayCommand DeleteTaskCommand { get; set; }
 
+        /// <summary>
+        /// Command for refreshing the task list from database
+        /// </summary>
+        public RelayCommand RefreshTaskListCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -157,6 +143,7 @@ namespace ToDoPlanner.ViewModel
             TaskViewModelControl = new TaskViewModel(this);
             AddNewTaskCommand = new RelayCommand(AddNewTask);
             DeleteTaskCommand = new RelayCommand(DeleteTask);
+            RefreshTaskListCommand = new RelayCommand(RefreshTaskList);
         }
 
         #endregion
@@ -231,8 +218,8 @@ namespace ToDoPlanner.ViewModel
                 XmlSerializer xs = new XmlSerializer(typeof(ObservableCollection<ColumnInfo>));
                 using (StreamReader rd = new StreamReader(FolderPathSettings + @"\" + FileNameDataGridView))
                 {
-                    columnInfos = xs.Deserialize(rd) as ObservableCollection<ColumnInfo>;
-                    ColumnInfos = columnInfos;
+                    ColumnInfos = xs.Deserialize(rd) as ObservableCollection<ColumnInfo>;
+                    //ColumnInfos = columnInfos;
                 }
             }
             catch
@@ -252,6 +239,36 @@ namespace ToDoPlanner.ViewModel
             ToDoTasks = ops.GetTasks(token);
             filteredView = CollectionViewSource.GetDefaultView(ToDoTasks);
             filteredView.Filter = o => string.IsNullOrEmpty(Filter) ? true : (o.ToString()).Contains(Filter);
+        }
+
+        /// <summary>
+        /// Refresh the Task list from the databank
+        /// </summary>
+        /// <param name="resetFilter">Automatically reset the filter if true</param>
+        public void RefreshTaskList(bool resetFilter)
+        {
+            if (resetFilter)
+                Filter = "";
+
+            // Get token for authentication with api
+            TokenResponse token = GetToken();
+            ApiOperations ops = new ApiOperations();
+
+            // To have the bindings of the view still working,
+            // you have to clear the List and Add every task one by one
+            ToDoTasks.Clear();
+               foreach(ToDoTask task in ops.GetTasks(token))
+            {
+                ToDoTasks.Add(task);
+            }
+        }
+
+        /// <summary>
+        /// Refresh the Task list from the databank and reset the filter
+        /// </summary>
+        public void RefreshTaskList()
+        {
+            RefreshTaskList(true);
         }
 
         #endregion
@@ -307,6 +324,8 @@ namespace ToDoPlanner.ViewModel
         public void SaveSettings()
         {
             var serializer = new XmlSerializer(typeof(ObservableCollection<ColumnInfo>));
+            
+            // Create folder if it still not exist. For the first use of the program.
             if (!Directory.Exists(FolderPathSettings))
             {
                 try
@@ -319,6 +338,7 @@ namespace ToDoPlanner.ViewModel
                 }
             }
 
+            // Create settings file, overrides old settings file
             try
             {
                 FileStream fs = new FileStream(FolderPathSettings + @"\" + FileNameDataGridView, FileMode.Create);

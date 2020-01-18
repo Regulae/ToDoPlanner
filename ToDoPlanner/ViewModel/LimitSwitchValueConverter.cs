@@ -1,9 +1,24 @@
-﻿using System;
+﻿///------------------------------------------------------------------------
+/// Namespace:    ToDoPlanner.ViewModel
+/// Class:        LimitSwitchValueConverter
+/// Description:  This class is used for adjusting the number of rows
+///               on an UniformGrid depending on the actual width.
+/// Author:       Kevin Kessler & Regula Engelhardt
+/// Copyright:    (c) Kevin Kessler & Regula Engelhardt
+///------------------------------------------------------------------------
+
+
+using System;
 using System.Globalization;
 using System.Windows.Data;
 
 namespace ToDoPlanner.ViewModel
 {
+    /// <summary>
+    /// Return one of two values depending on a limit value.
+    /// Parameter has to be used. Without parameter, the converter always return 1.
+    /// Converting back is not implemented.
+    /// </summary>
     public class LimitSwitchValueConverter : IValueConverter
     {
 
@@ -64,7 +79,7 @@ namespace ToDoPlanner.ViewModel
         /// <param name="targetType">The type to convert to.</param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>An interger without percentage symbol</returns>
+        /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

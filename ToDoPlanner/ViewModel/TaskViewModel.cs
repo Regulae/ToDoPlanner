@@ -1,32 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
+﻿///------------------------------------------------------------------------
+/// Namespace:    ToDoPlanner.ViewModel
+/// Class:        TaskViewModel
+/// Description:  See class summary
+/// Author:       Kevin Kessler & Regula Engelhardt
+/// Copyright:    (c) Kevin Kessler & Regula Engelhardt
+///------------------------------------------------------------------------
+
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using ToDoPlanner.Annotations;
 using ToDoPlanner.Command;
 using ToDoPlanner.Model;
-using ToDoPlanner.UserControls;
 
 namespace ToDoPlanner.ViewModel
 {
+    /// <summary>
+    /// This view model class is about the task.
+    /// It handles the editing of a task and send the save command to the referenced TaskListViewModel.
+    /// The direct editing of the task in the TaskList is prevented.
+    /// An active command has to be given to either save the edited Task or cancel the changes.
+    /// </summary>
     public class TaskViewModel : ViewModelBase
     {
         #region Properties
         
+        private ToDoTask task;
         /// <summary>
         /// The Task which is shown on the view
         /// </summary>
-        private ToDoTask task;
         public ToDoTask Task {
             get => task;
             set
             {
                 if (value != null)
                 {
+                    // Make deep copy, so you don't edit the source task directly
                     task = value.Clone();
+                    // Store the reference of the source task, for save the changes later to the source
                     sourceTask = value;
                     task.PropertyChanged += taskChanged;
                 }
@@ -41,11 +50,20 @@ namespace ToDoPlanner.ViewModel
             }
         }
 
-        private ToDoTask sourceTask;      // The Task which was opened
+        /// <summary>
+        /// The task which was opened
+        /// </summary>
+        private ToDoTask sourceTask;
+        /// <summary>
+        /// The reference to the TaskListViewModel
+        /// </summary>
         private TaskListViewModel taskListViewModel;
         
         
         private bool hasChanged;
+        /// <summary>
+        /// True if the task has been changed
+        /// </summary>
         public bool HasChanged
         {
             get => hasChanged;
@@ -68,7 +86,6 @@ namespace ToDoPlanner.ViewModel
 
         #endregion
 
-
         #region Constructor
 
         public TaskViewModel(TaskListViewModel tasklist)
@@ -82,7 +99,11 @@ namespace ToDoPlanner.ViewModel
 
         #endregion
 
+        #region Methods
 
+        /// <summary>
+        /// Apply changes and save it to the database
+        /// </summary>
         private void Apply()
         {
             sourceTask?.Copy(Task);
@@ -90,16 +111,25 @@ namespace ToDoPlanner.ViewModel
             HasChanged = false;
         }
 
+        /// <summary>
+        /// Cancel all changes to the task
+        /// </summary>
         private void Cancel()
         {
             Task.Copy(sourceTask);
             HasChanged = false;
         }
 
+        /// <summary>
+        /// Event to notice if the task has changed
+        /// </summary>
+        /// <param name="sender">The sender object</param>
+        /// <param name="e">The Arguments of the event</param>
         private void taskChanged(object sender, PropertyChangedEventArgs e)
         {
             HasChanged = true;
         }
 
+        #endregion
     }
 }
