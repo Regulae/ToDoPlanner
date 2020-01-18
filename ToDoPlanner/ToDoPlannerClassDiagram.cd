@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Model">
+    <Position X="3.729" Y="0.661" Height="0.291" Width="1.067" />
+  </Comment>
+  <Comment CommentText="ViewModel">
+    <Position X="11.023" Y="0.654" Height="0.291" Width="1.168" />
+  </Comment>
+  <Comment CommentText="WebAPI">
+    <Position X="3.338" Y="11.043" Height="0.291" Width="1.168" />
+  </Comment>
+  <Comment CommentText="View">
+    <Position X="17.426" Y="0.5" Height="0.291" Width="1.168" />
+  </Comment>
+  <Comment CommentText="Converters">
+    <Position X="16.038" Y="5.646" Height="0.291" Width="1.168" />
+  </Comment>
+  <Comment CommentText="Custom Controls">
+    <Position X="18.986" Y="5.732" Height="0.291" Width="1.168" />
+  </Comment>
+  <Class Name="ToDoPlanner.Model.TokenResponse">
+    <Position X="3" Y="14.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\TokenResponse.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToDoPlanner.Model.ToDoTask">
+    <Position X="3.25" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAIAiJEAEBABACBAAowAAAgwAAAEAAEKACBA=</HashCode>
+      <FileName>Model\ToDoTask.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToDoPlanner.Model.ModelBase">
+    <Position X="0.5" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAgAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\ModelBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ToDoPlanner.Model.BindingProxy">
+    <Position X="2.25" Y="16" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAgACA=</HashCode>
+      <FileName>Model\BindingProxy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToDoPlanner.Command.RelayCommand">
+    <Position X="5" Y="16" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAQAAEAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Command\RelayCommand.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ToDoPlanner.ReApi.ApiOperations">
+    <Position X="3" Y="11.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAIAgBgAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>ReApi\ApiOperations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToDoPlanner.UserControls.EnhancedDataGrid">
+    <Position X="18.5" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BIAAAAAAAAAAgAAAwAAAAAQAAAAAAAAgCAQAAAAgAAA=</HashCode>
+      <FileName>UserControls\EnhancedDataGrid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToDoPlanner.ViewModel.LimitSwitchValueConverter">
+    <Position X="15.5" Y="9.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\LimitSwitchValueConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ToDoPlanner.ViewModel.PercentageValueConverter">
+    <Position X="15.5" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgIAAAAAAIAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\PercentageValueConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ToDoPlanner.ViewModel.TaskListViewModel">
+    <Position X="10.5" Y="1.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>EBAgCCEAAAAIAYAgAABAEAgABBCAAIiAggAAQACAAAg=</HashCode>
+      <FileName>ViewModel\TaskListViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToDoPlanner.ViewModel.ViewModelBase">
+    <Position X="7.75" Y="4" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAAAIAAAAAAAAAAgAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\ViewModelBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ToDoPlanner.ViewModel.TaskViewModel">
+    <Position X="10.5" Y="8" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>YIAAIAAAQBAAAACAIAAAAAAEAAAAAAAAAEAAAABAAAA=</HashCode>
+      <FileName>ViewModel\TaskViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToDoPlanner.View.MainWindow">
+    <Position X="17" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>View\MainWindow.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ToDoPlanner.View.TaskListView">
+    <Position X="15.5" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\TaskListView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ToDoPlanner.View.TasksView">
+    <Position X="18.5" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\TasksView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Struct Name="ToDoPlanner.UserControls.ColumnInfo">
+    <Position X="18.5" Y="10.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BEAAAAAAABAAAAAAAAAAAAAAAAAAAQAAAAgQIAAAQAA=</HashCode>
+      <FileName>UserControls\EnhancedDataGrid.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="ToDoPlanner.Model.Priority">
+    <Position X="2.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAgAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Model\ToDoTask.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ToDoPlanner.Model.Status">
+    <Position X="4.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAIAAAAAAQQAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Model\ToDoTask.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
