@@ -1,4 +1,14 @@
-﻿using System;
+﻿///------------------------------------------------------------------------
+/// Namespace:    ToDoPlanner.Model
+/// Class:        TokenResponse
+/// Author:       Kevin Kessler & Regula Engelhardt
+/// Copyright:    Extensions (c) Kevin Kessler & Regula Engelhardt
+///               Original Source from (without any Copyright information):
+///               https://bengribaudo.com/blog/2012/03/14/1942/saving-restoring-wpf-datagrid-columns-size-sorting-and-order
+/// 
+///------------------------------------------------------------------------
+
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -7,6 +17,9 @@ using System.Windows.Controls;
 
 namespace ToDoPlanner.UserControls
 {
+    /// <summary>
+    /// An enhanced datagrid to be able to save the column properties like width, order, visibilty.
+    /// </summary>
     class EnhancedDataGrid : DataGrid
     {
         /// <summary>
@@ -71,7 +84,9 @@ namespace ToDoPlanner.UserControls
             base.OnInitialized(e);
         }
 
-        // 
+        /// <summary>
+        /// The list of all column with the properties for a datagrid
+        /// </summary>
         public ObservableCollection<ColumnInfo> ColumnInfo
         {
             get { return (ObservableCollection<ColumnInfo>)GetValue(ColumnInfoProperty); }
@@ -127,6 +142,9 @@ namespace ToDoPlanner.UserControls
         }
     }
 
+    /// <summary>
+    /// The ColumnInfo struct, for all the properties which shall be accessible from outside the datagrid
+    /// </summary>
     public struct ColumnInfo
     {
         public object Header;                       // Header, e.g. title string     

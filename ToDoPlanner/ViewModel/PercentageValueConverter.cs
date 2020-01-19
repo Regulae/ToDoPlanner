@@ -20,7 +20,13 @@ namespace ToDoPlanner.ViewModel
     {
         #region Default values
 
+        /// <summary>
+        /// the default lower limit which the percentage value will be limited
+        /// </summary>
         const long defaultLowerLimit = 0;
+        /// <summary>
+        /// the default upper limit which the percentage value will be limited
+        /// </summary>
         const long defaultUpperLimit = 100;
 
         #endregion
