@@ -88,7 +88,6 @@
     </ApplicationDefinition>
     <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="Model\BindingProxy.cs" />
-    <Compile Include="Model\ToDoTaskVisibility.cs" />
     <Compile Include="Model\TokenResponse.cs" />
     <Compile Include="ReApi\ApiOperations.cs" />
     <Compile Include="UserControls\EnhancedDataGrid.cs" />
@@ -113,7 +112,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Command\Command.cs" />
     <Compile Include="Model\ToDoTask.cs" />
     <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Properties\Annotations.cs" />

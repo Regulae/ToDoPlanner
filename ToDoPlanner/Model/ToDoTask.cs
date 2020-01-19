@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
+﻿///------------------------------------------------------------------------
+/// Namespace:    ToDoPlanner.Model
+/// Class:        ToDoTask
+/// Author:       Kevin Kessler & Regula Engelhardt
+/// Copyright:    (c) Kevin Kessler & Regula Engelhardt
+///------------------------------------------------------------------------
+
+using System;
 using Newtonsoft.Json;
-using ToDoPlanner.ViewModel;
 
 namespace ToDoPlanner.Model
 {
+    /// <summary>
+    /// Enum for priority levels of a task
+    /// </summary>
     public enum Priority
     {
         Low,
@@ -17,6 +20,9 @@ namespace ToDoPlanner.Model
         High
     }
 
+    /// <summary>
+    /// Enum for the status of a task
+    /// </summary>
     public enum Status
     {
         None,
@@ -26,10 +32,15 @@ namespace ToDoPlanner.Model
         Done
     }
 
+    /// <summary>
+    /// The ToDoTask class. This class hold all information about a ToDoTask.
+    /// </summary>
     public class ToDoTask : ModelBase
     {
         private int? _id;
-        
+        /// <summary>
+        /// Unique ID in the database.
+        /// </summary>
         [JsonProperty("id")]
         public int? Id
         {
@@ -38,6 +49,9 @@ namespace ToDoPlanner.Model
         }
         
         private string _title;
+        /// <summary>
+        /// The title of the task
+        /// </summary>
         [JsonProperty("title")]
         public string Title
         {
@@ -46,7 +60,9 @@ namespace ToDoPlanner.Model
         }
 
         private string _description;
-        
+        /// <summary>
+        /// The description of the task
+        /// </summary>
         [JsonProperty("description")]
         public string Description
         {
@@ -55,7 +71,9 @@ namespace ToDoPlanner.Model
         }
 
         private int _priorityNum;
-        
+        /// <summary>
+        /// The priority of a task
+        /// </summary>
         [JsonProperty("priority")]
         public int PriorityNum
         {
@@ -63,9 +81,10 @@ namespace ToDoPlanner.Model
             set => SetProperty(ref _priorityNum, value);
         }
 
-        //public int status = 1;
         private int _statusNum;
-
+        /// <summary>
+        /// The status of a task
+        /// </summary>
         [JsonProperty("status")]
         public int StatusNum
         {
@@ -74,6 +93,9 @@ namespace ToDoPlanner.Model
         }
 
         private DateTime _deadline = DateTime.Today;
+        /// <summary>
+        /// The deadline date of the task
+        /// </summary>
         [JsonProperty("deadline")]
         public DateTime Deadline
         {
@@ -82,6 +104,9 @@ namespace ToDoPlanner.Model
         }
 
         private DateTime _startDate = DateTime.Today;
+        /// <summary>
+        /// The date to start with the task
+        /// </summary>
         [JsonProperty("start_date")]
         public DateTime StartDate
         {
@@ -90,7 +115,9 @@ namespace ToDoPlanner.Model
         }
 
         private string _category;
-
+        /// <summary>
+        /// The category of a task
+        /// </summary>
         [JsonProperty("category")]
         public string Category
         {
@@ -99,7 +126,9 @@ namespace ToDoPlanner.Model
         }
 
         private DateTime _created = DateTime.Today;
-        
+        /// <summary>
+        /// The creation date of a task
+        /// </summary>
         [JsonProperty("created")]
         public DateTime Created
         {
@@ -108,7 +137,9 @@ namespace ToDoPlanner.Model
         }
 
         private DateTime _changed = DateTime.Today;
-        
+        /// <summary>
+        /// The date when the task has been last changed
+        /// </summary>
         [JsonProperty("changed")]
         public DateTime Changed
         {
@@ -117,6 +148,9 @@ namespace ToDoPlanner.Model
         }
 
         private int _effort;
+        /// <summary>
+        /// The effort of a task
+        /// </summary>
         [JsonProperty("effort")]
         public int Effort
         {
@@ -125,6 +159,9 @@ namespace ToDoPlanner.Model
         }
 
         private int _progress;
+        /// <summary>
+        /// The progress of a task
+        /// </summary>
         [JsonProperty("progress")]
         public int Progress // Implement as progressbar in the MainWindow.xaml
         {
@@ -137,7 +174,7 @@ namespace ToDoPlanner.Model
         /// <summary>
         /// Clone the actual task, so the reference is not the same anymore but the values are.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A deep copy of the task</returns>
         public ToDoTask Clone()
         {
             return new ToDoTask()

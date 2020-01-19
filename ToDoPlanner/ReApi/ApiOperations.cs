@@ -132,8 +132,8 @@ namespace ToDoPlanner.ReApi
         /// <summary>
         /// Delete task from database
         /// </summary>
-        /// <param name="task"></param>
-        /// <param name="tokenResponse"></param>
+        /// <param name="task">The task which has to be deleted</param>
+        /// <param name="tokenResponse">Database token response</param>
         /// <returns>ToDoTask</returns>
         public ToDoTask DeleteTask(ToDoTask task, TokenResponse tokenResponse)
         {
