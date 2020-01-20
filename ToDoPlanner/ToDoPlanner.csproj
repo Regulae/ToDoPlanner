@@ -91,7 +91,6 @@
     <Compile Include="Model\TokenResponse.cs" />
     <Compile Include="ReApi\ApiOperations.cs" />
     <Compile Include="UserControls\EnhancedDataGrid.cs" />
-    <Compile Include="ViewModel\EnumToStringConverter.cs" />
     <Compile Include="ViewModel\PercentageValueConverter.cs" />
     <Compile Include="ViewModel\StringToDateTimeConverter.cs" />
     <Compile Include="ViewModel\TaskViewModel.cs" />
