@@ -203,7 +203,7 @@
 
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedIndex="{Binding Path=PriorityNum}">
+                                <ComboBox SelectedIndex="{Binding Path=PriorityNum}" MaxDropDownHeight="0">
                                     <ComboBoxItem Content="Low" />
                                     <ComboBoxItem Content="Medium" />
                                     <ComboBoxItem Content="High" />
@@ -234,7 +234,7 @@
 
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox SelectedIndex="{Binding Path=StatusNum}">
+                                <ComboBox SelectedIndex="{Binding Path=StatusNum}" MaxDropDownHeight="0">
                                     <ComboBoxItem Content="None" />
                                     <ComboBoxItem Content="Open" />
                                     <ComboBoxItem Content="Planned" />

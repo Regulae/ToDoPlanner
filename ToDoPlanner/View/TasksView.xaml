@@ -27,6 +27,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <model:PercentageValueConverter x:Key="PercentageValueConverter"/>
         <model:LimitSwitchValueConverter x:Key="LimitSwitchValueConverter"/>
+        <model:StringToDateTimeConverter x:Key="StringToDateTimeConverter"/>
         <ctr:EnhancedDataGrid x:Key="dgGrid"/>
     </UserControl.Resources>
     <Grid Margin="0">
@@ -90,7 +91,7 @@
                            VerticalAlignment="Center"
                            Margin="2,3,2,3"/>
                     <DatePicker Name="txtDeadline"
-                                Text="{Binding Path=Task.Deadline, StringFormat=dd.MM.yyyy}"
+                                Text="{Binding Path=Task.Deadline, ConverterParameter=dd.MM.yyyy, Converter={StaticResource StringToDateTimeConverter}, Mode=TwoWay}"
                                 FontSize="16"
                                 VerticalAlignment="Center"
                                 Margin="2,3,2,3"/>
