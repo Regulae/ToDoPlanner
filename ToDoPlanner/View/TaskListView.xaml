@@ -164,13 +164,6 @@
                     </Style>
                 </DataGrid.Resources>
 
-                <!-- Context Menu for Data Grid -->
-                <DataGrid.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Name="miExport" Header="_Export to xml..." Command=""/>
-                    </ContextMenu>
-                </DataGrid.ContextMenu>
-
                 <!-- Colums for DataGrid -->
                 <DataGrid.Columns>
                     <!-- Created -->
@@ -189,14 +182,7 @@
                     <DataGridTextColumn Header="Category" Binding="{Binding Category, StringFormat=dd.MM.yyyy}"
                         Visibility="{Binding Path=Data, Source={StaticResource proxyCategory}, Mode=TwoWay,
                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    <!-- Priority -->
-
-                    <!--
-                    <DataGridTextColumn Header="Priority" Binding="{Binding PriorityNum}"
-                        Visibility="{Binding Path=Data, Source={StaticResource proxyPriority}, Mode=TwoWay,
-                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    -->
-                    
+                    <!-- Priority -->                 
                     <DataGridTemplateColumn Header="Priority"
                         Visibility="{Binding Path=Data, Source={StaticResource proxyPriority}, Mode=TwoWay,
                         Converter={StaticResource BooleanToVisibilityConverter}}">
