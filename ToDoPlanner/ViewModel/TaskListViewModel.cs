@@ -140,6 +140,7 @@ namespace ToDoPlanner.ViewModel
         /// </summary>
         public TaskListViewModel()
         {
+            ToDoTasks = new ObservableCollection<ToDoTask>();
             TaskViewModelControl = new TaskViewModel(this);
             AddNewTaskCommand = new RelayCommand(AddNewTask);
             DeleteTaskCommand = new RelayCommand(DeleteTask);

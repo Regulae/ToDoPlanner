@@ -101,12 +101,12 @@ namespace ToDoPlanner.ReApi
 
                 Application.Current.Shutdown();
 
-                return null;
+                return new ObservableCollection<ToDoTask>();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Trace.WriteLine("Exception: " + ex);
-                return null;
+                return new ObservableCollection<ToDoTask>();
             }
         }
 
