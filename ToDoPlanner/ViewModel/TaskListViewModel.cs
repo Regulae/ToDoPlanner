@@ -95,7 +95,7 @@ namespace ToDoPlanner.ViewModel
             set
             {
                 if (SetProperty(ref filter, value))
-                    filteredView.Refresh();
+                    filteredView?.Refresh();
             }
         }
 
@@ -282,7 +282,6 @@ namespace ToDoPlanner.ViewModel
         /// <param name="e"></param> The Arguments
         public void Close(object sender, CancelEventArgs e)
         {
-            //SaveTasks();
             SaveSettings();
         }
 

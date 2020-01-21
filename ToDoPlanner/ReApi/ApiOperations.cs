@@ -15,6 +15,7 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using ToDoPlanner.Model;
+using System.Windows;
 
 namespace ToDoPlanner.ReApi
 {
@@ -59,7 +60,8 @@ namespace ToDoPlanner.ReApi
             catch (Exception ex)
             {
                 System.Diagnostics.Trace.WriteLine("Exception: " + ex);
-                return null;
+                // return empty string, to avoid NullReferenceExceptions
+                return new TokenResponse() { token = "" };
             }
         }
 
@@ -84,6 +86,22 @@ namespace ToDoPlanner.ReApi
                 string response = wc.DownloadString(endpoint);
                 toDoTasks = JsonConvert.DeserializeObject<ObservableCollection<ToDoTask>>(response);
                 return toDoTasks;
+            }
+            catch (WebException ex)
+            {
+                System.Diagnostics.Trace.WriteLine("Exception: " + ex);
+
+                // Inform user before shuting down application, because of missing internet connection
+                MessageBox.Show("There is a problem with the database connection." +
+                    "\nCheck your internet connection." +
+                    "\nThe application will be closed.",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+
+                Application.Current.Shutdown();
+
+                return null;
             }
             catch (Exception ex)
             {
